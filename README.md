@@ -6,11 +6,14 @@
 
 ## 兼容性
 
-- 已适配：`caelestia-shell 2.1.0`
+- 已适配：`caelestia-shell 2.1.0` 和 Villode 受控分支
 - 系统：Arch Linux / 基于 Arch 的发行版
 - 依赖：`bash`、`patch`、`rsync`
 
 补丁直接修改 QML 界面文本，因此上游升级后可能需要重新适配。应用前不会修改 `/etc` 下的系统文件，而是使用用户配置副本。
+
+在 [Villode Caelestia](https://github.com/Villode/villode-caelestia) 中使用时，基础 Shell
+来自 [Villode/caelestia-shell](https://github.com/Villode/caelestia-shell) 的锁定版本；上游升级不会绕过适配测试直接进入整合安装器。
 
 ## 安装
 

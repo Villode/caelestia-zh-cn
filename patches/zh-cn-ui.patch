@@ -3521,7 +3521,7 @@
                  }
 --- a/modules/utilities/cards/Toggles.qml
 +++ b/modules/utilities/cards/Toggles.qml
-@@ -53,7 +53,7 @@
+@@ -53,6 +53,6 @@
          spacing: Tokens.spacing.medium
  
          StyledText {
@@ -3529,15 +3529,3 @@
 +            text: qsTr("快捷开关")
              font: Tokens.font.body.medium
          }
- 
---- a/shell.qml
-+++ b/shell.qml
-@@ -1,8 +1,4 @@
- //@ pragma Env QS_CRASHREPORT_URL=https://github.com/caelestia-dots/shell/issues/new?template=crash.yml
--//@ pragma DefaultEnv QS_NO_RELOAD_POPUP=1
--//@ pragma DefaultEnv QS_DROP_EXPENSIVE_FONTS=1
--//@ pragma DefaultEnv QSG_RENDER_LOOP=threaded
--//@ pragma DefaultEnv QT_QUICK_FLICKABLE_WHEEL_DECELERATION=10000
- 
- import "modules"
- import "modules/drawers"
