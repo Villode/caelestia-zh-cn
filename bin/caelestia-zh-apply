@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
+source_dir="${CAELESTIA_SOURCE_DIR:-/etc/xdg/quickshell/caelestia}"
+config_dir="${CAELESTIA_CONFIG_DIR:-$config_home/quickshell/caelestia}"
+patch_file="${CAELESTIA_PATCH_FILE:-$data_home/caelestia-zh-cn/patches/zh-cn-ui.patch}"
+restart=true
+refresh=false
+
+usage() {
+    cat <<'EOF'
+用法：caelestia-zh-apply [选项]
+
+应用 Caelestia 简体中文界面补丁。
+
+选项：
+  --refresh       备份当前用户副本，从系统源码重新复制后再应用
+  --no-restart    应用后不重启 Caelestia
+  -h, --help      显示帮助
+EOF
+}
+
+while (($#)); do
+    case "$1" in
+        --refresh)
+            refresh=true
+            ;;
+        --no-restart)
+            restart=false
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        *)
+            echo "未知选项：$1" >&2
+            usage >&2
+            exit 64
+            ;;
+    esac
+    shift
+done
+
+for command_name in patch rsync; do
+    if ! command -v "$command_name" >/dev/null 2>&1; then
+        echo "缺少依赖：$command_name" >&2
+        exit 69
+    fi
+done
+
+if [[ ! -f "$patch_file" ]]; then
+    echo "找不到中文补丁：$patch_file" >&2
+    exit 66
+fi
+
+if [[ ! -f "$source_dir/shell.qml" ]]; then
+    echo "找不到 Caelestia 源码：$source_dir" >&2
+    echo "请先安装 caelestia-shell，或设置 CAELESTIA_SOURCE_DIR。" >&2
+    exit 66
+fi
+
+if $refresh && [[ -e "$config_dir" ]]; then
+    backup_dir="${config_dir}.backup-$(date +%Y%m%d-%H%M%S)"
+    mv "$config_dir" "$backup_dir"
+    echo "原用户副本已备份到：$backup_dir"
+fi
+
+if [[ ! -f "$config_dir/shell.qml" ]]; then
+    mkdir -p "$config_dir"
+    rsync -a "$source_dir/" "$config_dir/"
+    echo "已从系统源码创建用户副本。"
+fi
+
+cd "$config_dir"
+
+if patch -p1 --dry-run --forward < "$patch_file" >/dev/null 2>&1; then
+    patch -p1 --forward < "$patch_file"
+    echo "已应用 Caelestia 简体中文补丁。"
+elif patch -R -p1 --dry-run < "$patch_file" >/dev/null 2>&1; then
+    echo "简体中文补丁已经应用，无需重复操作。"
+else
+    echo "补丁无法干净应用，当前 Caelestia 版本可能与补丁不兼容。" >&2
+    echo "可运行 caelestia-zh-apply --refresh，从系统源码重新生成用户副本。" >&2
+    exit 65
+fi
+
+# 当前 Quickshell 版本不接受这些 DefaultEnv pragma。环境变量由启动器设置。
+if [[ -f shell.qml ]]; then
+    sed -i '/^\/\/@ pragma DefaultEnv /d' shell.qml
+fi
+
+if $restart && command -v caelestia >/dev/null 2>&1; then
+    caelestia shell -k >/dev/null 2>&1 || true
+    LANG=zh_CN.UTF-8 \
+    LC_ALL=zh_CN.UTF-8 \
+    LC_MESSAGES=zh_CN.UTF-8 \
+    QT_QPA_PLATFORM=wayland \
+    QT_QPA_PLATFORMTHEME=gtk3 \
+    QT_WAYLAND_DISABLE_WINDOWDECORATION=1 \
+        caelestia shell -d >/tmp/caelestia-zh-apply.log 2>&1 || {
+            echo "补丁已应用，但 Caelestia 自动重启失败。" >&2
+            echo "日志：/tmp/caelestia-zh-apply.log" >&2
+            exit 70
+        }
+    echo "Caelestia 已使用简体中文环境重新启动。"
+fi

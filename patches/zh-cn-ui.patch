@@ -1,0 +1,3543 @@
+--- a/components/filedialog/DialogButtons.qml
++++ b/components/filedialog/DialogButtons.qml
+@@ -22,7 +22,7 @@
+         spacing: Tokens.spacing.small
+ 
+         StyledText {
+-            text: qsTr("Filter:")
++            text: qsTr("筛选：")
+         }
+ 
+         StyledRect {
+@@ -59,7 +59,7 @@
+                 anchors.centerIn: parent
+                 anchors.margins: Tokens.padding.medium
+ 
+-                text: qsTr("Select")
++                text: qsTr("选择")
+                 color: root.dialog.selectionValid ? Colours.palette.m3onSurface : Colours.palette.m3outline
+             }
+         }
+@@ -83,7 +83,7 @@
+                 anchors.centerIn: parent
+                 anchors.margins: Tokens.padding.medium
+ 
+-                text: qsTr("Cancel")
++                text: qsTr("取消")
+             }
+         }
+     }
+--- a/components/filedialog/FileDialog.qml
++++ b/components/filedialog/FileDialog.qml
+@@ -12,7 +12,7 @@
+     property list<string> cwd: ["Home"]
+     property string filterLabel: "All files"
+     property list<string> filters: ["*"]
+-    property string title: qsTr("Select a file")
++    property string title: qsTr("选择文件")
+ 
+     signal accepted(path: string)
+     signal rejected
+--- a/components/filedialog/FolderContents.qml
++++ b/components/filedialog/FolderContents.qml
+@@ -60,7 +60,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("This folder is empty")
++                text: qsTr("此文件夹为空")
+                 color: Colours.palette.m3outline
+                 font: Tokens.font.body.builders.large.weight(Font.Medium).build()
+             }
+--- a/components/filedialog/Sidebar.qml
++++ b/components/filedialog/Sidebar.qml
+@@ -30,7 +30,7 @@
+             Layout.alignment: Qt.AlignHCenter
+             Layout.topMargin: Tokens.padding.extraSmall / 2
+             Layout.bottomMargin: Tokens.spacing.medium
+-            text: qsTr("Files")
++            text: qsTr("文件")
+             color: Colours.palette.m3onSurface
+             font: Tokens.font.body.builders.large.weight(Font.Bold).build()
+         }
+--- a/modules/bar/components/ActiveWindow.qml
++++ b/modules/bar/components/ActiveWindow.qml
+@@ -16,7 +16,7 @@
+     readonly property string windowTitle: {
+         const title = Hypr.activeToplevel?.title;
+         if (!title)
+-            return qsTr("Desktop");
++            return qsTr("桌面");
+         if (Config.bar.activeWindow.compact) {
+             // " - " (standard hyphen), " — " (em dash), " – " (en dash)
+             const parts = title.split(/\s+[\-\u2013\u2014]\s+/);
+--- a/modules/bar/popouts/Audio.qml
++++ b/modules/bar/popouts/Audio.qml
+@@ -33,7 +33,7 @@
+         spacing: Tokens.spacing.medium
+ 
+         StyledText {
+-            text: qsTr("Output device")
++            text: qsTr("输出设备")
+             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+         }
+ 
+@@ -54,7 +54,7 @@
+ 
+         StyledText {
+             Layout.topMargin: Tokens.spacing.medium
+-            text: qsTr("Input device")
++            text: qsTr("输入设备")
+             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+         }
+ 
+@@ -73,7 +73,7 @@
+ 
+         StyledText {
+             Layout.topMargin: Tokens.spacing.medium
+-            text: qsTr("Volume (%1)").arg(Audio.muted ? qsTr("Muted") : `${Math.round(Audio.volume * 100)}%`)
++            text: qsTr("音量（%1）").arg(Audio.muted ? qsTr("已静音") : `${Math.round(Audio.volume * 100)}%`)
+             font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+         }
+ 
+@@ -104,7 +104,7 @@
+             inactiveColour: Colours.palette.m3primaryContainer
+             inactiveOnColour: Colours.palette.m3onPrimaryContainer
+             verticalPadding: Tokens.padding.extraSmall
+-            text: qsTr("Open settings")
++            text: qsTr("打开设置")
+             icon: "settings"
+ 
+             onClicked: root.popouts.detachRequested("audio")
+--- a/modules/bar/popouts/Battery.qml
++++ b/modules/bar/popouts/Battery.qml
+@@ -13,7 +13,7 @@
+     width: Tokens.sizes.bar.batteryWidth
+ 
+     StyledText {
+-        text: UPower.displayDevice.isLaptopBattery ? qsTr("Remaining: %1%").arg(Math.round(UPower.displayDevice.percentage * 100)) : qsTr("No battery detected")
++        text: UPower.displayDevice.isLaptopBattery ? qsTr("剩余：%1%").arg(Math.round(UPower.displayDevice.percentage * 100)) : qsTr("未检测到电池")
+     }
+ 
+     StyledText {
+@@ -33,7 +33,7 @@
+             return comps.join(", ") || fallback;
+         }
+ 
+-        text: UPower.displayDevice.isLaptopBattery ? qsTr("Time %1: %2").arg(UPower.onBattery ? "remaining" : "until charged").arg(UPower.onBattery ? formatSeconds(UPower.displayDevice.timeToEmpty, "Calculating...") : formatSeconds(UPower.displayDevice.timeToFull, "Fully charged!")) : qsTr("Power profile: %1").arg(PowerProfile.toString(PowerProfiles.profile))
++        text: UPower.displayDevice.isLaptopBattery ? qsTr("%1：%2").arg(UPower.onBattery ? "剩余时间" : "充满时间").arg(UPower.onBattery ? formatSeconds(UPower.displayDevice.timeToEmpty, "正在计算…") : formatSeconds(UPower.displayDevice.timeToFull, "已充满！")) : qsTr("电源模式：%1").arg(PowerProfile.toString(PowerProfiles.profile))
+     }
+ 
+     Loader {
+@@ -70,7 +70,7 @@
+ 
+                     StyledText {
+                         anchors.verticalCenter: parent.verticalCenter
+-                        text: qsTr("Performance Degraded")
++                        text: qsTr("性能受限")
+                         color: Colours.palette.m3onError
+                         font: Tokens.font.mono.builders.medium.weight(Font.Medium).build()
+                     }
+@@ -87,7 +87,7 @@
+                 StyledText {
+                     anchors.horizontalCenter: parent.horizontalCenter
+ 
+-                    text: qsTr("Reason: %1").arg(PerformanceDegradationReason.toString(PowerProfiles.degradationReason))
++                    text: qsTr("原因：%1").arg(PerformanceDegradationReason.toString(PowerProfiles.degradationReason))
+                     color: Colours.palette.m3onError
+                 }
+             }
+--- a/modules/bar/popouts/Bluetooth.qml
++++ b/modules/bar/popouts/Bluetooth.qml
+@@ -21,12 +21,12 @@
+     StyledText {
+         Layout.topMargin: Tokens.padding.medium
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("Bluetooth")
++        text: qsTr("蓝牙")
+         font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+     }
+ 
+     Toggle {
+-        label: qsTr("Enabled")
++        label: qsTr("启用")
+         checked: Bluetooth.defaultAdapter?.enabled ?? false // qmllint disable unresolved-type
+         toggle.onToggled: {
+             const adapter = Bluetooth.defaultAdapter; // qmllint disable unresolved-type
+@@ -36,7 +36,7 @@
+     }
+ 
+     Toggle {
+-        label: qsTr("Discovering")
++        label: qsTr("正在发现")
+         checked: Bluetooth.defaultAdapter?.discovering ?? false // qmllint disable unresolved-type
+         toggle.onToggled: {
+             const adapter = Bluetooth.defaultAdapter; // qmllint disable unresolved-type
+@@ -177,7 +177,7 @@
+         inactiveColour: Colours.palette.m3primaryContainer
+         inactiveOnColour: Colours.palette.m3onPrimaryContainer
+         verticalPadding: Tokens.padding.extraSmall
+-        text: qsTr("Open settings")
++        text: qsTr("打开设置")
+         icon: "settings"
+ 
+         onClicked: root.popouts.detachRequested("bluetooth")
+--- a/modules/bar/popouts/LockStatus.qml
++++ b/modules/bar/popouts/LockStatus.qml
+@@ -7,10 +7,10 @@
+     spacing: Tokens.spacing.small
+ 
+     StyledText {
+-        text: qsTr("Capslock: %1").arg(Hypr.capsLock ? "Enabled" : "Disabled")
++        text: qsTr("大写锁定：%1").arg(Hypr.capsLock ? "Enabled" : "Disabled")
+     }
+ 
+     StyledText {
+-        text: qsTr("Numlock: %1").arg(Hypr.numLock ? "Enabled" : "Disabled")
++        text: qsTr("数字锁定：%1").arg(Hypr.numLock ? "Enabled" : "Disabled")
+     }
+ }
+--- a/modules/bar/popouts/Network.qml
++++ b/modules/bar/popouts/Network.qml
+@@ -28,14 +28,14 @@
+         Layout.preferredHeight: visible ? implicitHeight : 0
+         Layout.topMargin: visible ? Tokens.padding.medium : 0
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("Wireless")
++        text: qsTr("无线网络")
+         font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+     }
+ 
+     Toggle {
+         visible: root.view === "wireless"
+         Layout.preferredHeight: visible ? implicitHeight : 0
+-        label: qsTr("Enabled")
++        label: qsTr("启用")
+         checked: Nmcli.wifiEnabled
+         toggle.onToggled: Nmcli.enableWifi(checked)
+     }
+@@ -45,7 +45,7 @@
+         Layout.preferredHeight: visible ? implicitHeight : 0
+         Layout.topMargin: visible ? Tokens.spacing.small : 0
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("%1 networks available").arg(Nmcli.networks.length) // qmllint disable missing-property
++        text: qsTr("可用网络：%1 个").arg(Nmcli.networks.length) // qmllint disable missing-property
+         color: Colours.palette.m3onSurfaceVariant
+         font: Tokens.font.body.small
+     }
+@@ -200,7 +200,7 @@
+ 
+             StyledText {
+                 Layout.topMargin: -Math.round(scanIcon.fontInfo.pointSize * 0.0575)
+-                text: qsTr("Rescan networks")
++                text: qsTr("重新扫描网络")
+                 color: Colours.palette.m3onPrimaryContainer
+             }
+ 
+@@ -226,7 +226,7 @@
+         Layout.preferredHeight: visible ? implicitHeight : 0
+         Layout.topMargin: visible ? Tokens.padding.medium : 0
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("Ethernet")
++        text: qsTr("有线网络")
+         font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+     }
+ 
+@@ -235,7 +235,7 @@
+         Layout.preferredHeight: visible ? implicitHeight : 0
+         Layout.topMargin: visible ? Tokens.spacing.small : 0
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("%1 devices available").arg(Nmcli.ethernetDevices.length)
++        text: qsTr("可用设备：%1 个").arg(Nmcli.ethernetDevices.length)
+         color: Colours.palette.m3onSurfaceVariant
+         font: Tokens.font.body.small
+     }
+@@ -289,7 +289,7 @@
+                 Layout.leftMargin: Tokens.spacing.extraSmall
+                 Layout.rightMargin: Tokens.spacing.extraSmall
+                 Layout.fillWidth: true
+-                text: ethernetItem.modelData.iface || qsTr("Unknown")
++                text: ethernetItem.modelData.iface || qsTr("未知")
+                 elide: Text.ElideRight
+                 font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
+                 color: ethernetItem.modelData.connected ? Colours.palette.m3primary : Colours.palette.m3onSurface
+--- a/modules/bar/popouts/TrayMenu.qml
++++ b/modules/bar/popouts/TrayMenu.qml
+@@ -217,7 +217,7 @@
+ 
+                         StyledText {
+                             anchors.verticalCenter: parent.verticalCenter
+-                            text: qsTr("Back")
++                            text: qsTr("返回")
+                             color: Colours.palette.m3onSecondaryContainer
+                         }
+                     }
+--- a/modules/bar/popouts/WirelessPassword.qml
++++ b/modules/bar/popouts/WirelessPassword.qml
+@@ -41,7 +41,7 @@
+                 connectButton.connecting = false;
+                 connectButton.hasError = true;
+                 connectButton.enabled = true;
+-                connectButton.text = qsTr("Connect");
++                connectButton.text = qsTr("连接");
+                 passwordContainer.passwordBuffer = "";
+                 // Delete the failed connection
+                 if (root.network && root.network.ssid) {
+@@ -60,7 +60,7 @@
+         passwordContainer.passwordBuffer = "";
+         connectButton.connecting = false;
+         connectButton.hasError = false;
+-        connectButton.text = qsTr("Connect");
++        connectButton.text = qsTr("连接");
+         connectionMonitor.stop();
+ 
+         // Return to network popout
+@@ -185,7 +185,7 @@
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("Enter password")
++                text: qsTr("输入密码")
+                 font: Tokens.font.body.builders.large.weight(Font.Medium).build()
+             }
+ 
+@@ -197,10 +197,10 @@
+                     if (root.network) {
+                         const ssid = root.network.ssid;
+                         if (ssid && ssid.length > 0) {
+-                            return qsTr("Network: %1").arg(ssid);
++                            return qsTr("网络：%1").arg(ssid);
+                         }
+                     }
+-                    return qsTr("Network: Unknown");
++                    return qsTr("网络：未知");
+                 }
+                 color: Colours.palette.m3outline
+                 font: Tokens.font.body.small
+@@ -243,10 +243,10 @@
+                 visible: connectButton.connecting || connectButton.hasError
+                 text: {
+                     if (connectButton.hasError) {
+-                        return qsTr("Connection failed. Please check your password and try again.");
++                        return qsTr("连接失败。请检查密码后重试。");
+                     }
+                     if (connectButton.connecting) {
+-                        return qsTr("Connecting...");
++                        return qsTr("正在连接...");
+                     }
+                     return "";
+                 }
+@@ -374,7 +374,7 @@
+                     id: placeholder
+ 
+                     anchors.centerIn: parent
+-                    text: qsTr("Password")
++                    text: qsTr("密码")
+                     color: Colours.palette.m3outline
+                     font: Tokens.font.mono.medium
+                     opacity: passwordContainer.passwordBuffer ? 0 : 1
+@@ -479,7 +479,7 @@
+                     Layout.minimumHeight: Tokens.font.body.medium.pointSize + Tokens.padding.medium * 2
+                     inactiveColour: Colours.palette.m3secondaryContainer
+                     inactiveOnColour: Colours.palette.m3onSecondaryContainer
+-                    text: qsTr("Cancel")
++                    text: qsTr("取消")
+ 
+                     onClicked: root.closeDialog()
+                 }
+@@ -494,7 +494,7 @@
+                     Layout.minimumHeight: Tokens.font.body.medium.pointSize + Tokens.padding.medium * 2
+                     inactiveColour: Colours.palette.m3primary
+                     inactiveOnColour: Colours.palette.m3onPrimary
+-                    text: qsTr("Connect")
++                    text: qsTr("连接")
+                     enabled: passwordContainer.passwordBuffer.length > 0 && !connecting
+ 
+                     onClicked: {
+@@ -513,7 +513,7 @@
+                         // Set connecting state
+                         connecting = true;
+                         enabled = false;
+-                        text = qsTr("Connecting...");
++                        text = qsTr("正在连接...");
+ 
+                         // Connect to network
+                         NetworkConnection.connectWithPassword(root.network, password, result => {
+@@ -525,7 +525,7 @@
+                                 connecting = false;
+                                 hasError = true;
+                                 enabled = true;
+-                                text = qsTr("Connect");
++                                text = qsTr("连接");
+                                 passwordContainer.passwordBuffer = "";
+                                 // Delete the failed connection
+                                 if (root.network && root.network.ssid) {
+@@ -537,7 +537,7 @@
+                                 connecting = false;
+                                 hasError = true;
+                                 enabled = true;
+-                                text = qsTr("Connect");
++                                text = qsTr("连接");
+                                 passwordContainer.passwordBuffer = "";
+                                 // Delete the failed connection
+                                 if (root.network && root.network.ssid) {
+@@ -586,7 +586,7 @@
+                 if (stillConnected) {
+                     connectionMonitor.stop();
+                     connectButton.connecting = false;
+-                    connectButton.text = qsTr("Connect");
++                    connectButton.text = qsTr("连接");
+                     // Return to network popout on successful connection
+                     if (root.popouts.currentName === "wirelesspassword") {
+                         root.popouts.currentName = "network";
+@@ -610,7 +610,7 @@
+                 connectButton.connecting = false;
+                 connectButton.hasError = true;
+                 connectButton.enabled = true;
+-                connectButton.text = qsTr("Connect");
++                connectButton.text = qsTr("连接");
+                 passwordContainer.passwordBuffer = "";
+                 // Delete the failed connection
+                 Nmcli.forgetNetwork(ssid);
+--- a/modules/bar/popouts/kblayout/KbLayout.qml
++++ b/modules/bar/popouts/kblayout/KbLayout.qml
+@@ -26,7 +26,7 @@
+     StyledText {
+         Layout.topMargin: Tokens.padding.medium
+         Layout.rightMargin: Tokens.padding.extraSmall
+-        text: qsTr("Keyboard Layouts")
++        text: qsTr("键盘布局")
+         font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
+     }
+ 
+--- a/modules/bar/popouts/kblayout/KbLayoutModel.qml
++++ b/modules/bar/popouts/kblayout/KbLayoutModel.qml
+@@ -110,7 +110,7 @@
+             return;
+ 
+         if (layoutsModel.count > 4) {
+-            Toaster.toast(qsTr("Keyboard layout limit"), qsTr("XKB supports only 4 layouts at a time"), "warning");
++            Toaster.toast(qsTr("键盘布局限制"), qsTr("XKB 一次最多支持 4 个布局"), "warning");
+         }
+     }
+ 
+--- a/modules/dashboard/Content.qml
++++ b/modules/dashboard/Content.qml
+@@ -21,25 +21,25 @@
+             {
+                 component: dashComponent,
+                 iconName: "dashboard",
+-                text: qsTr("Dashboard"),
++                text: qsTr("仪表盘"),
+                 enabled: Config.dashboard.showDashboard
+             },
+             {
+                 component: mediaComponent,
+                 iconName: "queue_music",
+-                text: qsTr("Media"),
++                text: qsTr("媒体"),
+                 enabled: Config.dashboard.showMedia
+             },
+             {
+                 component: performanceComponent,
+                 iconName: "speed",
+-                text: qsTr("Performance"),
++                text: qsTr("性能"),
+                 enabled: Config.dashboard.showPerformance
+             },
+             {
+                 component: weatherComponent,
+                 iconName: "cloud",
+-                text: qsTr("Weather"),
++                text: qsTr("天气"),
+                 enabled: Config.dashboard.showWeather
+             }
+         ];
+--- a/modules/dashboard/Media.qml
++++ b/modules/dashboard/Media.qml
+@@ -114,12 +114,12 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: qsTr("Nothing playing")
++                        text: qsTr("没有正在播放")
+                         font: Tokens.font.headline.medium
+                     }
+ 
+                     StyledText {
+-                        text: qsTr("Play something for it to show up here!")
++                        text: qsTr("播放内容后会显示在这里")
+                         color: Colours.palette.m3onSurfaceVariant
+                         font: Tokens.font.body.large
+                     }
+--- a/modules/dashboard/Performance.qml
++++ b/modules/dashboard/Performance.qml
+@@ -33,14 +33,14 @@
+             StyledText {
+                 Layout.topMargin: -Tokens.spacing.small
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("No widgets enabled")
++                text: qsTr("未启用组件")
+                 font: Tokens.font.title.large
+                 color: Colours.palette.m3onSurface
+             }
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("Enable widgets in the dashboard settings")
++                text: qsTr("请在仪表盘设置中启用组件")
+                 font: Tokens.font.body.small
+                 color: Colours.palette.m3onSurfaceVariant
+             }
+--- a/modules/dashboard/WeatherTab.qml
++++ b/modules/dashboard/WeatherTab.qml
+@@ -28,7 +28,7 @@
+                 spacing: Tokens.spacing.extraSmall
+ 
+                 StyledText {
+-                    text: Weather.city || qsTr("Loading...")
++                    text: Weather.city || qsTr("正在加载...")
+                     font: Tokens.font.body.builders.large.size(28).weight(Font.DemiBold).build()
+                     color: Colours.palette.m3onSurface
+                 }
+@@ -132,7 +132,7 @@
+             Layout.topMargin: Tokens.spacing.medium
+             Layout.leftMargin: Tokens.padding.medium
+             visible: forecastRepeater.count > 0
+-            text: qsTr("7-Day Forecast")
++            text: qsTr("7 天预报")
+             font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
+             color: Colours.palette.m3onSurface
+         }
+@@ -166,7 +166,7 @@
+ 
+                         StyledText {
+                             Layout.alignment: Qt.AlignHCenter
+-                            text: forecastItem.index === 0 ? qsTr("Today") : new Date(forecastItem.modelData.date).toLocaleDateString(Qt.locale(), "ddd")
++                            text: forecastItem.index === 0 ? qsTr("今天") : new Date(forecastItem.modelData.date).toLocaleDateString(Qt.locale(), "ddd")
+                             font: Tokens.font.body.builders.medium.weight(Font.DemiBold).build()
+                             color: Colours.palette.m3primary
+                         }
+--- a/modules/dashboard/Wrapper.qml
++++ b/modules/dashboard/Wrapper.qml
+@@ -16,8 +16,8 @@
+         reloadableId: "dashboardState"
+     }
+     readonly property FileDialog facePicker: FileDialog {
+-        title: qsTr("Select a profile picture")
+-        filterLabel: qsTr("Image files")
++        title: qsTr("选择头像")
++        filterLabel: qsTr("图片文件")
+         filters: Images.validImageExtensions
+         onAccepted: path => {
+             if (CUtils.copyFile(Qt.resolvedUrl(path), Qt.resolvedUrl(`${Paths.home}/.face`)))
+--- a/modules/dashboard/dash/Media.qml
++++ b/modules/dashboard/dash/Media.qml
+@@ -79,7 +79,7 @@
+ 
+         animate: true
+         horizontalAlignment: Text.AlignHCenter
+-        text: (Players.active?.trackTitle ?? qsTr("No media")) || qsTr("Unknown title")
++        text: (Players.active?.trackTitle ?? qsTr("无媒体")) || qsTr("未知标题")
+         color: Colours.palette.m3primary
+         font: Tokens.font.title.small
+ 
+@@ -96,7 +96,7 @@
+ 
+         animate: true
+         horizontalAlignment: Text.AlignHCenter
+-        text: (Players.active?.trackAlbum ?? qsTr("No media")) || qsTr("Unknown album")
++        text: (Players.active?.trackAlbum ?? qsTr("无媒体")) || qsTr("未知专辑")
+         color: Colours.palette.m3outline
+         font: Tokens.font.body.small
+ 
+@@ -113,7 +113,7 @@
+ 
+         animate: true
+         horizontalAlignment: Text.AlignHCenter
+-        text: (Players.active?.trackArtist ?? qsTr("No media")) || qsTr("Unknown artist")
++        text: (Players.active?.trackArtist ?? qsTr("无媒体")) || qsTr("未知艺人")
+         color: Colours.palette.m3secondary
+ 
+         width: parent.implicitWidth - Tokens.padding.extraLargeIncreased
+--- a/modules/dashboard/media/Details.qml
++++ b/modules/dashboard/media/Details.qml
+@@ -43,7 +43,7 @@
+ 
+     StyledText {
+         Layout.fillWidth: true
+-        text: Players.active?.trackArtist || qsTr("Unknown artist")
++        text: Players.active?.trackArtist || qsTr("未知艺人")
+         color: Colours.palette.m3onSurfaceVariant
+         font: Tokens.font.title.medium
+         elide: Text.ElideRight
+@@ -52,7 +52,7 @@
+ 
+     StyledText {
+         Layout.fillWidth: true
+-        text: Players.active?.trackAlbum || qsTr("Unknown album")
++        text: Players.active?.trackAlbum || qsTr("未知专辑")
+         color: Colours.palette.m3secondary
+         font: Tokens.font.title.medium
+         elide: Text.ElideRight
+--- a/modules/dashboard/media/LyricList.qml
++++ b/modules/dashboard/media/LyricList.qml
+@@ -188,7 +188,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Loading lyrics...")
++                text: qsTr("正在加载歌词...")
+                 color: Colours.palette.m3onSurfaceVariant
+                 font: Tokens.font.title.medium
+             }
+@@ -220,7 +220,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("No lyrics found")
++                text: qsTr("未找到歌词")
+                 color: Colours.palette.m3outline
+                 font: Tokens.font.title.medium
+             }
+--- a/modules/dashboard/media/LyricsAndSelector.qml
++++ b/modules/dashboard/media/LyricsAndSelector.qml
+@@ -28,7 +28,7 @@
+ 
+             StyledText {
+                 Layout.fillWidth: true
+-                text: qsTr("Lyrics")
++                text: qsTr("歌词")
+                 font: Tokens.font.title.medium
+             }
+ 
+@@ -50,7 +50,7 @@
+ 
+             menuItems: playerList.instances
+             fallbackIcon: "music_off"
+-            fallbackText: qsTr("No players")
++            fallbackText: qsTr("没有播放器")
+ 
+             minLeftWidth: layout.width - expandBtn.implicitWidth - spacing
+             label.Layout.maximumWidth: minLeftWidth - iconLabel.implicitWidth - textRow.spacing - textRow.anchors.horizontalCenterOffset / 2 - horizontalPadding * 2
+--- a/modules/dashboard/media/LyricsInfo.qml
++++ b/modules/dashboard/media/LyricsInfo.qml
+@@ -178,7 +178,7 @@
+                 StyledText {
+                     id: placeholderText
+ 
+-                    text: Lyrics.loading ? qsTr("Loading...") : qsTr("No lyrics found")
++                    text: Lyrics.loading ? qsTr("正在加载...") : qsTr("未找到歌词")
+                     color: Colours.palette.m3onSurfaceVariant
+                     font: Tokens.font.body.medium
+                     animate: true
+--- a/modules/dashboard/performance/BatteryTank.qml
++++ b/modules/dashboard/performance/BatteryTank.qml
+@@ -74,7 +74,7 @@
+ 
+         StyledText {
+             Layout.fillWidth: true
+-            text: qsTr("Battery")
++            text: qsTr("电池")
+             color: contents.textColour
+             font: Tokens.font.body.medium
+         }
+@@ -87,10 +87,10 @@
+             Layout.alignment: Qt.AlignRight
+             text: {
+                 if (UPower.displayDevice.state === UPowerDeviceState.FullyCharged)
+-                    return qsTr("Full");
++                    return qsTr("已充满");
+ 
+                 if (contents.charging)
+-                    return qsTr("Charging");
++                    return qsTr("充电中");
+ 
+                 const s = UPower.displayDevice.timeToEmpty;
+                 if (s === 0)
+--- a/modules/dashboard/performance/HeroCard.qml
++++ b/modules/dashboard/performance/HeroCard.qml
+@@ -133,7 +133,7 @@
+             anchors.bottom: parent.top
+             anchors.horizontalCenter: parent.horizontalCenter
+ 
+-            text: qsTr("Usage")
++            text: qsTr("使用率")
+             color: Colours.palette.m3onSurfaceVariant
+             font: Tokens.font.body.small
+         }
+--- a/modules/dashboard/performance/MemoryCard.qml
++++ b/modules/dashboard/performance/MemoryCard.qml
+@@ -39,7 +39,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Memory")
++                text: qsTr("内存")
+                 font: Tokens.font.title.medium
+             }
+         }
+@@ -74,7 +74,7 @@
+ 
+                 StyledText {
+                     Layout.alignment: Qt.AlignHCenter
+-                    text: qsTr("Used")
++                    text: qsTr("已用")
+                     font: Tokens.font.body.small
+                     color: Colours.palette.m3onSurfaceVariant
+                 }
+--- a/modules/dashboard/performance/NetworkCard.qml
++++ b/modules/dashboard/performance/NetworkCard.qml
+@@ -37,7 +37,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Network")
++                text: qsTr("网络")
+                 font: Tokens.font.title.medium
+             }
+         }
+@@ -93,7 +93,7 @@
+             // "Collecting data" placeholder
+             StyledText {
+                 anchors.centerIn: parent
+-                text: qsTr("Collecting data...")
++                text: qsTr("正在收集数据...")
+                 font: Tokens.font.body.small
+                 color: Colours.palette.m3outline
+                 visible: NetworkUsage.downloadBuffer.count < 2
+@@ -112,7 +112,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Download")
++                text: qsTr("下载")
+                 font: Tokens.font.body.small
+                 color: Colours.palette.m3onSurfaceVariant
+             }
+@@ -143,7 +143,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Upload")
++                text: qsTr("上传")
+                 font: Tokens.font.body.small
+                 color: Colours.palette.m3onSurfaceVariant
+             }
+@@ -174,7 +174,7 @@
+             }
+ 
+             StyledText {
+-                text: qsTr("Total")
++                text: qsTr("总计")
+                 font: Tokens.font.body.small
+                 color: Colours.palette.m3onSurfaceVariant
+             }
+--- a/modules/dashboard/performance/StorageCard.qml
++++ b/modules/dashboard/performance/StorageCard.qml
+@@ -71,7 +71,7 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: qsTr("Used")
++                        text: qsTr("已用")
+                         font: Tokens.font.body.small
+                         color: Colours.palette.m3onSurfaceVariant
+                     }
+@@ -83,14 +83,14 @@
+                 spacing: Tokens.spacing.extraSmall
+ 
+                 StyledText {
+-                    text: qsTr("Storage")
++                    text: qsTr("存储")
+                     font: Tokens.font.title.medium
+                 }
+ 
+                 StyledText {
+                     text: {
+                         if (!Storage.primaryDisk)
+-                            return qsTr("No disks detected");
++                            return qsTr("未检测到磁盘");
+ 
+                         const fmt = UsageFmt.formatKib(Storage.primaryDisk.used, Storage.primaryDisk.total);
+                         return `${+fmt.value.toFixed(1)} / ${+fmt.total.toFixed(1)} ${fmt.unit}`;
+@@ -107,7 +107,7 @@
+             type: SplitButton.Tonal
+             disabled: !Storage.disks.length
+             fallbackIcon: "storage"
+-            fallbackText: qsTr("No disks")
++            fallbackText: qsTr("无磁盘")
+             menuOnTop: true
+             minLeftWidth: row.implicitWidth * 0.6
+ 
+--- a/modules/launcher/ContentList.qml
++++ b/modules/launcher/ContentList.qml
+@@ -129,13 +129,13 @@
+             anchors.verticalCenter: parent.verticalCenter
+ 
+             StyledText {
+-                text: root.state === "wallpapers" ? qsTr("No wallpapers found") : qsTr("No results")
++                text: root.state === "wallpapers" ? qsTr("未找到壁纸") : qsTr("无结果")
+                 color: Colours.palette.m3onSurfaceVariant
+                 font: Tokens.font.body.builders.large.weight(Font.Medium).build()
+             }
+ 
+             StyledText {
+-                text: root.state === "wallpapers" && Wallpapers.list.length === 0 ? qsTr("Try putting some wallpapers in %1").arg(Paths.shortenHome(Paths.wallsdir)) : qsTr("Try searching for something else")
++                text: root.state === "wallpapers" && Wallpapers.list.length === 0 ? qsTr("请把壁纸放入 %1").arg(Paths.shortenHome(Paths.wallsdir)) : qsTr("尝试搜索其他内容")
+                 color: Colours.palette.m3onSurfaceVariant
+                 font: Tokens.font.body.medium
+             }
+--- a/modules/launcher/items/CalcItem.qml
++++ b/modules/launcher/items/CalcItem.qml
+@@ -57,7 +57,7 @@
+                 return Colours.palette.m3onSurface;
+             }
+ 
+-            text: root.math.length > 0 ? (Qalculator.result || qsTr("Calculating...")) : qsTr("Type an expression to calculate")
++            text: root.math.length > 0 ? (Qalculator.result || qsTr("正在计算...")) : qsTr("输入表达式进行计算")
+             elide: Text.ElideLeft
+ 
+             Layout.fillWidth: true
+@@ -92,7 +92,7 @@
+                 anchors.right: icon.left
+                 anchors.rightMargin: Tokens.spacing.small
+ 
+-                text: qsTr("Open in calculator")
++                text: qsTr("在计算器中打开")
+                 color: Colours.palette.m3onTertiary
+                 font: Tokens.font.label.medium
+ 
+--- a/modules/launcher/services/Actions.qml
++++ b/modules/launcher/services/Actions.qml
+@@ -28,8 +28,8 @@
+ 
+     component Action: QtObject {
+         required property var modelData
+-        readonly property string name: modelData.name ?? qsTr("Unnamed")
+-        readonly property string desc: modelData.description ?? qsTr("No description")
++        readonly property string name: modelData.name ?? qsTr("未命名")
++        readonly property string desc: modelData.description ?? qsTr("无描述")
+         readonly property string icon: modelData.icon ?? "help_outline"
+         readonly property list<string> command: modelData.command ?? []
+         readonly property bool enabled: modelData.enabled ?? true
+--- a/modules/launcher/services/M3Variants.qml
++++ b/modules/launcher/services/M3Variants.qml
+@@ -17,55 +17,55 @@
+         Variant {
+             variant: "vibrant"
+             icon: "sentiment_very_dissatisfied"
+-            name: qsTr("Vibrant")
++            name: qsTr("鲜艳")
+             description: qsTr("A high chroma palette. The primary palette's chroma is at maximum.")
+         },
+         Variant {
+             variant: "tonalspot"
+             icon: "android"
+-            name: qsTr("Tonal Spot")
++            name: qsTr("柔和色点")
+             description: qsTr("Default for Material theme colours. A pastel palette with a low chroma.")
+         },
+         Variant {
+             variant: "expressive"
+             icon: "compare_arrows"
+-            name: qsTr("Expressive")
++            name: qsTr("表现力")
+             description: qsTr("A medium chroma palette. The primary palette's hue is different from the seed colour, for variety.")
+         },
+         Variant {
+             variant: "fidelity"
+             icon: "compare"
+-            name: qsTr("Fidelity")
++            name: qsTr("保真")
+             description: qsTr("Matches the seed colour, even if the seed colour is very bright (high chroma).")
+         },
+         Variant {
+             variant: "content"
+             icon: "sentiment_calm"
+-            name: qsTr("Content")
++            name: qsTr("内容")
+             description: qsTr("Almost identical to fidelity.")
+         },
+         Variant {
+             variant: "fruitsalad"
+             icon: "nutrition"
+-            name: qsTr("Fruit Salad")
++            name: qsTr("水果沙拉")
+             description: qsTr("A playful theme - the seed colour's hue does not appear in the theme.")
+         },
+         Variant {
+             variant: "rainbow"
+             icon: "looks"
+-            name: qsTr("Rainbow")
++            name: qsTr("彩虹")
+             description: qsTr("A playful theme - the seed colour's hue does not appear in the theme.")
+         },
+         Variant {
+             variant: "neutral"
+             icon: "contrast"
+-            name: qsTr("Neutral")
++            name: qsTr("中性")
+             description: qsTr("Close to grayscale, a hint of chroma.")
+         },
+         Variant {
+             variant: "monochrome"
+             icon: "filter_b_and_w"
+-            name: qsTr("Monochrome")
++            name: qsTr("单色")
+             description: qsTr("All colours are grayscale, no chroma.")
+         }
+     ]
+--- a/modules/lock/NotifDock.qml
++++ b/modules/lock/NotifDock.qml
+@@ -23,7 +23,7 @@
+ 
+     StyledText {
+         Layout.fillWidth: true
+-        text: Notifs.list.length > 0 ? qsTr("%1 notification%2").arg(Notifs.list.length).arg(Notifs.list.length === 1 ? "" : "s") : qsTr("Notifications")
++        text: Notifs.list.length > 0 ? qsTr("%1 条通知%2").arg(Notifs.list.length).arg(Notifs.list.length === 1 ? "" : "s") : qsTr("通知")
+         color: Colours.palette.m3outline
+         font: Tokens.font.mono.builders.small.weight(Font.Medium).build()
+         elide: Text.ElideRight
+--- a/modules/nexus/PageCompRegistry.qml
++++ b/modules/nexus/PageCompRegistry.qml
+@@ -187,14 +187,14 @@
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("Page under construction")
++                text: qsTr("页面正在建设中")
+                 color: Colours.palette.m3outlineVariant
+                 font: Tokens.font.title.large
+             }
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("This page will be available in a future update.")
++                text: qsTr("此页面会在后续更新中开放。")
+                 color: Colours.palette.m3outlineVariant
+                 font: Tokens.font.body.large
+             }
+--- a/modules/nexus/PageRegistry.qml
++++ b/modules/nexus/PageRegistry.qml
+@@ -8,85 +8,85 @@
+     readonly property list<var> pages: [
+         // Appearance
+         {
+-            label: qsTr("Wallpaper & style"),
++            label: qsTr("壁纸和样式"),
+             icon: "palette",
+-            description: qsTr("Wallpaper, fonts, colours"),
++            description: qsTr("壁纸、字体、颜色"),
+             category: "appearance"
+         },
+ 
+         // Connectivity
+         // TODO
+         // {
+-        //     label: qsTr("Display"),
++        //     label: qsTr("显示"),
+         //     icon: "monitor",
+-        //     description: qsTr("Output configuration"),
++        //     description: qsTr("输出配置"),
+         //     category: "connectivity"
+         // },
+         {
+-            label: qsTr("Network"),
++            label: qsTr("网络"),
+             icon: "wifi",
+-            description: qsTr("Wi-Fi, ethernet"),
++            description: qsTr("无线网络、有线网络"),
+             category: "connectivity"
+         },
+         {
+-            label: qsTr("Connected devices"),
++            label: qsTr("已连接设备"),
+             icon: "devices_other",
+-            description: qsTr("Bluetooth, pairing"),
++            description: qsTr("蓝牙、配对"),
+             category: "connectivity",
+             noFill: true
+         },
+         {
+-            label: qsTr("Audio"),
++            label: qsTr("音频"),
+             icon: "volume_up",
+-            description: qsTr("App volumes, sound devices"),
++            description: qsTr("应用音量、声音设备"),
+             category: "connectivity"
+         },
+ 
+         // System
+         {
+-            label: qsTr("Updates"),
++            label: qsTr("更新"),
+             icon: "update",
+-            description: qsTr("System updates"),
++            description: qsTr("系统更新"),
+             category: "system"
+         },
+         {
+-            label: qsTr("Plugins"),
++            label: qsTr("插件"),
+             icon: "extension",
+-            description: qsTr("Manage plugins"),
++            description: qsTr("管理插件"),
+             category: "system"
+         },
+ 
+         // Shell
+         {
+-            label: qsTr("Panels"),
++            label: qsTr("面板"),
+             icon: "dock_to_bottom",
+-            description: qsTr("Dashboard, taskbar, launcher, sidebar"),
++            description: qsTr("仪表盘、任务栏、启动器、侧边栏"),
+             category: "shell"
+         },
+         {
+-            label: qsTr("Apps"),
++            label: qsTr("应用"),
+             icon: "apps",
+-            description: qsTr("Default apps, favourites, hidden apps"),
++            description: qsTr("默认应用、收藏、隐藏应用"),
+             category: "shell"
+         },
+         {
+-            label: qsTr("Services"),
++            label: qsTr("服务"),
+             icon: "build",
+-            description: qsTr("Poll intervals, lyrics backend"),
++            description: qsTr("轮询间隔、歌词后端"),
+             category: "shell"
+         },
+         {
+-            label: qsTr("Language & region"),
++            label: qsTr("语言和地区"),
+             icon: "globe",
+-            description: qsTr("UI language, weather location, display units"),
++            description: qsTr("界面语言、天气位置、显示单位"),
+             category: "shell"
+         },
+ 
+         // About
+         {
+-            label: qsTr("About"),
++            label: qsTr("关于"),
+             icon: "info",
+-            description: qsTr("System information, credits"),
++            description: qsTr("系统信息、致谢"),
+             category: "about"
+         },
+     ]
+--- a/modules/nexus/WindowFactory.qml
++++ b/modules/nexus/WindowFactory.qml
+@@ -41,7 +41,7 @@
+             contentItem.Config.screen: screen.name
+             contentItem.Tokens.screen: screen.name
+ 
+-            title: qsTr("Nexus — %1").arg(PageRegistry.pages[nexus.nState.currentPageIdx].label)
++            title: qsTr("设置 — %1").arg(PageRegistry.pages[nexus.nState.currentPageIdx].label)
+ 
+             Nexus {
+                 id: nexus
+--- a/modules/nexus/common/AudioDeviceList.qml
++++ b/modules/nexus/common/AudioDeviceList.qml
+@@ -75,7 +75,7 @@
+ 
+             StyledText {
+                 Layout.fillWidth: true
+-                text: device.modelData?.description || device.modelData?.name || qsTr("Unknown")
++                text: device.modelData?.description || device.modelData?.name || qsTr("未知")
+                 font: Tokens.font.body.small
+                 elide: Text.ElideRight
+             }
+--- a/modules/nexus/common/EthernetSection.qml
++++ b/modules/nexus/common/EthernetSection.qml
+@@ -50,7 +50,7 @@
+ 
+             StyledText {
+                 Layout.fillWidth: true
+-                text: qsTr("Ethernet")
++                text: qsTr("有线网络")
+                 font: Tokens.font.body.medium
+             }
+ 
+@@ -60,7 +60,7 @@
+ 
+                 StyledText {
+                     Layout.alignment: Qt.AlignRight
+-                    text: Nmcli.activeEthernet ? qsTr("Connected") : qsTr("Not connected")
++                    text: Nmcli.activeEthernet ? qsTr("已连接") : qsTr("未连接")
+                     color: Nmcli.activeEthernet ? Colours.palette.m3primary : Colours.palette.m3outline
+                     font: Tokens.font.label.small
+                 }
+@@ -68,7 +68,7 @@
+                 StyledText {
+                     Layout.alignment: Qt.AlignRight
+                     visible: Nmcli.activeEthernet && Nmcli.ethernetDataUsage.length > 0
+-                    text: qsTr("Data usage: %1").arg(Nmcli.ethernetDataUsage)
++                    text: qsTr("数据用量：%1").arg(Nmcli.ethernetDataUsage)
+                     color: Colours.palette.m3outline
+                     font: Tokens.font.label.small
+                 }
+@@ -138,7 +138,7 @@
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: ethRow.modelData.connection || ethRow.modelData.iface || qsTr("Wired connection")
++                        text: ethRow.modelData.connection || ethRow.modelData.iface || qsTr("有线连接")
+                         font: Tokens.font.body.medium
+                         elide: Text.ElideRight
+                         animate: true
+@@ -146,7 +146,7 @@
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: ethRow.isConnected ? ethRow.modelData.iface : qsTr("Not connected • %1").arg(ethRow.modelData.iface)
++                        text: ethRow.isConnected ? ethRow.modelData.iface : qsTr("未连接 • %1").arg(ethRow.modelData.iface)
+                         color: ethRow.isConnected ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
+                         font: Tokens.font.label.small
+                         elide: Text.ElideRight
+@@ -190,13 +190,13 @@
+                         EthDetail {
+                             id: ethIpAddr
+ 
+-                            label: qsTr("Local IP Address")
++                            label: qsTr("本地 IP 地址")
+                         }
+ 
+                         EthDetail {
+                             id: ethDns
+ 
+-                            label: qsTr("Primary DNS")
++                            label: qsTr("主 DNS")
+                         }
+                     }
+                 }
+--- a/modules/nexus/navpane/SearchBar.qml
++++ b/modules/nexus/navpane/SearchBar.qml
+@@ -49,7 +49,7 @@
+             Layout.fillWidth: true
+             Layout.fillHeight: true
+ 
+-            placeholderText: qsTr("Search settings")
++            placeholderText: qsTr("搜索设置")
+             placeholderTextColor: Colours.palette.m3onSurfaceVariant
+             color: Colours.palette.m3onSurfaceVariant
+             font: Tokens.font.body.large
+--- a/modules/nexus/pages/AboutPage.qml
++++ b/modules/nexus/pages/AboutPage.qml
+@@ -17,7 +17,7 @@
+     property string quickshellVersion
+     property string cliVersion
+ 
+-    title: qsTr("About")
++    title: qsTr("关于")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -85,39 +85,39 @@
+ 
+         // System
+         SectionHeader {
+-            text: qsTr("System")
++            text: qsTr("系统")
+         }
+ 
+         InfoRow {
+             first: true
+-            label: qsTr("Hostname")
++            label: qsTr("主机名")
+             value: SysInfo.hostname
+         }
+ 
+         InfoRow {
+-            label: qsTr("Device")
++            label: qsTr("设备")
+             value: SysInfo.device
+         }
+ 
+         InfoRow {
+-            label: qsTr("Distro")
++            label: qsTr("发行版")
+             value: SysInfo.osPrettyName || SysInfo.osName
+         }
+ 
+         InfoRow {
+-            label: qsTr("Kernel")
++            label: qsTr("内核")
+             value: SysInfo.kernel
+         }
+ 
+         InfoRow {
+             last: true
+-            label: qsTr("Firmware")
++            label: qsTr("固件")
+             value: SysInfo.firmware
+         }
+ 
+         // Software
+         SectionHeader {
+-            text: qsTr("Software")
++            text: qsTr("软件")
+         }
+ 
+         InfoRow {
+@@ -127,7 +127,7 @@
+         }
+ 
+         InfoRow {
+-            label: qsTr("CLI")
++            label: qsTr("命令行")
+             value: root.cliVersion || "…"
+         }
+ 
+@@ -144,13 +144,13 @@
+ 
+         // Plugins
+         SectionHeader {
+-            text: qsTr("Plugins")
++            text: qsTr("插件")
+         }
+ 
+         InfoRow {
+             first: true
+             last: true
+-            label: qsTr("Loaded plugins")
++            label: qsTr("已加载插件")
+             value: root.pluginCount.toString()
+         }
+     }
+--- a/modules/nexus/pages/AppsPage.qml
++++ b/modules/nexus/pages/AppsPage.qml
+@@ -15,7 +15,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Apps")
++    title: qsTr("应用")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -26,27 +26,27 @@
+         // Default applications
+         SectionHeader {
+             first: true
+-            text: qsTr("Default applications")
++            text: qsTr("默认应用")
+         }
+ 
+         DefaultRow {
+             first: true
+             icon: "terminal"
+-            label: qsTr("Terminal")
++            label: qsTr("终端")
+             status: GlobalConfig.general.apps.terminal.join(" ")
+             onSelected: app => GlobalConfig.general.apps.terminal = app.command
+         }
+ 
+         DefaultRow {
+             icon: "volume_up"
+-            label: qsTr("Audio")
++            label: qsTr("音频")
+             status: GlobalConfig.general.apps.audio.join(" ")
+             onSelected: app => GlobalConfig.general.apps.audio = app.command
+         }
+ 
+         DefaultRow {
+             icon: "play_circle"
+-            label: qsTr("Media playback")
++            label: qsTr("媒体播放")
+             status: GlobalConfig.general.apps.playback.join(" ")
+             onSelected: app => GlobalConfig.general.apps.playback = app.command
+         }
+@@ -54,22 +54,22 @@
+         DefaultRow {
+             last: true
+             icon: "folder"
+-            label: qsTr("File manager")
++            label: qsTr("文件管理器")
+             status: GlobalConfig.general.apps.explorer.join(" ")
+             onSelected: app => GlobalConfig.general.apps.explorer = app.command
+         }
+ 
+         // Library
+         SectionHeader {
+-            text: qsTr("Library")
++            text: qsTr("应用库")
+         }
+ 
+         NavRow {
+             first: true
+             last: true
+             icon: "apps"
+-            label: qsTr("All apps")
+-            status: qsTr("Browse installed apps, set favourites and hidden")
++            label: qsTr("所有应用")
++            status: qsTr("浏览已安装应用，设置收藏和隐藏")
+             onClicked: root.nState.openSubPage(1)
+         }
+     }
+--- a/modules/nexus/pages/AudioPage.qml
++++ b/modules/nexus/pages/AudioPage.qml
+@@ -11,7 +11,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Audio")
++    title: qsTr("音频")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -23,7 +23,7 @@
+         SliderRow {
+             first: true
+             icon: Icons.getVolumeIcon(Audio.volume, Audio.muted)
+-            label: qsTr("Output")
++            label: qsTr("输出")
+             valueLabel: Math.round(value * 100) + "%"
+             value: Audio.volume
+             enabled: !Audio.muted
+@@ -31,7 +31,7 @@
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Muted")
++            text: qsTr("已静音")
+             checked: Audio.muted
+             onToggled: Audio.setStreamMuted(Audio.sink, checked)
+         }
+@@ -41,7 +41,7 @@
+             currentId: Audio.sink?.id ?? -1
+             iconName: "speaker"
+             placeholderIcon: "speaker"
+-            placeholderText: qsTr("No output devices")
++            placeholderText: qsTr("没有输出设备")
+             onSelected: node => Audio.setAudioSink(node)
+         }
+ 
+@@ -50,7 +50,7 @@
+             Layout.topMargin: Tokens.spacing.large - parent.spacing
+             first: true
+             icon: Icons.getMicVolumeIcon(Audio.sourceVolume, Audio.sourceMuted)
+-            label: qsTr("Input")
++            label: qsTr("输入")
+             valueLabel: Math.round(value * 100) + "%"
+             value: Audio.sourceVolume
+             enabled: !Audio.sourceMuted
+@@ -58,7 +58,7 @@
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Muted")
++            text: qsTr("已静音")
+             checked: Audio.sourceMuted
+             onToggled: Audio.setStreamMuted(Audio.source, checked)
+         }
+@@ -68,7 +68,7 @@
+             currentId: Audio.source?.id ?? -1
+             iconName: "mic"
+             placeholderIcon: "mic_off"
+-            placeholderText: qsTr("No input devices")
++            placeholderText: qsTr("没有输入设备")
+             onSelected: node => Audio.setAudioSource(node)
+         }
+ 
+@@ -104,14 +104,14 @@
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: qsTr("App volumes")
++                        text: qsTr("应用音量")
+                         font: Tokens.font.body.small
+                         elide: Text.ElideRight
+                     }
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: Audio.streams.length === 0 ? qsTr("No apps playing audio") : Audio.streams.length === 1 ? qsTr("1 app playing audio") : qsTr("%1 apps playing audio").arg(Audio.streams.length)
++                        text: Audio.streams.length === 0 ? qsTr("没有应用正在播放音频") : Audio.streams.length === 1 ? qsTr("1 个应用正在播放音频") : qsTr("%1 个应用正在播放音频").arg(Audio.streams.length)
+                         color: Colours.palette.m3outline
+                         font: Tokens.font.label.small
+                         elide: Text.ElideRight
+--- a/modules/nexus/pages/BluetoothPage.qml
++++ b/modules/nexus/pages/BluetoothPage.qml
+@@ -17,7 +17,7 @@
+     readonly property BluetoothAdapter adapter: Bluetooth.defaultAdapter // qmllint disable unresolved-type
+     readonly property bool btEnabled: adapter?.enabled ?? false
+ 
+-    title: qsTr("Connected devices")
++    title: qsTr("已连接设备")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -27,7 +27,7 @@
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Bluetooth")
++            text: qsTr("蓝牙")
+             font: Tokens.font.body.medium
+             horizontalPadding: Tokens.padding.largeIncreased
+             checked: root.btEnabled
+@@ -42,7 +42,7 @@
+ 
+             showList: root.btEnabled
+             placeholderIcon: root.btEnabled ? "devices_other" : "bluetooth_disabled"
+-            placeholderText: root.btEnabled ? qsTr("No saved devices") : qsTr("Bluetooth disabled")
++            placeholderText: root.btEnabled ? qsTr("没有已保存设备") : qsTr("蓝牙已关闭")
+ 
+             model: ScriptModel {
+                 values: Bluetooth.devices.values.filter(d => d.bonded).sort((a, b) => (b.connected - a.connected) || a.name.localeCompare(b.name)) // qmllint disable unresolved-type
+@@ -115,14 +115,14 @@
+ 
+                         StyledText {
+                             Layout.fillWidth: true
+-                            text: device.modelData?.name ?? qsTr("Unknown")
++                            text: device.modelData?.name ?? qsTr("未知")
+                             font: Tokens.font.body.small
+                             elide: Text.ElideRight
+                         }
+ 
+                         StyledText {
+                             Layout.fillWidth: true
+-                            text: device.connected ? qsTr("Connected%1").arg(device.modelData?.batteryAvailable ? " • " + Math.round(device.modelData.battery * 100) + "%" : "") : qsTr("Saved")
++                            text: device.connected ? qsTr("已连接%1").arg(device.modelData?.batteryAvailable ? " • " + Math.round(device.modelData.battery * 100) + "%" : "") : qsTr("已保存")
+                             color: Colours.palette.m3outline
+                             font: Tokens.font.label.small
+                             elide: Text.ElideRight
+@@ -199,7 +199,7 @@
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: qsTr("Pair new device")
++                    text: qsTr("配对新设备")
+                     font: Tokens.font.body.small
+                     elide: Text.ElideRight
+                 }
+@@ -210,8 +210,8 @@
+             Layout.topMargin: Tokens.spacing.large - parent.spacing
+ 
+             first: true
+-            text: qsTr("Discoverable")
+-            subtext: qsTr("Allow nearby devices to find this one")
++            text: qsTr("可被发现")
++            subtext: qsTr("允许附近设备发现本机")
+             enabled: root.btEnabled
+             opacity: root.btEnabled ? 1 : 0.5
+             checked: root.adapter?.discoverable ?? false
+@@ -227,8 +227,8 @@
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Pairable")
+-            subtext: qsTr("Allow nearby devices to pair with this one")
++            text: qsTr("允许配对")
++            subtext: qsTr("允许附近设备与本机配对")
+             enabled: root.btEnabled
+             opacity: root.btEnabled ? 1 : 0.5
+             checked: root.adapter?.pairable ?? false
+--- a/modules/nexus/pages/LanguageAndRegion.qml
++++ b/modules/nexus/pages/LanguageAndRegion.qml
+@@ -29,7 +29,7 @@
+         }
+     ]
+ 
+-    title: qsTr("Language & region")
++    title: qsTr("语言和地区")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -40,7 +40,7 @@
+         // Language
+         SectionHeader {
+             first: true
+-            text: qsTr("Language")
++            text: qsTr("语言")
+         }
+ 
+         // Read-only: the shell follows the system locale (no in-shell translations yet)
+@@ -65,14 +65,14 @@
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: qsTr("System language")
++                        text: qsTr("系统语言")
+                         font: Tokens.font.body.small
+                         elide: Text.ElideRight
+                     }
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: qsTr("Follows your system locale (%1)").arg(Qt.locale().name)
++                        text: qsTr("跟随系统区域设置（%1）").arg(Qt.locale().name)
+                         color: Colours.palette.m3outline
+                         font: Tokens.font.label.small
+                         elide: Text.ElideRight
+@@ -89,7 +89,7 @@
+ 
+         // Weather
+         SectionHeader {
+-            text: qsTr("Weather")
++            text: qsTr("天气")
+         }
+ 
+         // Placeholder until the map-based location picker lands
+@@ -115,7 +115,7 @@
+ 
+                 StyledText {
+                     Layout.alignment: Qt.AlignHCenter
+-                    text: qsTr("Location picker coming soon")
++                    text: qsTr("位置选择器即将推出")
+                     color: Colours.palette.m3outlineVariant
+                     font: Tokens.font.title.small
+                 }
+@@ -124,7 +124,7 @@
+                     Layout.fillWidth: true
+                     horizontalAlignment: Text.AlignHCenter
+                     wrapMode: Text.WordWrap
+-                    text: qsTr("Choose your weather location on a map in a future update")
++                    text: qsTr("后续更新可在地图上选择天气位置")
+                     color: Colours.palette.m3outlineVariant
+                     font: Tokens.font.body.small
+                 }
+@@ -133,13 +133,13 @@
+ 
+         // Units
+         SectionHeader {
+-            text: qsTr("Units")
++            text: qsTr("单位")
+         }
+ 
+         SelectRow {
+             first: true
+-            label: qsTr("Temperature")
+-            subtext: qsTr("Units for weather temperatures")
++            label: qsTr("温度")
++            subtext: qsTr("天气温度使用的单位")
+             menuItems: root.tempItems
+             active: root.tempItems[GlobalConfig.services.useFahrenheit ? 1 : 0]
+             onSelected: item => GlobalConfig.services.useFahrenheit = root.tempItems.indexOf(item) === 1
+@@ -147,8 +147,8 @@
+ 
+         SelectRow {
+             last: true
+-            label: qsTr("System temperatures")
+-            subtext: qsTr("Units for CPU and GPU temperatures")
++            label: qsTr("系统温度")
++            subtext: qsTr("CPU 和 GPU 温度使用的单位")
+             menuItems: root.tempItems
+             active: root.tempItems[GlobalConfig.services.useFahrenheitPerformance ? 1 : 0]
+             onSelected: item => GlobalConfig.services.useFahrenheitPerformance = root.tempItems.indexOf(item) === 1
+@@ -156,14 +156,14 @@
+ 
+         // Time & date
+         SectionHeader {
+-            text: qsTr("Time & date")
++            text: qsTr("时间和日期")
+         }
+ 
+         SelectRow {
+             first: true
+             last: true
+-            label: qsTr("Clock format")
+-            subtext: qsTr("How times are shown across the shell")
++            label: qsTr("时钟格式")
++            subtext: qsTr("Shell 中时间的显示方式")
+             menuItems: root.clockItems
+             active: root.clockItems[GlobalConfig.services.useTwelveHourClock ? 1 : 0]
+             onSelected: item => GlobalConfig.services.useTwelveHourClock = root.clockItems.indexOf(item) === 1
+--- a/modules/nexus/pages/NetworkPage.qml
++++ b/modules/nexus/pages/NetworkPage.qml
+@@ -15,7 +15,7 @@
+ 
+     signal networkSelected(ap: Nmcli.AccessPoint)
+ 
+-    title: qsTr("Network")
++    title: qsTr("网络")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -62,7 +62,7 @@
+         ToggleRow {
+             Layout.topMargin: Nmcli.hasAvailableEthernet ? Tokens.spacing.large : 0
+             first: true
+-            text: qsTr("Wi-Fi")
++            text: qsTr("无线网络")
+             font: Tokens.font.body.medium
+             horizontalPadding: Tokens.padding.largeIncreased
+             checked: Nmcli.wifiEnabled
+@@ -74,7 +74,7 @@
+ 
+             showList: Nmcli.wifiEnabled
+             placeholderIcon: Nmcli.wifiEnabled ? "wifi_find" : "signal_wifi_off"
+-            placeholderText: Nmcli.wifiEnabled ? qsTr("No networks found") : qsTr("Wi-Fi disabled")
++            placeholderText: Nmcli.wifiEnabled ? qsTr("未找到网络") : qsTr("无线网络已关闭")
+             extraHeight: Nmcli.scanning ? Tokens.rounding.extraSmall : 0 // Inline so it isn't affected by anim
+             list.anchors.top: scanningIndicator.bottom
+ 
+@@ -164,7 +164,7 @@
+ 
+                         StyledText {
+                             Layout.fillWidth: true
+-                            text: qsTr("Security: %1%2").arg(network.modelData.security).arg(network.modelData.active ? qsTr(" • Connected") : Nmcli.hasSavedProfile(network.modelData.ssid) ? qsTr(" • Saved") : "")
++                            text: qsTr("安全性：%1%2").arg(network.modelData.security).arg(network.modelData.active ? qsTr(" • 已连接") : Nmcli.hasSavedProfile(network.modelData.ssid) ? qsTr(" • 已保存") : "")
+                             color: Colours.palette.m3outline
+                             font: Tokens.font.label.small
+                             elide: Text.ElideRight
+@@ -237,7 +237,7 @@
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: qsTr("Add network")
++                    text: qsTr("添加网络")
+                     font: Tokens.font.body.small
+                     elide: Text.ElideRight
+                 }
+--- a/modules/nexus/pages/PanelsPage.qml
++++ b/modules/nexus/pages/PanelsPage.qml
+@@ -5,7 +5,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Panels")
++    title: qsTr("面板")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -16,30 +16,30 @@
+         NavRow {
+             first: true
+             icon: "dashboard"
+-            label: qsTr("Dashboard")
+-            status: Config.dashboard.enabled ? qsTr("Enabled") : qsTr("Disabled")
++            label: qsTr("仪表盘")
++            status: Config.dashboard.enabled ? qsTr("启用") : qsTr("禁用")
+             onClicked: root.nState.openSubPage(1)
+         }
+ 
+         NavRow {
+             icon: "dock_to_bottom"
+-            label: qsTr("Taskbar")
+-            status: Config.bar.persistent ? qsTr("Always visible") : Config.bar.showOnHover ? qsTr("Reveal on hover") : qsTr("Reveal on drag")
++            label: qsTr("任务栏")
++            status: Config.bar.persistent ? qsTr("始终可见") : Config.bar.showOnHover ? qsTr("悬停显示") : qsTr("拖动显示")
+             onClicked: root.nState.openSubPage(2)
+         }
+ 
+         NavRow {
+             icon: "apps"
+-            label: qsTr("Launcher")
+-            status: Config.launcher.enabled ? qsTr("Enabled") : qsTr("Disabled")
++            label: qsTr("启动器")
++            status: Config.launcher.enabled ? qsTr("启用") : qsTr("禁用")
+             onClicked: root.nState.openSubPage(3)
+         }
+ 
+         NavRow {
+             last: true
+             icon: "dock_to_right"
+-            label: qsTr("Sidebar")
+-            status: Config.sidebar.enabled ? qsTr("Enabled") : qsTr("Disabled")
++            label: qsTr("侧边栏")
++            status: Config.sidebar.enabled ? qsTr("启用") : qsTr("禁用")
+             onClicked: root.nState.openSubPage(4)
+         }
+     }
+--- a/modules/nexus/pages/ServicesPage.qml
++++ b/modules/nexus/pages/ServicesPage.qml
+@@ -13,7 +13,7 @@
+     // Lyrics backends, ordered to match LyricsBackend::Backend (Auto, Local, LRCLIB, NetEase)
+     readonly property list<MenuItem> lyricsItems: [
+         MenuItem {
+-            text: qsTr("Auto")
++            text: qsTr("自动")
+         },
+         MenuItem {
+             text: "Local"
+@@ -29,16 +29,16 @@
+     // GPU options + the config string each maps to (see Gpu::parseType)
+     readonly property list<MenuItem> gpuItems: [
+         MenuItem {
+-            text: qsTr("Auto")
++            text: qsTr("自动")
+         },
+         MenuItem {
+             text: "NVIDIA"
+         },
+         MenuItem {
+-            text: qsTr("Generic")
++            text: qsTr("通用")
+         },
+         MenuItem {
+-            text: qsTr("None")
++            text: qsTr("无")
+         }
+     ]
+     readonly property list<string> gpuValues: ["", "NVIDIA", "GENERIC", "None"]
+@@ -54,7 +54,7 @@
+         return 3; // None
+     }
+ 
+-    title: qsTr("Services")
++    title: qsTr("服务")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -80,27 +80,27 @@
+         // Notifications
+         SectionHeader {
+             first: true
+-            text: qsTr("Notifications")
++            text: qsTr("通知")
+         }
+ 
+         NavRow {
+             first: true
+             last: true
+             icon: "notifications"
+-            label: qsTr("Notifications")
+-            status: qsTr("Notifications, toasts, timeouts")
++            label: qsTr("通知")
++            status: qsTr("通知、提示、超时")
+             onClicked: root.nState.openSubPage(1)
+         }
+ 
+         // Polling
+         SectionHeader {
+-            text: qsTr("Polling")
++            text: qsTr("轮询")
+         }
+ 
+         StepperRow {
+             first: true
+-            label: qsTr("Media refresh")
+-            subtext: qsTr("How often the media position updates (ms)")
++            label: qsTr("媒体刷新")
++            subtext: qsTr("媒体播放位置更新频率（毫秒）")
+             value: GlobalConfig.dashboard.mediaUpdateInterval
+             from: 100
+             to: 2000
+@@ -109,8 +109,8 @@
+         }
+ 
+         StepperRow {
+-            label: qsTr("System stats refresh")
+-            subtext: qsTr("CPU, memory and GPU update interval (seconds)")
++            label: qsTr("系统状态刷新")
++            subtext: qsTr("CPU、内存和 GPU 更新间隔（秒）")
+             value: GlobalConfig.dashboard.resourceUpdateInterval / 1000
+             from: 0.5
+             to: 10
+@@ -120,8 +120,8 @@
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Wi-Fi rescan")
+-            subtext: qsTr("How often available networks are rescanned (seconds)")
++            label: qsTr("无线网络重新扫描")
++            subtext: qsTr("可用网络重新扫描频率（秒）")
+             value: GlobalConfig.nexus.networkRescanInterval / 1000
+             from: 5
+             to: 120
+@@ -131,13 +131,13 @@
+ 
+         // Media & lyrics
+         SectionHeader {
+-            text: qsTr("Media & lyrics")
++            text: qsTr("媒体和歌词")
+         }
+ 
+         SelectRow {
+             first: true
+-            label: qsTr("Lyrics backend")
+-            subtext: qsTr("Source used to fetch synced lyrics")
++            label: qsTr("歌词后端")
++            subtext: qsTr("用于获取同步歌词的来源")
+             menuItems: root.lyricsItems
+             active: root.lyricsItems[Lyrics.preferredBackend] ?? root.lyricsItems[0]
+             onSelected: item => Lyrics.preferredBackend = root.lyricsItems.indexOf(item)
+@@ -145,24 +145,24 @@
+ 
+         SelectRow {
+             last: true
+-            label: qsTr("Default player")
+-            subtext: qsTr("Preferred media player when several are open")
++            label: qsTr("默认播放器")
++            subtext: qsTr("多个播放器打开时优先使用的播放器")
+             menuItems: playerVariants.instances
+             active: menuItems.find(i => i.text === GlobalConfig.services.defaultPlayer) ?? null
+             fallbackIcon: "music_note"
+-            fallbackText: GlobalConfig.services.defaultPlayer || qsTr("Auto")
++            fallbackText: GlobalConfig.services.defaultPlayer || qsTr("自动")
+             onSelected: item => GlobalConfig.services.defaultPlayer = item.text
+         }
+ 
+         // Input increments
+         SectionHeader {
+-            text: qsTr("Input increments")
++            text: qsTr("输入步进")
+         }
+ 
+         StepperRow {
+             first: true
+-            label: qsTr("Volume step")
+-            subtext: qsTr("Amount the volume changes per scroll (%)")
++            label: qsTr("音量步进")
++            subtext: qsTr("每次滚动改变的音量（%）")
+             value: Math.round(GlobalConfig.services.audioIncrement * 100)
+             from: 1
+             to: 50
+@@ -171,8 +171,8 @@
+         }
+ 
+         StepperRow {
+-            label: qsTr("Brightness step")
+-            subtext: qsTr("Amount the brightness changes per scroll (%)")
++            label: qsTr("亮度步进")
++            subtext: qsTr("每次滚动改变的亮度（%）")
+             value: Math.round(GlobalConfig.services.brightnessIncrement * 100)
+             from: 1
+             to: 50
+@@ -182,8 +182,8 @@
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Max volume")
+-            subtext: qsTr("Upper limit for output volume (%)")
++            label: qsTr("最大音量")
++            subtext: qsTr("输出音量上限（%）")
+             value: Math.round(GlobalConfig.services.maxVolume * 100)
+             from: 50
+             to: 200
+@@ -193,13 +193,13 @@
+ 
+         // Service tuning
+         SectionHeader {
+-            text: qsTr("Service tuning")
++            text: qsTr("服务调优")
+         }
+ 
+         StepperRow {
+             first: true
+-            label: qsTr("Visualiser bars")
+-            subtext: qsTr("Number of bars in the audio visualisers")
++            label: qsTr("可视化条数")
++            subtext: qsTr("音频可视化中的条数")
+             value: GlobalConfig.services.visualiserBars
+             from: 10
+             to: 120
+@@ -208,8 +208,8 @@
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Smart colour scheme")
+-            subtext: qsTr("Derive theme mode and variant from the wallpaper")
++            text: qsTr("智能配色方案")
++            subtext: qsTr("根据壁纸生成主题模式和变体")
+             checked: GlobalConfig.services.smartScheme
+             onToggled: GlobalConfig.services.smartScheme = checked
+         }
+@@ -217,7 +217,7 @@
+         SelectRow {
+             last: true
+             label: qsTr("GPU")
+-            subtext: Gpu.name ? qsTr("Monitoring: %1").arg(Gpu.name) : qsTr("Override for GPU type")
++            subtext: Gpu.name ? qsTr("正在监控：%1").arg(Gpu.name) : qsTr("覆盖 GPU 类型")
+             menuOnTop: true
+             menuItems: root.gpuItems
+             active: root.gpuItems[root.gpuKeyToIndex(GlobalConfig.services.gpuType)]
+--- a/modules/nexus/pages/WallpaperAndStyle.qml
++++ b/modules/nexus/pages/WallpaperAndStyle.qml
+@@ -13,7 +13,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Wallpaper & style")
++    title: qsTr("壁纸和样式")
+ 
+     ColumnLayout {
+         anchors.horizontalCenter: parent.horizontalCenter
+@@ -55,7 +55,7 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: qsTr("Wallpaper disabled")
++                        text: qsTr("壁纸已关闭")
+                         color: Colours.palette.m3onSurfaceVariant
+                         font: Tokens.font.body.large
+                     }
+@@ -146,7 +146,7 @@
+ 
+             IconTextButton {
+                 icon: "wallpaper"
+-                text: qsTr("Wallpapers")
++                text: qsTr("壁纸")
+                 font: Tokens.font.body.large
+                 isRound: true
+                 shapeMorph: true
+@@ -159,7 +159,7 @@
+ 
+             IconTextButton {
+                 icon: "palette"
+-                text: qsTr("Colours")
++                text: qsTr("颜色")
+                 font: Tokens.font.body.large
+                 isRound: true
+                 shapeMorph: true
+@@ -172,7 +172,7 @@
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Display wallpaper")
++            text: qsTr("显示壁纸")
+             checked: Config.background.wallpaperEnabled
+             onToggled: GlobalConfig.background.wallpaperEnabled = checked
+         }
+@@ -180,8 +180,8 @@
+         ToggleRow {
+             Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
+ 
+-            text: qsTr("Transparency")
+-            subtext: qsTr("Base %1, layers %2").arg(Colours.transparency.base).arg(Colours.transparency.layers)
++            text: qsTr("透明度")
++            subtext: qsTr("基础 %1，图层 %2").arg(Colours.transparency.base).arg(Colours.transparency.layers)
+             checked: Colours.transparency.enabled
+             onToggled: GlobalConfig.appearance.transparency.enabled = checked
+         }
+@@ -190,7 +190,7 @@
+             Layout.topMargin: Tokens.spacing.extraSmall / 2 - parent.spacing
+ 
+             last: true
+-            text: qsTr("Dark theme")
++            text: qsTr("深色主题")
+             checked: !Colours.light
+             onToggled: Colours.setMode(checked ? "dark" : "light")
+         }
+--- a/modules/nexus/pages/apps/AllApps.qml
++++ b/modules/nexus/pages/apps/AllApps.qml
+@@ -13,7 +13,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("All apps")
++    title: qsTr("所有应用")
+     isSubPage: true
+ 
+     ColumnLayout {
+--- a/modules/nexus/pages/apps/AppInfo.qml
++++ b/modules/nexus/pages/apps/AppInfo.qml
+@@ -29,7 +29,7 @@
+             nState.closeSubPage();
+     }
+ 
+-    title: qsTr("App info")
++    title: qsTr("应用信息")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -76,13 +76,13 @@
+         // Launcher
+         SectionHeader {
+             first: true
+-            text: qsTr("Launcher")
++            text: qsTr("启动器")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Favourite")
+-            subtext: root.favouriteByRegex ? qsTr("Matched by a regex in favouriteApps — edit the config file to change") : qsTr("Pin to the top of the launcher")
++            text: qsTr("收藏")
++            subtext: root.favouriteByRegex ? qsTr("由 favouriteApps 中的正则匹配，需编辑配置文件修改") : qsTr("固定到启动器顶部")
+             enabled: !root.favouriteByRegex
+             checked: root.app && Strings.testRegexList(GlobalConfig.launcher.favouriteApps, root.app.id)
+             onToggled: {
+@@ -93,8 +93,8 @@
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Hidden")
+-            subtext: root.hiddenByRegex ? qsTr("Matched by a regex in hiddenApps — edit the config file to change") : qsTr("Hide from the launcher")
++            text: qsTr("隐藏")
++            subtext: root.hiddenByRegex ? qsTr("由 hiddenApps 中的正则匹配，需编辑配置文件修改") : qsTr("从启动器隐藏")
+             enabled: !root.hiddenByRegex
+             checked: root.app && Strings.testRegexList(GlobalConfig.launcher.hiddenApps, root.app.id)
+             onToggled: {
+@@ -105,14 +105,14 @@
+ 
+         // Details
+         SectionHeader {
+-            text: qsTr("Details")
++            text: qsTr("详情")
+         }
+ 
+         WrapInfoRow {
+             id: appId
+ 
+             first: true
+-            label: qsTr("App ID")
++            label: qsTr("应用 ID")
+             value: root.app?.id ?? ""
+             labelComp.Layout.preferredWidth: Math.max(labelComp.implicitWidth, command.labelComp.implicitWidth)
+         }
+@@ -121,7 +121,7 @@
+             id: command
+ 
+             last: true
+-            label: qsTr("Command")
++            label: qsTr("命令")
+             value: (root.app?.command ?? []).join(" ")
+             labelComp.Layout.preferredWidth: Math.max(labelComp.implicitWidth, appId.labelComp.implicitWidth)
+         }
+--- a/modules/nexus/pages/audio/AppVolumes.qml
++++ b/modules/nexus/pages/audio/AppVolumes.qml
+@@ -13,7 +13,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("App volumes")
++    title: qsTr("应用音量")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -26,7 +26,7 @@
+             Layout.fillWidth: true
+             Layout.leftMargin: Tokens.padding.small
+             Layout.bottomMargin: Tokens.spacing.medium
+-            text: qsTr("Adjust the volume of individual apps currently playing audio.")
++            text: qsTr("调整当前正在播放音频的各个应用音量。")
+             color: Colours.palette.m3outline
+             font: Tokens.font.body.small
+             wrapMode: Text.WordWrap
+@@ -39,7 +39,7 @@
+             last: true
+             showList: true
+             placeholderIcon: "music_off"
+-            placeholderText: qsTr("No apps playing audio")
++            placeholderText: qsTr("没有应用正在播放音频")
+             color: list.count === 0 ? Colours.tPalette.m3surfaceContainer : "transparent"
+             list.spacing: Tokens.spacing.extraSmall / 2
+ 
+--- a/modules/nexus/pages/bluetooth/BluetoothPairing.qml
++++ b/modules/nexus/pages/bluetooth/BluetoothPairing.qml
+@@ -21,7 +21,7 @@
+             adapter.discovering = on;
+     }
+ 
+-    title: qsTr("Pair new device")
++    title: qsTr("配对新设备")
+     isSubPage: true
+ 
+     Component.onCompleted: setScan(true)
+@@ -56,7 +56,7 @@
+                 anchors.leftMargin: Tokens.padding.large
+                 anchors.verticalCenterOffset: Math.round(fontInfo.pointSize * 0.2)
+ 
+-                text: qsTr("Available devices")
++                text: qsTr("可用设备")
+                 color: Colours.palette.m3onSurfaceVariant
+                 font: Tokens.font.body.small
+             }
+@@ -70,7 +70,7 @@
+             extraHeight: scanIndicator.implicitHeight
+             last: true
+             placeholderIcon: "bluetooth_searching"
+-            placeholderText: qsTr("Searching for devices…")
++            placeholderText: qsTr("正在搜索设备…")
+             list.anchors.top: scanIndicator.bottom
+ 
+             model: ScriptModel {
+@@ -139,14 +139,14 @@
+ 
+                         StyledText {
+                             Layout.fillWidth: true
+-                            text: newDevice.modelData?.name || qsTr("Unknown device")
++                            text: newDevice.modelData?.name || qsTr("未知设备")
+                             font: Tokens.font.body.small
+                             elide: Text.ElideRight
+                         }
+ 
+                         StyledText {
+                             Layout.fillWidth: true
+-                            text: newDevice.modelData?.pairing ? qsTr("Pairing...") : (newDevice.modelData?.address ?? "")
++                            text: newDevice.modelData?.pairing ? qsTr("正在配对...") : (newDevice.modelData?.address ?? "")
+                             color: Colours.palette.m3outline
+                             font: Tokens.font.label.small
+                             elide: Text.ElideRight
+--- a/modules/nexus/pages/bluetooth/BtDeviceInfo.qml
++++ b/modules/nexus/pages/bluetooth/BtDeviceInfo.qml
+@@ -20,7 +20,7 @@
+     readonly property string statusText: {
+         if (!device)
+             return "";
+-        let s = connected ? qsTr("Connected") : (device.bonded ? qsTr("Paired") : qsTr("Not paired"));
++        let s = connected ? qsTr("已连接") : (device.bonded ? qsTr("已配对") : qsTr("未配对"));
+         if (connected && device.batteryAvailable)
+             s += " • " + Math.round(device.battery * 100) + "%";
+         return s;
+@@ -32,7 +32,7 @@
+             nState.closeSubPage();
+     }
+ 
+-    title: device?.name ?? qsTr("Device")
++    title: device?.name ?? qsTr("设备")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -81,7 +81,7 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: qsTr("Forget")
++                        text: qsTr("忘记")
+                         color: forgetBtn.onColour
+                     }
+                 }
+@@ -136,7 +136,7 @@
+ 
+                         StyledText {
+                             Layout.alignment: Qt.AlignHCenter
+-                            text: root.connected ? qsTr("Disconnect") : qsTr("Connect")
++                            text: root.connected ? qsTr("断开") : qsTr("连接")
+                             color: connectBtn.inactiveOnColour
+                             animate: true
+                         }
+@@ -149,8 +149,8 @@
+         ToggleRow {
+             verticalPadding: Tokens.padding.large
+             first: true
+-            text: qsTr("Trusted")
+-            subtext: qsTr("Allow this device to connect automatically")
++            text: qsTr("信任")
++            subtext: qsTr("允许此设备自动连接")
+             checked: root.device?.trusted ?? false
+             onToggled: {
+                 if (root.device)
+@@ -160,8 +160,8 @@
+ 
+         ToggleRow {
+             verticalPadding: Tokens.padding.large
+-            text: qsTr("Blocked")
+-            subtext: qsTr("Prevent this device from connecting")
++            text: qsTr("已阻止")
++            subtext: qsTr("阻止此设备连接")
+             checked: root.device?.blocked ?? false
+             onToggled: {
+                 if (root.device)
+@@ -172,8 +172,8 @@
+         ToggleRow {
+             verticalPadding: Tokens.padding.large
+             last: true
+-            text: qsTr("Wake allowed")
+-            subtext: qsTr("Allow this device to wake the system")
++            text: qsTr("允许唤醒")
++            subtext: qsTr("允许此设备唤醒系统")
+             checked: root.device?.wakeAllowed ?? false
+             onToggled: {
+                 if (root.device)
+@@ -203,11 +203,11 @@
+ 
+                     StyledText {
+                         Layout.fillWidth: true
+-                        text: qsTr("Battery")
++                        text: qsTr("电池")
+                     }
+ 
+                     StyledText {
+-                        text: root.device?.batteryAvailable ? Math.round(root.device.battery * 100) + "%" : qsTr("Unavailable")
++                        text: root.device?.batteryAvailable ? Math.round(root.device.battery * 100) + "%" : qsTr("不可用")
+                         color: Colours.palette.m3outline
+                         font: Tokens.font.body.small
+                     }
+@@ -243,7 +243,7 @@
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: qsTr("Address")
++                    text: qsTr("地址")
+                 }
+ 
+                 StyledText {
+--- a/modules/nexus/pages/network/EthernetDetailPage.qml
++++ b/modules/nexus/pages/network/EthernetDetailPage.qml
+@@ -78,7 +78,7 @@
+         });
+     }
+ 
+-    title: root.device?.connection || root.ifaceName || qsTr("Ethernet")
++    title: root.device?.connection || root.ifaceName || qsTr("有线网络")
+     isSubPage: true
+ 
+     Component.onCompleted: {
+@@ -134,7 +134,7 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: root.device?.connected ? qsTr("Disconnect") : qsTr("Connect")
++                        text: root.device?.connected ? qsTr("断开") : qsTr("连接")
+                         color: connectBtn.onColour
+                     }
+                 }
+@@ -144,45 +144,45 @@
+         // ---- Connection info ------------------------------------------------
+         SectionHeader {
+             first: true
+-            text: qsTr("Connection")
++            text: qsTr("连接")
+         }
+ 
+         InfoRow {
+             first: true
+             icon: "link"
+-            label: qsTr("Status")
+-            value: root.device?.connected ? qsTr("Connected") : qsTr("Not connected")
++            label: qsTr("状态")
++            value: root.device?.connected ? qsTr("已连接") : qsTr("未连接")
+         }
+ 
+         InfoRow {
+             icon: "settings_ethernet"
+-            label: qsTr("Interface")
++            label: qsTr("接口")
+             value: root.ifaceName || qsTr("—")
+         }
+ 
+         InfoRow {
+             icon: "speed"
+-            label: qsTr("Speed")
++            label: qsTr("速度")
+             visible: Nmcli.ethernetSpeed.length > 0
+             value: Nmcli.ethernetSpeed
+         }
+ 
+         InfoRow {
+             icon: "lan"
+-            label: qsTr("IP address")
++            label: qsTr("IP 地址")
+             value: root.details?.ipAddress || qsTr("—")
+         }
+ 
+         InfoRow {
+             icon: "router"
+-            label: qsTr("Gateway")
++            label: qsTr("网关")
+             value: root.details?.gateway || qsTr("—")
+         }
+ 
+         InfoRow {
+             last: true
+             icon: "memory"
+-            label: qsTr("MAC address")
++            label: qsTr("MAC 地址")
+             value: root.details?.macAddress || qsTr("—")
+         }
+ 
+@@ -197,8 +197,8 @@
+             Layout.fillWidth: true
+             first: true
+             last: root.ipMethod === "auto"
+-            label: qsTr("IP assignment")
+-            fallbackText: qsTr("Automatic (DHCP)")
++            label: qsTr("IP 分配")
++            fallbackText: qsTr("自动（DHCP）")
+             fallbackIcon: "lan"
+ 
+             menuItems: [autoItem, autoDnsItem, manualItem]
+@@ -209,21 +209,21 @@
+                 id: autoItem
+ 
+                 icon: "lan"
+-                text: qsTr("Automatic (DHCP)")
++                text: qsTr("自动（DHCP）")
+             }
+ 
+             MenuItem {
+                 id: autoDnsItem
+ 
+                 icon: "dns"
+-                text: qsTr("Automatic, DNS only")
++                text: qsTr("自动，仅 DNS")
+             }
+ 
+             MenuItem {
+                 id: manualItem
+ 
+                 icon: "edit"
+-                text: qsTr("Manual")
++                text: qsTr("手动")
+             }
+         }
+ 
+@@ -238,11 +238,11 @@
+ 
+                 Layout.fillWidth: true
+                 visible: root.ipMethod === "manual"
+-                label: qsTr("Address (CIDR)")
++                label: qsTr("地址（CIDR）")
+                 placeholder: qsTr("192.168.1.50/24")
+                 leadingIcon: "router"
+-                supportingText: qsTr("IP and prefix, e.g. 192.168.1.50/24")
+-                errorText: qsTr("Enter a valid address in CIDR notation")
++                supportingText: qsTr("IP 和前缀，例如 192.168.1.50/24")
++                errorText: qsTr("请输入有效的 CIDR 地址")
+                 inputMethodHints: Qt.ImhNoPredictiveText
+             }
+ 
+@@ -251,7 +251,7 @@
+ 
+                 Layout.fillWidth: true
+                 visible: root.ipMethod === "manual"
+-                label: qsTr("Gateway")
++                label: qsTr("网关")
+                 placeholder: qsTr("192.168.1.1")
+                 leadingIcon: "exit_to_app"
+                 inputMethodHints: Qt.ImhNoPredictiveText
+@@ -261,11 +261,11 @@
+                 id: dnsField
+ 
+                 Layout.fillWidth: true
+-                label: qsTr("DNS servers")
++                label: qsTr("DNS 服务器")
+                 placeholder: qsTr("1.1.1.1, 8.8.8.8")
+                 leadingIcon: "dns"
+-                supportingText: qsTr("Comma-separated")
+-                errorText: qsTr("Enter valid DNS server addresses")
++                supportingText: qsTr("用逗号分隔")
++                errorText: qsTr("请输入有效的 DNS 服务器地址")
+                 inputMethodHints: Qt.ImhNoPredictiveText
+             }
+         }
+@@ -319,7 +319,7 @@
+                     id: applyTextComp
+ 
+                     StyledText {
+-                        text: qsTr("Apply")
++                        text: qsTr("应用")
+                         color: applyBtn.onColour
+                         animate: true
+                     }
+--- a/modules/nexus/pages/panels/DashboardPanel.qml
++++ b/modules/nexus/pages/panels/DashboardPanel.qml
+@@ -8,7 +8,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Dashboard")
++    title: qsTr("仪表盘")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -20,63 +20,63 @@
+         // General
+         SectionHeader {
+             first: true
+-            text: qsTr("General")
++            text: qsTr("通用")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Enabled")
++            text: qsTr("启用")
+             checked: Config.dashboard.enabled
+             onToggled: GlobalConfig.dashboard.enabled = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Show on hover")
+-            subtext: qsTr("Reveal when the cursor reaches the screen edge")
++            text: qsTr("悬停显示")
++            subtext: qsTr("光标到达屏幕边缘时显示")
+             checked: Config.dashboard.showOnHover
+             onToggled: GlobalConfig.dashboard.showOnHover = checked
+         }
+ 
+         // Tabs
+         SectionHeader {
+-            text: qsTr("Tabs")
++            text: qsTr("标签页")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Dashboard")
++            text: qsTr("仪表盘")
+             checked: Config.dashboard.showDashboard
+             onToggled: GlobalConfig.dashboard.showDashboard = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Media")
++            text: qsTr("媒体")
+             checked: Config.dashboard.showMedia
+             onToggled: GlobalConfig.dashboard.showMedia = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Performance")
++            text: qsTr("性能")
+             checked: Config.dashboard.showPerformance
+             onToggled: GlobalConfig.dashboard.showPerformance = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Weather")
++            text: qsTr("天气")
+             checked: Config.dashboard.showWeather
+             onToggled: GlobalConfig.dashboard.showWeather = checked
+         }
+ 
+         // Performance widgets
+         SectionHeader {
+-            text: qsTr("Performance widgets")
++            text: qsTr("性能组件")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Battery")
++            text: qsTr("电池")
+             checked: Config.dashboard.performance.showBattery
+             onToggled: GlobalConfig.dashboard.performance.showBattery = checked
+         }
+@@ -94,34 +94,34 @@
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Memory")
++            text: qsTr("内存")
+             checked: Config.dashboard.performance.showMemory
+             onToggled: GlobalConfig.dashboard.performance.showMemory = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Storage")
++            text: qsTr("存储")
+             checked: Config.dashboard.performance.showStorage
+             onToggled: GlobalConfig.dashboard.performance.showStorage = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Network")
++            text: qsTr("网络")
+             checked: Config.dashboard.performance.showNetwork
+             onToggled: GlobalConfig.dashboard.performance.showNetwork = checked
+         }
+ 
+         // Behaviour
+         SectionHeader {
+-            text: qsTr("Behaviour")
++            text: qsTr("行为")
+         }
+ 
+         StepperRow {
+             first: true
+             last: true
+-            label: qsTr("Drag threshold")
+-            subtext: qsTr("Pixels dragged before the dashboard opens")
++            label: qsTr("拖动阈值")
++            subtext: qsTr("打开仪表盘前需要拖动的像素")
+             value: Config.dashboard.dragThreshold
+             from: 0
+             to: 200
+--- a/modules/nexus/pages/panels/LauncherPanel.qml
++++ b/modules/nexus/pages/panels/LauncherPanel.qml
+@@ -8,7 +8,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Launcher")
++    title: qsTr("启动器")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -20,32 +20,32 @@
+         // General
+         SectionHeader {
+             first: true
+-            text: qsTr("General")
++            text: qsTr("通用")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Enabled")
++            text: qsTr("启用")
+             checked: Config.launcher.enabled
+             onToggled: GlobalConfig.launcher.enabled = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Show on hover")
+-            subtext: qsTr("Reveal when the cursor reaches the screen edge")
++            text: qsTr("悬停显示")
++            subtext: qsTr("光标到达屏幕边缘时显示")
+             checked: Config.launcher.showOnHover
+             onToggled: GlobalConfig.launcher.showOnHover = checked
+         }
+ 
+         // Display
+         SectionHeader {
+-            text: qsTr("Display")
++            text: qsTr("显示")
+         }
+ 
+         StepperRow {
+             first: true
+-            label: qsTr("Max items shown")
++            label: qsTr("最大显示项目")
+             value: Config.launcher.maxShown
+             from: 1
+             to: 20
+@@ -54,7 +54,7 @@
+         }
+ 
+         StepperRow {
+-            label: qsTr("Max wallpapers")
++            label: qsTr("最大壁纸数")
+             value: Config.launcher.maxWallpapers
+             from: 1
+             to: 30
+@@ -64,8 +64,8 @@
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Drag threshold")
+-            subtext: qsTr("Pixels dragged before the launcher opens")
++            label: qsTr("拖动阈值")
++            subtext: qsTr("打开启动器前需要拖动的像素")
+             value: Config.launcher.dragThreshold
+             from: 0
+             to: 200
+@@ -75,58 +75,58 @@
+ 
+         // Behaviour
+         SectionHeader {
+-            text: qsTr("Behaviour")
++            text: qsTr("行为")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Vim keybinds")
+-            subtext: qsTr("Navigate results with Ctrl+hjkl")
++            text: qsTr("Vim 键位")
++            subtext: qsTr("用 Ctrl+hjkl 导航结果")
+             checked: GlobalConfig.launcher.vimKeybinds
+             onToggled: GlobalConfig.launcher.vimKeybinds = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Enable dangerous actions")
+-            subtext: qsTr("Allow actions that shut down or log out")
++            text: qsTr("启用危险操作")
++            subtext: qsTr("允许关机或注销操作")
+             checked: GlobalConfig.launcher.enableDangerousActions
+             onToggled: GlobalConfig.launcher.enableDangerousActions = checked
+         }
+ 
+         // Fuzzy search
+         SectionHeader {
+-            text: qsTr("Fuzzy search")
++            text: qsTr("模糊搜索")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Apps")
++            text: qsTr("应用")
+             checked: GlobalConfig.launcher.useFuzzy.apps
+             onToggled: GlobalConfig.launcher.useFuzzy.apps = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Actions")
++            text: qsTr("操作")
+             checked: GlobalConfig.launcher.useFuzzy.actions
+             onToggled: GlobalConfig.launcher.useFuzzy.actions = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Schemes")
++            text: qsTr("配色方案")
+             checked: GlobalConfig.launcher.useFuzzy.schemes
+             onToggled: GlobalConfig.launcher.useFuzzy.schemes = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Variants")
++            text: qsTr("变体")
+             checked: GlobalConfig.launcher.useFuzzy.variants
+             onToggled: GlobalConfig.launcher.useFuzzy.variants = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Wallpapers")
++            text: qsTr("壁纸")
+             checked: GlobalConfig.launcher.useFuzzy.wallpapers
+             onToggled: GlobalConfig.launcher.useFuzzy.wallpapers = checked
+         }
+--- a/modules/nexus/pages/panels/SidebarPanel.qml
++++ b/modules/nexus/pages/panels/SidebarPanel.qml
+@@ -8,7 +8,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Sidebar")
++    title: qsTr("侧边栏")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -19,20 +19,20 @@
+ 
+         SectionHeader {
+             first: true
+-            text: qsTr("General")
++            text: qsTr("通用")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Enabled")
++            text: qsTr("启用")
+             checked: Config.sidebar.enabled
+             onToggled: GlobalConfig.sidebar.enabled = checked
+         }
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Drag threshold")
+-            subtext: qsTr("Pixels dragged before the sidebar opens")
++            label: qsTr("拖动阈值")
++            subtext: qsTr("打开侧边栏前需要拖动的像素")
+             value: Config.sidebar.dragThreshold
+             from: 0
+             to: 200
+--- a/modules/nexus/pages/panels/TaskbarPanel.qml
++++ b/modules/nexus/pages/panels/TaskbarPanel.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Taskbar")
++    title: qsTr("任务栏")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -19,28 +19,28 @@
+         // Behaviour
+         SectionHeader {
+             first: true
+-            text: qsTr("Behaviour")
++            text: qsTr("行为")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Persistent")
+-            subtext: qsTr("Keep the bar visible at all times")
++            text: qsTr("常驻")
++            subtext: qsTr("始终显示任务栏")
+             checked: Config.bar.persistent
+             onToggled: GlobalConfig.bar.persistent = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Show on hover")
+-            subtext: qsTr("Reveal the bar when the cursor reaches the screen edge")
++            text: qsTr("悬停显示")
++            subtext: qsTr("光标到达屏幕边缘时显示任务栏")
+             checked: Config.bar.showOnHover
+             onToggled: GlobalConfig.bar.showOnHover = checked
+         }
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Drag threshold")
+-            subtext: qsTr("Pixels dragged before the bar reveals")
++            label: qsTr("拖动阈值")
++            subtext: qsTr("显示任务栏前需要拖动的像素")
+             value: Config.bar.dragThreshold
+             from: 0
+             to: 200
+@@ -50,70 +50,70 @@
+ 
+         // Components
+         SectionHeader {
+-            text: qsTr("Components")
++            text: qsTr("组件")
+         }
+ 
+         NavRow {
+             first: true
+             icon: "workspaces"
+-            label: qsTr("Workspaces")
+-            status: qsTr("Indicators, window icons")
++            label: qsTr("工作区")
++            status: qsTr("指示器、窗口图标")
+             onClicked: root.nState.openSubPage(5)
+         }
+ 
+         NavRow {
+             icon: "web_asset"
+-            label: qsTr("Active window")
+-            status: qsTr("Title display, popout")
++            label: qsTr("活动窗口")
++            status: qsTr("标题显示、弹窗")
+             onClicked: root.nState.openSubPage(6)
+         }
+ 
+         NavRow {
+             icon: "widgets"
+-            label: qsTr("Tray")
+-            status: qsTr("System tray icons")
++            label: qsTr("托盘")
++            status: qsTr("系统托盘图标")
+             onClicked: root.nState.openSubPage(7)
+         }
+ 
+         NavRow {
+             icon: "signal_cellular_alt"
+-            label: qsTr("Status icons")
+-            status: qsTr("Visible indicators")
++            label: qsTr("状态图标")
++            status: qsTr("可见指示器")
+             onClicked: root.nState.openSubPage(8)
+         }
+ 
+         NavRow {
+             last: true
+             icon: "schedule"
+-            label: qsTr("Clock")
+-            status: qsTr("Date, icon, background")
++            label: qsTr("时钟")
++            status: qsTr("日期、图标、背景")
+             onClicked: root.nState.openSubPage(9)
+         }
+ 
+         // Scroll actions
+         SectionHeader {
+-            text: qsTr("Scroll actions")
++            text: qsTr("滚轮操作")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Workspaces")
+-            subtext: qsTr("Scroll over the workspace indicator to switch workspaces")
++            text: qsTr("工作区")
++            subtext: qsTr("在工作区指示器上滚动以切换工作区")
+             checked: Config.bar.scrollActions.workspaces
+             onToggled: GlobalConfig.bar.scrollActions.workspaces = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Volume")
+-            subtext: qsTr("Scroll on the top half of the bar to adjust volume")
++            text: qsTr("音量")
++            subtext: qsTr("在任务栏上半部分滚动以调节音量")
+             checked: Config.bar.scrollActions.volume
+             onToggled: GlobalConfig.bar.scrollActions.volume = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Brightness")
+-            subtext: qsTr("Scroll on the bottom half of the bar to adjust brightness")
++            text: qsTr("亮度")
++            subtext: qsTr("在任务栏下半部分滚动以调节亮度")
+             checked: Config.bar.scrollActions.brightness
+             onToggled: GlobalConfig.bar.scrollActions.brightness = checked
+         }
+--- a/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
++++ b/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Active window")
++    title: qsTr("活动窗口")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -18,28 +18,28 @@
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Compact")
++            text: qsTr("紧凑")
+             checked: Config.bar.activeWindow.compact
+             onToggled: GlobalConfig.bar.activeWindow.compact = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Inverted")
++            text: qsTr("反色")
+             checked: Config.bar.activeWindow.inverted
+             onToggled: GlobalConfig.bar.activeWindow.inverted = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Show on hover")
+-            subtext: qsTr("Only show the active window title while hovering")
++            text: qsTr("悬停显示")
++            subtext: qsTr("仅在悬停时显示活动窗口标题")
+             checked: Config.bar.activeWindow.showOnHover
+             onToggled: GlobalConfig.bar.activeWindow.showOnHover = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Popout on hover")
+-            subtext: qsTr("Show a window details popout when hovering")
++            text: qsTr("悬停弹出")
++            subtext: qsTr("悬停时显示窗口详情弹窗")
+             checked: Config.bar.popouts.activeWindow
+             onToggled: GlobalConfig.bar.popouts.activeWindow = checked
+         }
+--- a/modules/nexus/pages/panels/taskbar/BarClock.qml
++++ b/modules/nexus/pages/panels/taskbar/BarClock.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Clock")
++    title: qsTr("时钟")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -18,20 +18,20 @@
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Background")
++            text: qsTr("背景")
+             checked: Config.bar.clock.background
+             onToggled: GlobalConfig.bar.clock.background = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Show date")
++            text: qsTr("显示日期")
+             checked: Config.bar.clock.showDate
+             onToggled: GlobalConfig.bar.clock.showDate = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Show icon")
++            text: qsTr("显示图标")
+             checked: Config.bar.clock.showIcon
+             onToggled: GlobalConfig.bar.clock.showIcon = checked
+         }
+--- a/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
++++ b/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Status icons")
++    title: qsTr("状态图标")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -19,69 +19,69 @@
+         // Visible icons
+         SectionHeader {
+             first: true
+-            text: qsTr("Visible icons")
++            text: qsTr("可见图标")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Speakers")
++            text: qsTr("扬声器")
+             checked: Config.bar.status.showAudio
+             onToggled: GlobalConfig.bar.status.showAudio = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Microphone")
++            text: qsTr("麦克风")
+             checked: Config.bar.status.showMicrophone
+             onToggled: GlobalConfig.bar.status.showMicrophone = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Keyboard layout")
++            text: qsTr("键盘布局")
+             checked: Config.bar.status.showKbLayout
+             onToggled: GlobalConfig.bar.status.showKbLayout = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Network")
++            text: qsTr("网络")
+             checked: Config.bar.status.showNetwork
+             onToggled: GlobalConfig.bar.status.showNetwork = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Wi-Fi")
++            text: qsTr("无线网络")
+             checked: Config.bar.status.showWifi
+             onToggled: GlobalConfig.bar.status.showWifi = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Bluetooth")
++            text: qsTr("蓝牙")
+             checked: Config.bar.status.showBluetooth
+             onToggled: GlobalConfig.bar.status.showBluetooth = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Battery")
++            text: qsTr("电池")
+             checked: Config.bar.status.showBattery
+             onToggled: GlobalConfig.bar.status.showBattery = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Caps lock")
++            text: qsTr("大写锁定")
+             checked: Config.bar.status.showLockStatus
+             onToggled: GlobalConfig.bar.status.showLockStatus = checked
+         }
+ 
+         // Behaviour
+         SectionHeader {
+-            text: qsTr("Behaviour")
++            text: qsTr("行为")
+         }
+ 
+         ToggleRow {
+             first: true
+             last: true
+-            text: qsTr("Popout on hover")
+-            subtext: qsTr("Show a details popout when hovering the status icons")
++            text: qsTr("悬停弹出")
++            subtext: qsTr("悬停状态图标时显示详情弹窗")
+             checked: Config.bar.popouts.statusIcons
+             onToggled: GlobalConfig.bar.popouts.statusIcons = checked
+         }
+--- a/modules/nexus/pages/panels/taskbar/BarTray.qml
++++ b/modules/nexus/pages/panels/taskbar/BarTray.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Tray")
++    title: qsTr("托盘")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -18,27 +18,27 @@
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Background")
++            text: qsTr("背景")
+             checked: Config.bar.tray.background
+             onToggled: GlobalConfig.bar.tray.background = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Recolour icons")
++            text: qsTr("重绘图标颜色")
+             checked: Config.bar.tray.recolour
+             onToggled: GlobalConfig.bar.tray.recolour = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Compact")
++            text: qsTr("紧凑")
+             checked: Config.bar.tray.compact
+             onToggled: GlobalConfig.bar.tray.compact = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Popout on hover")
+-            subtext: qsTr("Show the tray menu popout when hovering")
++            text: qsTr("悬停弹出")
++            subtext: qsTr("悬停时显示托盘菜单")
+             checked: Config.bar.popouts.tray
+             onToggled: GlobalConfig.bar.popouts.tray = checked
+         }
+--- a/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
++++ b/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
+@@ -7,7 +7,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Workspaces")
++    title: qsTr("工作区")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -18,8 +18,8 @@
+ 
+         StepperRow {
+             first: true
+-            label: qsTr("Shown")
+-            subtext: qsTr("Number of workspaces displayed")
++            label: qsTr("显示数量")
++            subtext: qsTr("显示的工作区数量")
+             value: Config.bar.workspaces.shown
+             from: 1
+             to: 20
+@@ -28,38 +28,38 @@
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Active indicator")
++            text: qsTr("活动指示器")
+             checked: Config.bar.workspaces.activeIndicator
+             onToggled: GlobalConfig.bar.workspaces.activeIndicator = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Active trail")
++            text: qsTr("活动轨迹")
+             checked: Config.bar.workspaces.activeTrail
+             onToggled: GlobalConfig.bar.workspaces.activeTrail = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Occupied background")
++            text: qsTr("已占用背景")
+             checked: Config.bar.workspaces.occupiedBg
+             onToggled: GlobalConfig.bar.workspaces.occupiedBg = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Show windows")
+-            subtext: qsTr("Show icons of open windows on each workspace")
++            text: qsTr("显示窗口")
++            subtext: qsTr("在每个工作区显示已打开窗口图标")
+             checked: Config.bar.workspaces.showWindows
+             onToggled: GlobalConfig.bar.workspaces.showWindows = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Windows on special workspaces")
++            text: qsTr("特殊工作区中的窗口")
+             checked: Config.bar.workspaces.showWindowsOnSpecialWorkspaces
+             onToggled: GlobalConfig.bar.workspaces.showWindowsOnSpecialWorkspaces = checked
+         }
+ 
+         StepperRow {
+-            label: qsTr("Max window icons")
++            label: qsTr("最大窗口图标数")
+             value: Config.bar.workspaces.maxWindowIcons
+             from: 0
+             to: 20
+@@ -69,8 +69,8 @@
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Per-monitor workspaces")
+-            subtext: qsTr("Show each monitor's workspaces independently")
++            text: qsTr("按显示器显示工作区")
++            subtext: qsTr("每个显示器独立显示工作区")
+             checked: GlobalConfig.bar.workspaces.perMonitorWorkspaces
+             onToggled: GlobalConfig.bar.workspaces.perMonitorWorkspaces = checked
+         }
+--- a/modules/nexus/pages/services/NotificationsPage.qml
++++ b/modules/nexus/pages/services/NotificationsPage.qml
+@@ -10,11 +10,11 @@
+     // Notification fullscreen visibility, mapped to GlobalConfig.notifs.fullscreen
+     readonly property list<MenuItem> notifFullscreenItems: [
+         MenuItem {
+-            text: qsTr("Off")
++            text: qsTr("关")
+             icon: "notifications_off"
+         },
+         MenuItem {
+-            text: qsTr("On")
++            text: qsTr("开")
+             icon: "notifications"
+         }
+     ]
+@@ -23,21 +23,21 @@
+     // Toast fullscreen visibility, mapped to GlobalConfig.utilities.toasts.fullscreen
+     readonly property list<MenuItem> toastFullscreenItems: [
+         MenuItem {
+-            text: qsTr("Off")
++            text: qsTr("关")
+             icon: "notifications_off"
+         },
+         MenuItem {
+-            text: qsTr("Important")
++            text: qsTr("重要")
+             icon: "priority_high"
+         },
+         MenuItem {
+-            text: qsTr("On")
++            text: qsTr("开")
+             icon: "notifications"
+         }
+     ]
+     readonly property list<string> toastFullscreenValues: ["off", "important", "all"]
+ 
+-    title: qsTr("Notifications")
++    title: qsTr("通知")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -49,35 +49,35 @@
+         // Notifications
+         SectionHeader {
+             first: true
+-            text: qsTr("Notifications")
++            text: qsTr("通知")
+         }
+ 
+         SelectRow {
+             first: true
+-            label: qsTr("Show in fullscreen")
+-            subtext: qsTr("Whether notifications appear over fullscreen apps")
++            label: qsTr("全屏时显示")
++            subtext: qsTr("通知是否显示在全屏应用上方")
+             menuItems: root.notifFullscreenItems
+             active: root.notifFullscreenItems[Math.max(0, root.notifFullscreenValues.indexOf(GlobalConfig.notifs.fullscreen))]
+             onSelected: item => GlobalConfig.notifs.fullscreen = root.notifFullscreenValues[root.notifFullscreenItems.indexOf(item)]
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Expire automatically")
+-            subtext: qsTr("Dismiss notifications after their timeout")
++            text: qsTr("自动过期")
++            subtext: qsTr("超时后关闭通知")
+             checked: GlobalConfig.notifs.expire
+             onToggled: GlobalConfig.notifs.expire = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Open expanded")
+-            subtext: qsTr("Show notifications expanded by default")
++            text: qsTr("默认展开")
++            subtext: qsTr("默认展开显示通知")
+             checked: GlobalConfig.notifs.openExpanded
+             onToggled: GlobalConfig.notifs.openExpanded = checked
+         }
+ 
+         StepperRow {
+-            label: qsTr("Default timeout")
+-            subtext: qsTr("Time before a notification dismisses (ms)")
++            label: qsTr("默认超时")
++            subtext: qsTr("通知关闭前的时间（毫秒）")
+             value: GlobalConfig.notifs.defaultExpireTimeout
+             from: 1000
+             to: 60000
+@@ -87,8 +87,8 @@
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Group preview count")
+-            subtext: qsTr("Notifications shown per group before collapsing")
++            label: qsTr("分组预览数量")
++            subtext: qsTr("折叠前每组显示的通知数")
+             value: GlobalConfig.notifs.groupPreviewNum
+             from: 1
+             to: 10
+@@ -98,13 +98,13 @@
+ 
+         // Toasts
+         SectionHeader {
+-            text: qsTr("Toasts")
++            text: qsTr("提示")
+         }
+ 
+         SelectRow {
+             first: true
+-            label: qsTr("Show in fullscreen")
+-            subtext: qsTr("Whether toasts appear over fullscreen apps")
++            label: qsTr("全屏时显示")
++            subtext: qsTr("提示是否显示在全屏应用上方")
+             menuItems: root.toastFullscreenItems
+             active: root.toastFullscreenItems[Math.max(0, root.toastFullscreenValues.indexOf(GlobalConfig.utilities.toasts.fullscreen))]
+             onSelected: item => GlobalConfig.utilities.toasts.fullscreen = root.toastFullscreenValues[root.toastFullscreenItems.indexOf(item)]
+@@ -112,8 +112,8 @@
+ 
+         StepperRow {
+             last: true
+-            label: qsTr("Visible toasts")
+-            subtext: qsTr("Maximum number of toasts shown at once")
++            label: qsTr("可见提示数")
++            subtext: qsTr("同时显示的最大提示数")
+             value: GlobalConfig.utilities.maxToasts
+             from: 1
+             to: 10
+@@ -123,67 +123,67 @@
+ 
+         // Toast events
+         SectionHeader {
+-            text: qsTr("Toast events")
++            text: qsTr("提示事件")
+         }
+ 
+         ToggleRow {
+             first: true
+-            text: qsTr("Charging changes")
++            text: qsTr("充电状态变化")
+             checked: GlobalConfig.utilities.toasts.chargingChanged
+             onToggled: GlobalConfig.utilities.toasts.chargingChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Game mode changes")
++            text: qsTr("游戏模式变化")
+             checked: GlobalConfig.utilities.toasts.gameModeChanged
+             onToggled: GlobalConfig.utilities.toasts.gameModeChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Do not disturb changes")
++            text: qsTr("勿扰模式变化")
+             checked: GlobalConfig.utilities.toasts.dndChanged
+             onToggled: GlobalConfig.utilities.toasts.dndChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Audio output changes")
++            text: qsTr("音频输出变化")
+             checked: GlobalConfig.utilities.toasts.audioOutputChanged
+             onToggled: GlobalConfig.utilities.toasts.audioOutputChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Audio input changes")
++            text: qsTr("音频输入变化")
+             checked: GlobalConfig.utilities.toasts.audioInputChanged
+             onToggled: GlobalConfig.utilities.toasts.audioInputChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Caps lock changes")
++            text: qsTr("大写锁定变化")
+             checked: GlobalConfig.utilities.toasts.capsLockChanged
+             onToggled: GlobalConfig.utilities.toasts.capsLockChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Num lock changes")
++            text: qsTr("数字锁定变化")
+             checked: GlobalConfig.utilities.toasts.numLockChanged
+             onToggled: GlobalConfig.utilities.toasts.numLockChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("Keyboard layout changes")
++            text: qsTr("键盘布局变化")
+             checked: GlobalConfig.utilities.toasts.kbLayoutChanged
+             onToggled: GlobalConfig.utilities.toasts.kbLayoutChanged = checked
+         }
+ 
+         ToggleRow {
+-            text: qsTr("VPN changes")
++            text: qsTr("VPN 变化")
+             checked: GlobalConfig.utilities.toasts.vpnChanged
+             onToggled: GlobalConfig.utilities.toasts.vpnChanged = checked
+         }
+ 
+         ToggleRow {
+             last: true
+-            text: qsTr("Now playing")
++            text: qsTr("正在播放")
+             checked: GlobalConfig.utilities.toasts.nowPlaying
+             onToggled: GlobalConfig.utilities.toasts.nowPlaying = checked
+         }
+--- a/modules/nexus/pages/wallandstyle/ColourSelect.qml
++++ b/modules/nexus/pages/wallandstyle/ColourSelect.qml
+@@ -8,7 +8,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Colours")
++    title: qsTr("颜色")
+     isSubPage: true
+ 
+     Item {
+@@ -31,14 +31,14 @@
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("Page under construction")
++                text: qsTr("页面建设中")
+                 color: Colours.palette.m3outlineVariant
+                 font: Tokens.font.title.large
+             }
+ 
+             StyledText {
+                 Layout.alignment: Qt.AlignHCenter
+-                text: qsTr("This page will be available in a future update.")
++                text: qsTr("此页面将在未来更新中可用。")
+                 color: Colours.palette.m3outlineVariant
+                 font: Tokens.font.body.large
+             }
+--- a/modules/nexus/pages/wallandstyle/WallpaperSelect.qml
++++ b/modules/nexus/pages/wallandstyle/WallpaperSelect.qml
+@@ -16,7 +16,7 @@
+ PageBase {
+     id: root
+ 
+-    title: qsTr("Wallpapers")
++    title: qsTr("壁纸")
+     isSubPage: true
+ 
+     ColumnLayout {
+@@ -32,7 +32,7 @@
+ 
+             IconTextButton {
+                 icon: "photo_library"
+-                text: qsTr("Browse")
++                text: qsTr("浏览")
+                 font: Tokens.font.body.large
+                 isRound: true
+                 shapeMorph: true
+@@ -43,8 +43,8 @@
+                 FileDialog {
+                     id: browseDialog
+ 
+-                    title: qsTr("Select an image")
+-                    filterLabel: qsTr("Image files")
++                    title: qsTr("选择图片")
++                    filterLabel: qsTr("图片文件")
+                     filters: Images.validImageExtensions
+                     onAccepted: path => {
+                         Wallpapers.setWallpaper(path);
+@@ -55,7 +55,7 @@
+ 
+             IconTextButton {
+                 icon: "shuffle"
+-                text: qsTr("Random")
++                text: qsTr("随机")
+                 font: Tokens.font.body.large
+                 isRound: true
+                 shapeMorph: true
+@@ -73,7 +73,7 @@
+             imgHeight: Math.round(width * 0.3)
+             radius: Tokens.rounding.extraLarge
+             source: Quickshell.shellPath("assets/wallpaper.webp")
+-            text: qsTr("Featured wallpaper")
++            text: qsTr("精选壁纸")
+             fillLabel: false
+             onClicked: {
+                 Wallpapers.setWallpaper(Quickshell.shellPath("assets/wallpaper.webp"));
+@@ -83,7 +83,7 @@
+ 
+         StyledText {
+             Layout.topMargin: Tokens.spacing.large
+-            text: qsTr("Local wallpapers")
++            text: qsTr("本地壁纸")
+             font: Tokens.font.title.small
+         }
+ 
+@@ -177,7 +177,7 @@
+ 
+                     StyledText {
+                         Layout.alignment: Qt.AlignHCenter
+-                        text: qsTr("No local wallpapers found")
++                        text: qsTr("未找到本地壁纸")
+                         color: Colours.palette.m3outline
+                         font: Tokens.font.title.small
+                     }
+--- a/modules/sidebar/NotifDock.qml
++++ b/modules/sidebar/NotifDock.qml
+@@ -65,7 +65,7 @@
+             anchors.right: parent.right
+             anchors.leftMargin: Tokens.spacing.extraSmall
+ 
+-            text: root.notifCount > 0 ? qsTr("notification%1").arg(root.notifCount === 1 ? "" : "s") : qsTr("Notifications")
++            text: root.notifCount > 0 ? qsTr("条通知%1").arg(root.notifCount === 1 ? "" : "s") : qsTr("通知")
+             color: Colours.palette.m3outline
+             font: Tokens.font.label.large
+             elide: Text.ElideRight
+--- a/modules/utilities/RecordingDeleteModal.qml
++++ b/modules/utilities/RecordingDeleteModal.qml
+@@ -167,13 +167,13 @@
+                 spacing: Tokens.spacing.medium
+ 
+                 StyledText {
+-                    text: qsTr("Delete recording?")
++                    text: qsTr("删除录制？")
+                     font: Tokens.font.body.large
+                 }
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: qsTr("Recording '%1' will be permanently deleted.").arg(deleteConfirmation.path)
++                    text: qsTr("录制“%1”将被永久删除。").arg(deleteConfirmation.path)
+                     color: Colours.palette.m3onSurfaceVariant
+                     font: Tokens.font.body.small
+                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+@@ -185,13 +185,13 @@
+                     spacing: Tokens.spacing.medium
+ 
+                     TextButton {
+-                        text: qsTr("Cancel")
++                        text: qsTr("取消")
+                         type: TextButton.Text
+                         onClicked: root.props.recordingConfirmDelete = ""
+                     }
+ 
+                     TextButton {
+-                        text: qsTr("Delete")
++                        text: qsTr("删除")
+                         type: TextButton.Text
+                         onClicked: {
+                             CUtils.deleteFile(Qt.resolvedUrl(root.props.recordingConfirmDelete));
+--- a/modules/utilities/cards/IdleInhibit.qml
++++ b/modules/utilities/cards/IdleInhibit.qml
+@@ -49,14 +49,14 @@
+ 
+             StyledText {
+                 Layout.fillWidth: true
+-                text: qsTr("Keep Awake")
++                text: qsTr("保持唤醒")
+                 font: Tokens.font.body.medium
+                 elide: Text.ElideRight
+             }
+ 
+             StyledText {
+                 Layout.fillWidth: true
+-                text: IdleInhibitor.enabled ? qsTr("Preventing sleep mode") : qsTr("Normal power management")
++                text: IdleInhibitor.enabled ? qsTr("正在阻止睡眠") : qsTr("正常电源管理")
+                 color: Colours.palette.m3onSurfaceVariant
+                 font: Tokens.font.body.small
+                 elide: Text.ElideRight
+@@ -95,7 +95,7 @@
+                 id: activeText
+ 
+                 anchors.centerIn: parent
+-                text: qsTr("Active since %1").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
++                text: qsTr("自 %1 起启用").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
+                 color: Colours.palette.m3onPrimary
+                 font: Tokens.font.body.builders.small.size(Math.round(Tokens.font.body.small.pointSize * 0.9)).build()
+             }
+--- a/modules/utilities/cards/Record.qml
++++ b/modules/utilities/cards/Record.qml
+@@ -60,14 +60,14 @@
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: qsTr("Screen Recorder")
++                    text: qsTr("屏幕录制")
+                     font: Tokens.font.body.medium
+                     elide: Text.ElideRight
+                 }
+ 
+                 StyledText {
+                     Layout.fillWidth: true
+-                    text: Recorder.paused ? qsTr("Paused") : Recorder.running ? qsTr("Running...") : qsTr("Ready")
++                    text: Recorder.paused ? qsTr("已暂停") : Recorder.running ? qsTr("运行中...") : qsTr("就绪")
+                     color: Colours.palette.m3onSurfaceVariant
+                     font: Tokens.font.body.small
+                     elide: Text.ElideRight
+@@ -84,26 +84,26 @@
+                 menuItems: [
+                     MenuItem {
+                         icon: "fullscreen"
+-                        text: qsTr("Record fullscreen")
+-                        activeText: qsTr("Fullscreen")
++                        text: qsTr("录制全屏")
++                        activeText: qsTr("全屏")
+                         onClicked: Recorder.start()
+                     },
+                     MenuItem {
+                         icon: "screenshot_region"
+-                        text: qsTr("Record region")
+-                        activeText: qsTr("Region")
++                        text: qsTr("录制区域")
++                        activeText: qsTr("区域")
+                         onClicked: Recorder.start(["-r"])
+                     },
+                     MenuItem {
+                         icon: "select_to_speak"
+-                        text: qsTr("Record fullscreen with sound")
+-                        activeText: qsTr("Fullscreen")
++                        text: qsTr("录制全屏和声音")
++                        activeText: qsTr("全屏")
+                         onClicked: Recorder.start(["-s"])
+                     },
+                     MenuItem {
+                         icon: "volume_up"
+-                        text: qsTr("Record region with sound")
+-                        activeText: qsTr("Region")
++                        text: qsTr("录制区域和声音")
++                        activeText: qsTr("区域")
+                         onClicked: Recorder.start(["-sr"])
+                     }
+                 ]
+@@ -237,7 +237,7 @@
+                     else
+                         time = `${mins}:${secs}`;
+ 
+-                    return qsTr("Recording for %1").arg(time);
++                    return qsTr("已录制 %1").arg(time);
+                 }
+                 font: Tokens.font.body.medium
+                 elide: Text.ElideMiddle
+--- a/modules/utilities/cards/RecordingList.qml
++++ b/modules/utilities/cards/RecordingList.qml
+@@ -38,7 +38,7 @@
+             StyledText {
+                 Layout.alignment: Qt.AlignVCenter
+                 Layout.fillWidth: true
+-                text: qsTr("Recordings")
++                text: qsTr("录制文件")
+                 font: Tokens.font.body.medium
+             }
+ 
+@@ -92,7 +92,7 @@
+                         return time;
+                     const date = new Date(...matches.slice(1));
+                     date.setMonth(date.getMonth() - 1); // Woe (months start from 0)
+-                    return qsTr("Recording at %1").arg(Qt.formatDateTime(date, Qt.locale()));
++                    return qsTr("录制于 %1").arg(Qt.formatDateTime(date, Qt.locale()));
+                 }
+                 color: Colours.palette.m3onSurfaceVariant
+                 elide: Text.ElideRight
+@@ -218,7 +218,7 @@
+                     }
+ 
+                     StyledText {
+-                        text: qsTr("No recordings found")
++                        text: qsTr("未找到录制文件")
+                         color: Colours.palette.m3outline
+                     }
+                 }
+--- a/modules/utilities/cards/Toggles.qml
++++ b/modules/utilities/cards/Toggles.qml
+@@ -53,7 +53,7 @@
+         spacing: Tokens.spacing.medium
+ 
+         StyledText {
+-            text: qsTr("Quick Toggles")
++            text: qsTr("快捷开关")
+             font: Tokens.font.body.medium
+         }
+ 
+--- a/shell.qml
++++ b/shell.qml
+@@ -1,8 +1,4 @@
+ //@ pragma Env QS_CRASHREPORT_URL=https://github.com/caelestia-dots/shell/issues/new?template=crash.yml
+-//@ pragma DefaultEnv QS_NO_RELOAD_POPUP=1
+-//@ pragma DefaultEnv QS_DROP_EXPENSIVE_FONTS=1
+-//@ pragma DefaultEnv QSG_RENDER_LOOP=threaded
+-//@ pragma DefaultEnv QT_QUICK_FLICKABLE_WHEEL_DECELERATION=10000
+ 
+ import "modules"
+ import "modules/drawers"
