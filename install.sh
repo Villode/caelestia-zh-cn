@@ -6,12 +6,24 @@ data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
 bin_dir="${HOME}/.local/bin"
 apply_after_install=true
 
-if [[ "${1:-}" == "--no-apply" ]]; then
-    apply_after_install=false
-elif (($#)); then
-    echo "用法：./install.sh [--no-apply]" >&2
-    exit 64
-fi
+usage() {
+    cat <<'EOF'
+用法：./install.sh [选项]
+
+选项：
+  --no-apply    只安装工具，暂不应用中文补丁
+  -h, --help    显示帮助
+EOF
+}
+
+while (($#)); do
+    case "$1" in
+        --no-apply) apply_after_install=false ;;
+        -h|--help) usage; exit 0 ;;
+        *) echo "未知选项：$1" >&2; usage >&2; exit 64 ;;
+    esac
+    shift
+done
 
 install -Dm644 \
     "$repo_dir/patches/zh-cn-ui.patch" \

@@ -47,6 +47,16 @@ caelestia-zh-apply --refresh
 
 `--refresh` 会先把现有用户副本备份为带时间戳的目录，再复制新版源码并应用补丁。它不会覆盖备份。
 
+在安装或更新前只检查指定 Shell 源码是否兼容（不会写文件）：
+
+```bash
+caelestia-zh-apply --check --source /path/to/caelestia-shell
+```
+
+兼容时返回 `0`，不兼容时返回 `65`。普通检查和应用会优先使用已安装的 Villode Shell 用户副本；`--refresh` 只从未应用补丁的 Villode 整合安装缓存或系统源码重建，避免误把旧中文副本复制回自身。两种模式都可用 `--source DIR` 明确指定源码。
+
+应用或刷新需要 `patch`、`rsync` 和 `flock`（通常由 `util-linux` 提供）。
+
 仅应用补丁，不自动重启：
 
 ```bash
