@@ -1,49 +1,5 @@
-diff --git a/components/filedialog/DialogButtons.qml b/components/filedialog/DialogButtons.qml
-index fe686e4..20dc961 100644
---- a/components/filedialog/DialogButtons.qml
-+++ b/components/filedialog/DialogButtons.qml
-@@ -22,7 +22,7 @@ StyledRect {
-         spacing: Tokens.spacing.small
- 
-         StyledText {
--            text: qsTr("Filter:")
-+            text: qsTr("筛选：")
-         }
- 
-         StyledRect {
-@@ -59,7 +59,7 @@ StyledRect {
-                 anchors.centerIn: parent
-                 anchors.margins: Tokens.padding.medium
- 
--                text: qsTr("Select")
-+                text: qsTr("选择")
-                 color: root.dialog.selectionValid ? Colours.palette.m3onSurface : Colours.palette.m3outline
-             }
-         }
-@@ -83,7 +83,7 @@ StyledRect {
-                 anchors.centerIn: parent
-                 anchors.margins: Tokens.padding.medium
- 
--                text: qsTr("Cancel")
-+                text: qsTr("取消")
-             }
-         }
-     }
-diff --git a/components/filedialog/FileDialog.qml b/components/filedialog/FileDialog.qml
-index 45f814a..db71651 100644
---- a/components/filedialog/FileDialog.qml
-+++ b/components/filedialog/FileDialog.qml
-@@ -12,7 +12,7 @@ LazyLoader {
-     property list<string> cwd: ["Home"]
-     property string filterLabel: "All files"
-     property list<string> filters: ["*"]
--    property string title: qsTr("Select a file")
-+    property string title: qsTr("选择文件")
- 
-     signal accepted(path: string)
-     signal rejected
 diff --git a/components/filedialog/FolderContents.qml b/components/filedialog/FolderContents.qml
-index 6238535..7279416 100644
+index 6238535dd758a76a6bcf798bc8b0ccf7eb62f1e1..7279416d8f1c098df0f4ea67b52f71625d463a5e 100644
 --- a/components/filedialog/FolderContents.qml
 +++ b/components/filedialog/FolderContents.qml
 @@ -60,7 +60,7 @@ Item {
@@ -56,7 +12,7 @@ index 6238535..7279416 100644
                  font: Tokens.font.body.builders.large.weight(Font.Medium).build()
              }
 diff --git a/components/filedialog/Sidebar.qml b/components/filedialog/Sidebar.qml
-index a8d2cf1..f0d5e67 100644
+index a8d2cf15dd84c4c76264749056906e6f511807da..f0d5e6722da9f3524d36c6195fcd4288e7b59e07 100644
 --- a/components/filedialog/Sidebar.qml
 +++ b/components/filedialog/Sidebar.qml
 @@ -30,7 +30,7 @@ StyledRect {
@@ -69,7 +25,7 @@ index a8d2cf1..f0d5e67 100644
              font: Tokens.font.body.builders.large.weight(Font.Bold).build()
          }
 diff --git a/modules/BatteryMonitor.qml b/modules/BatteryMonitor.qml
-index 48da6d0..62d8ff3 100644
+index 48da6d007110c64b9f2f9d928acb020ca55daaa5..62d8ff33f2dcba29fcc058992a7f0ce01463824b 100644
 --- a/modules/BatteryMonitor.qml
 +++ b/modules/BatteryMonitor.qml
 @@ -14,10 +14,10 @@ Scope {
@@ -101,7 +57,7 @@ index 48da6d0..62d8ff3 100644
              }
          }
 diff --git a/modules/ConfigToasts.qml b/modules/ConfigToasts.qml
-index 81463b8..ce65eff 100644
+index 81463b8d838bcde51b51a5804424098f8403cfcb..ce65eff5ee40ed4ce79f20ed533abf2360ed33e6 100644
 --- a/modules/ConfigToasts.qml
 +++ b/modules/ConfigToasts.qml
 @@ -7,19 +7,19 @@ Scope {
@@ -143,7 +99,7 @@ index 81463b8..ce65eff 100644
  
          target: TokenConfig
 diff --git a/modules/Shortcuts.qml b/modules/Shortcuts.qml
-index 68ffe65..b9c3337 100644
+index 68ffe6501913ee9353d1776eb4cce92a197b547e..b9c333705581c8d2cbed70854b50fae19483798b 100644
 --- a/modules/Shortcuts.qml
 +++ b/modules/Shortcuts.qml
 @@ -16,7 +16,7 @@ Scope {
@@ -219,7 +175,7 @@ index 68ffe65..b9c3337 100644
              if (root.hasFullscreen)
                  return;
 diff --git a/modules/areapicker/AreaPicker.qml b/modules/areapicker/AreaPicker.qml
-index 76cc103..09d95b8 100644
+index 76cc10399c3f75545b3d265a8ae9088489b2a872..09d95b8d6717da02ba3f7f98f220a4df95259355 100644
 --- a/modules/areapicker/AreaPicker.qml
 +++ b/modules/areapicker/AreaPicker.qml
 @@ -83,7 +83,7 @@ Scope {
@@ -259,7 +215,7 @@ index 76cc103..09d95b8 100644
              root.freeze = true;
              root.closing = false;
 diff --git a/modules/background/Wallpaper.qml b/modules/background/Wallpaper.qml
-index 21ff34e..1d5dde5 100644
+index 21ff34eb8f9893f4eaeb6530cf46b71e0ca64878..1d5dde51e242450988a40dded9146bf79bbad274 100644
 --- a/modules/background/Wallpaper.qml
 +++ b/modules/background/Wallpaper.qml
 @@ -58,7 +58,7 @@ Item {
@@ -292,7 +248,7 @@ index 21ff34e..1d5dde5 100644
                              font: Tokens.font.body.large
                          }
 diff --git a/modules/bar/components/ActiveWindow.qml b/modules/bar/components/ActiveWindow.qml
-index 8e34e8b..a42675e 100644
+index 8e34e8b136c6cee47d48de37e8f3de1a39f9b7cb..a42675edcc81f50fd4eeca7905ebfef522621b8a 100644
 --- a/modules/bar/components/ActiveWindow.qml
 +++ b/modules/bar/components/ActiveWindow.qml
 @@ -16,7 +16,7 @@ Item {
@@ -305,10 +261,10 @@ index 8e34e8b..a42675e 100644
              // " - " (standard hyphen), " — " (em dash), " – " (en dash)
              const parts = title.split(/\s+[\-\u2013\u2014]\s+/);
 diff --git a/modules/bar/popouts/Audio.qml b/modules/bar/popouts/Audio.qml
-index 1898342..e318fd9 100644
+index 546fedbd2251c4fad7dda71c2b2ce9d83a9cc319..1ed8be3c91ebfd880ff94203d61b20ed2238fde6 100644
 --- a/modules/bar/popouts/Audio.qml
 +++ b/modules/bar/popouts/Audio.qml
-@@ -33,7 +33,7 @@ Item {
+@@ -34,7 +34,7 @@ Item {
          spacing: Tokens.spacing.medium
  
          StyledText {
@@ -317,7 +273,7 @@ index 1898342..e318fd9 100644
              font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
          }
  
-@@ -54,7 +54,7 @@ Item {
+@@ -55,7 +55,7 @@ Item {
  
          StyledText {
              Layout.topMargin: Tokens.spacing.medium
@@ -326,7 +282,7 @@ index 1898342..e318fd9 100644
              font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
          }
  
-@@ -73,7 +73,7 @@ Item {
+@@ -74,7 +74,7 @@ Item {
  
          StyledText {
              Layout.topMargin: Tokens.spacing.medium
@@ -336,7 +292,7 @@ index 1898342..e318fd9 100644
          }
  
 diff --git a/modules/bar/popouts/Battery.qml b/modules/bar/popouts/Battery.qml
-index 3c3ced5..e27c562 100644
+index 3c3ced517ace1294983caed0e5faf9a2da627b48..e27c5621a01c2159c66be96a8ef15e523b3e1768 100644
 --- a/modules/bar/popouts/Battery.qml
 +++ b/modules/bar/popouts/Battery.qml
 @@ -13,7 +13,7 @@ Column {
@@ -376,7 +332,7 @@ index 3c3ced5..e27c562 100644
                  }
              }
 diff --git a/modules/bar/popouts/Bluetooth.qml b/modules/bar/popouts/Bluetooth.qml
-index ebf21de..dfa9bf0 100644
+index ebf21de30ee83f232e273d8cb29de34e67e7d3ab..dfa9bf0213bbf47d3f3b2c10a994f52a5870d3fe 100644
 --- a/modules/bar/popouts/Bluetooth.qml
 +++ b/modules/bar/popouts/Bluetooth.qml
 @@ -21,12 +21,12 @@ ColumnLayout {
@@ -413,7 +369,7 @@ index ebf21de..dfa9bf0 100644
  
          onClicked: root.popouts.detachRequested("bluetooth")
 diff --git a/modules/bar/popouts/LockStatus.qml b/modules/bar/popouts/LockStatus.qml
-index caab748..8fccd42 100644
+index caab7487f41c19bdfa59d9b471b7a01dcbe8e8f6..8fccd425474d38cffd52bd5a5baffd5639e8edd1 100644
 --- a/modules/bar/popouts/LockStatus.qml
 +++ b/modules/bar/popouts/LockStatus.qml
 @@ -7,10 +7,10 @@ ColumnLayout {
@@ -430,7 +386,7 @@ index caab748..8fccd42 100644
      }
  }
 diff --git a/modules/bar/popouts/Network.qml b/modules/bar/popouts/Network.qml
-index 4401330..d65ea4c 100644
+index 4401330b66a37ff45134980d8a303ee839ed86ce..d65ea4c4dd623136b1331505fbacc7cf5f50fcf5 100644
 --- a/modules/bar/popouts/Network.qml
 +++ b/modules/bar/popouts/Network.qml
 @@ -28,14 +28,14 @@ ColumnLayout {
@@ -496,10 +452,10 @@ index 4401330..d65ea4c 100644
                  font: Tokens.font.body.builders.medium.weight(ethernetItem.modelData.connected ? Font.Medium : Font.Normal).build()
                  color: ethernetItem.modelData.connected ? Colours.palette.m3primary : Colours.palette.m3onSurface
 diff --git a/modules/bar/popouts/TrayMenu.qml b/modules/bar/popouts/TrayMenu.qml
-index c4b8bf2..a75e258 100644
+index 84778f15b01b5dc7e1b2933dd2313e849a335918..240c4f5189d662e5f5ae8de7d530fbb524a184b3 100644
 --- a/modules/bar/popouts/TrayMenu.qml
 +++ b/modules/bar/popouts/TrayMenu.qml
-@@ -217,7 +217,7 @@ StackView {
+@@ -219,7 +219,7 @@ StackView {
  
                          StyledText {
                              anchors.verticalCenter: parent.verticalCenter
@@ -509,7 +465,7 @@ index c4b8bf2..a75e258 100644
                          }
                      }
 diff --git a/modules/bar/popouts/WirelessPassword.qml b/modules/bar/popouts/WirelessPassword.qml
-index 40d159d..21021c1 100644
+index 40d159df877d955478c118d326c5387be6010df3..21021c1f8439a13e14da7b56755869709d7d72de 100644
 --- a/modules/bar/popouts/WirelessPassword.qml
 +++ b/modules/bar/popouts/WirelessPassword.qml
 @@ -41,7 +41,7 @@ ColumnLayout {
@@ -638,7 +594,7 @@ index 40d159d..21021c1 100644
                  // Delete the failed connection
                  Nmcli.forgetNetwork(ssid);
 diff --git a/modules/bar/popouts/kblayout/KbLayout.qml b/modules/bar/popouts/kblayout/KbLayout.qml
-index abbbae0..6fb23f2 100644
+index abbbae097a3ca9286ab63ad3785f38e46074d954..6fb23f245d291c5dbfda682875441ae1bf436a44 100644
 --- a/modules/bar/popouts/kblayout/KbLayout.qml
 +++ b/modules/bar/popouts/kblayout/KbLayout.qml
 @@ -26,7 +26,7 @@ ColumnLayout {
@@ -660,7 +616,7 @@ index abbbae0..6fb23f2 100644
              StateLayer {
                  id: layer
 diff --git a/modules/bar/popouts/kblayout/KbLayoutModel.qml b/modules/bar/popouts/kblayout/KbLayoutModel.qml
-index 1cd9243..6ca7556 100644
+index 1cd9243e5075d256d3037c52ecdb7fe7ba97b92f..6ca75566442be3c53705237ceec1a163050e6ac5 100644
 --- a/modules/bar/popouts/kblayout/KbLayoutModel.qml
 +++ b/modules/bar/popouts/kblayout/KbLayoutModel.qml
 @@ -110,7 +110,7 @@ Item {
@@ -673,7 +629,7 @@ index 1cd9243..6ca7556 100644
      }
  
 diff --git a/modules/dashboard/Content.qml b/modules/dashboard/Content.qml
-index 0a1e23c..63258a1 100644
+index 0a1e23c2d420a70f823c4f03abd3d8667e98542e..63258a11e601c9938534fbd5c4eb2dfbf473c5b2 100644
 --- a/modules/dashboard/Content.qml
 +++ b/modules/dashboard/Content.qml
 @@ -21,25 +21,25 @@ Item {
@@ -707,7 +663,7 @@ index 0a1e23c..63258a1 100644
              }
          ];
 diff --git a/modules/dashboard/Media.qml b/modules/dashboard/Media.qml
-index 2a2f5c2..80ca5cf 100644
+index 2a2f5c2e70cbb1bce716a30b064faae0e110c9f8..80ca5cfc245b1cbb42674023a205f7845a5aec4a 100644
 --- a/modules/dashboard/Media.qml
 +++ b/modules/dashboard/Media.qml
 @@ -114,12 +114,12 @@ Item {
@@ -726,7 +682,7 @@ index 2a2f5c2..80ca5cf 100644
                          font: Tokens.font.body.large
                      }
 diff --git a/modules/dashboard/Performance.qml b/modules/dashboard/Performance.qml
-index 3973bdc..3520f12 100644
+index 3973bdc0c5a805842c016cb8060792634d7fda92..3520f12e488cf3806b1a8b56a158032767b3782d 100644
 --- a/modules/dashboard/Performance.qml
 +++ b/modules/dashboard/Performance.qml
 @@ -33,14 +33,14 @@ Item {
@@ -747,7 +703,7 @@ index 3973bdc..3520f12 100644
                  color: Colours.palette.m3onSurfaceVariant
              }
 diff --git a/modules/dashboard/WeatherTab.qml b/modules/dashboard/WeatherTab.qml
-index d2db255..16f562c 100644
+index d2db255544ab0446e3ac67daec665a92b69e3e15..16f562c0b4c1452db2bc72139dd1d8372c978569 100644
 --- a/modules/dashboard/WeatherTab.qml
 +++ b/modules/dashboard/WeatherTab.qml
 @@ -28,7 +28,7 @@ Item {
@@ -818,7 +774,7 @@ index d2db255..16f562c 100644
                              color: Colours.palette.m3primary
                          }
 diff --git a/modules/dashboard/Wrapper.qml b/modules/dashboard/Wrapper.qml
-index 5debd7a..b256fe0 100644
+index 5debd7adb786589b247e7e95a36bc8450accad97..b256fe04dc19d4103c4bd20fa5a52433332ffc11 100644
 --- a/modules/dashboard/Wrapper.qml
 +++ b/modules/dashboard/Wrapper.qml
 @@ -16,8 +16,8 @@ Item {
@@ -833,7 +789,7 @@ index 5debd7a..b256fe0 100644
          onAccepted: path => {
              if (CUtils.copyFile(Qt.resolvedUrl(path), Qt.resolvedUrl(`${Paths.home}/.face`)))
 diff --git a/modules/dashboard/dash/Media.qml b/modules/dashboard/dash/Media.qml
-index bbd8a35..f90e940 100644
+index bbd8a3515daf5459360454524a6edcdc8059ce66..f90e940a748b8bc4bd4b356a8cea4ca0c79431c4 100644
 --- a/modules/dashboard/dash/Media.qml
 +++ b/modules/dashboard/dash/Media.qml
 @@ -79,7 +79,7 @@ Item {
@@ -864,7 +820,7 @@ index bbd8a35..f90e940 100644
  
          width: parent.implicitWidth - Tokens.padding.extraLargeIncreased
 diff --git a/modules/dashboard/dash/User.qml b/modules/dashboard/dash/User.qml
-index d8d5612..21cba19 100644
+index d8d5612866c60b2eb4a48b9eccf2edfda4b497c5..21cba199ae6332f67aa65a195eeccd76bed75e3a 100644
 --- a/modules/dashboard/dash/User.qml
 +++ b/modules/dashboard/dash/User.qml
 @@ -201,7 +201,7 @@ Item {
@@ -877,7 +833,7 @@ index d8d5612..21cba19 100644
          elide: Text.ElideRight
      }
 diff --git a/modules/dashboard/media/Details.qml b/modules/dashboard/media/Details.qml
-index 5288efb..cbc7b9d 100644
+index 5288efbe80d11bcd6ee831a4a54aea54fc2ebd48..cbc7b9d21469a5f4d6469c35876a998708eebe81 100644
 --- a/modules/dashboard/media/Details.qml
 +++ b/modules/dashboard/media/Details.qml
 @@ -43,7 +43,7 @@ ColumnLayout {
@@ -899,7 +855,7 @@ index 5288efb..cbc7b9d 100644
          font: Tokens.font.title.medium
          elide: Text.ElideRight
 diff --git a/modules/dashboard/media/LyricList.qml b/modules/dashboard/media/LyricList.qml
-index c7fa7d2..6d754f0 100644
+index c7fa7d251b06cf82cb37fb1dfc4044fa2b123aed..6d754f083fde6975964d6a76628950ec3f4ad3fc 100644
 --- a/modules/dashboard/media/LyricList.qml
 +++ b/modules/dashboard/media/LyricList.qml
 @@ -188,7 +188,7 @@ Item {
@@ -921,7 +877,7 @@ index c7fa7d2..6d754f0 100644
                  font: Tokens.font.title.medium
              }
 diff --git a/modules/dashboard/media/LyricsAndSelector.qml b/modules/dashboard/media/LyricsAndSelector.qml
-index 89d7ce5..92dec55 100644
+index 89d7ce5fbaeea03277441d2a31e30240f0cf93be..92dec55b32d94a9d02bf7b115a4f8bb643e3a93f 100644
 --- a/modules/dashboard/media/LyricsAndSelector.qml
 +++ b/modules/dashboard/media/LyricsAndSelector.qml
 @@ -28,7 +28,7 @@ Item {
@@ -943,7 +899,7 @@ index 89d7ce5..92dec55 100644
              minLeftWidth: layout.width - expandBtn.implicitWidth - spacing
              label.Layout.maximumWidth: minLeftWidth - iconLabel.implicitWidth - textRow.spacing - textRow.anchors.horizontalCenterOffset / 2 - horizontalPadding * 2
 diff --git a/modules/dashboard/media/LyricsInfo.qml b/modules/dashboard/media/LyricsInfo.qml
-index 4091f05..dda6322 100644
+index 4091f05a971b86ea869b46dbbcd3ff4d120de625..dda6322328227f5cfd5469f9b7936064a2a124ac 100644
 --- a/modules/dashboard/media/LyricsInfo.qml
 +++ b/modules/dashboard/media/LyricsInfo.qml
 @@ -148,21 +148,21 @@ Item {
@@ -981,7 +937,7 @@ index 4091f05..dda6322 100644
                      font: Tokens.font.body.medium
                      animate: true
 diff --git a/modules/dashboard/performance/BatteryTank.qml b/modules/dashboard/performance/BatteryTank.qml
-index 691405d..90b4cde 100644
+index 691405dbe8a0d3f70ab34f627337e8da5faf8c0b..90b4cdeeba443db185680b730744ea8837a5e394 100644
 --- a/modules/dashboard/performance/BatteryTank.qml
 +++ b/modules/dashboard/performance/BatteryTank.qml
 @@ -74,7 +74,7 @@ StyledClippingRect {
@@ -1007,7 +963,7 @@ index 691405d..90b4cde 100644
                  const s = UPower.displayDevice.timeToEmpty;
                  if (s === 0)
 diff --git a/modules/dashboard/performance/HeroCard.qml b/modules/dashboard/performance/HeroCard.qml
-index c3805d5..4fa5bef 100644
+index c3805d5e1fdbf1b499b324bc286a0608c3bba92b..4fa5befd349edee7031286e42ea482376b36b635 100644
 --- a/modules/dashboard/performance/HeroCard.qml
 +++ b/modules/dashboard/performance/HeroCard.qml
 @@ -133,7 +133,7 @@ StyledRect {
@@ -1020,7 +976,7 @@ index c3805d5..4fa5bef 100644
              font: Tokens.font.body.small
          }
 diff --git a/modules/dashboard/performance/MemoryCard.qml b/modules/dashboard/performance/MemoryCard.qml
-index 963e8b9..c00c0a3 100644
+index 963e8b9463416929451336084eb9a9658d7a6ade..c00c0a3abed1c5b40c0d122ab77edb49bf7b9648 100644
 --- a/modules/dashboard/performance/MemoryCard.qml
 +++ b/modules/dashboard/performance/MemoryCard.qml
 @@ -39,7 +39,7 @@ StyledRect {
@@ -1042,7 +998,7 @@ index 963e8b9..c00c0a3 100644
                      color: Colours.palette.m3onSurfaceVariant
                  }
 diff --git a/modules/dashboard/performance/NetworkCard.qml b/modules/dashboard/performance/NetworkCard.qml
-index 4eccebe..4807c79 100644
+index 4eccebe74693acfcd08df396d73d16712cd7c0be..4807c790d8d409110a6323b52415fdccaf27883e 100644
 --- a/modules/dashboard/performance/NetworkCard.qml
 +++ b/modules/dashboard/performance/NetworkCard.qml
 @@ -37,7 +37,7 @@ StyledRect {
@@ -1091,7 +1047,7 @@ index 4eccebe..4807c79 100644
                  color: Colours.palette.m3onSurfaceVariant
              }
 diff --git a/modules/dashboard/performance/StorageCard.qml b/modules/dashboard/performance/StorageCard.qml
-index 41513ea..0a92404 100644
+index 41513ea50a91a951823302539416caef20f78475..0a92404afaf8034c67aa5a8af0fdcaa66062b8ba 100644
 --- a/modules/dashboard/performance/StorageCard.qml
 +++ b/modules/dashboard/performance/StorageCard.qml
 @@ -71,7 +71,7 @@ StyledRect {
@@ -1130,7 +1086,7 @@ index 41513ea..0a92404 100644
              minLeftWidth: row.implicitWidth * 0.6
  
 diff --git a/modules/launcher/Content.qml b/modules/launcher/Content.qml
-index 1c99038..a542162 100644
+index 1c9903884b3fdf4a01591aa2a2b3827cdc30dd32..a5421621dda5f0a33ddf09f728da4b5d80a82785 100644
 --- a/modules/launcher/Content.qml
 +++ b/modules/launcher/Content.qml
 @@ -80,7 +80,7 @@ Item {
@@ -1143,7 +1099,7 @@ index 1c99038..a542162 100644
              onAccepted: {
                  const currentItem = list.currentList?.currentItem;
 diff --git a/modules/launcher/ContentList.qml b/modules/launcher/ContentList.qml
-index ff420ce..d9bf6ad 100644
+index ff420ce31867dc1d6a372eff8e73514b10cdbcb5..d9bf6ad06de166b52a2aec9db3c4bbc29f2881d9 100644
 --- a/modules/launcher/ContentList.qml
 +++ b/modules/launcher/ContentList.qml
 @@ -129,13 +129,13 @@ Item {
@@ -1163,7 +1119,7 @@ index ff420ce..d9bf6ad 100644
                  font: Tokens.font.body.medium
              }
 diff --git a/modules/launcher/items/CalcItem.qml b/modules/launcher/items/CalcItem.qml
-index 53bdde4..36bcc80 100644
+index 53bdde49766d9360af8927f7e7a60354dcace0cd..36bcc80b400ab196500af1f4797c3fbf4d8c225e 100644
 --- a/modules/launcher/items/CalcItem.qml
 +++ b/modules/launcher/items/CalcItem.qml
 @@ -57,7 +57,7 @@ Item {
@@ -1185,7 +1141,7 @@ index 53bdde4..36bcc80 100644
                  font: Tokens.font.label.medium
  
 diff --git a/modules/launcher/services/Actions.qml b/modules/launcher/services/Actions.qml
-index dcb4884..7fee9d2 100644
+index dcb48849d3a9fa67b2066377a6088e121fd57c0f..7fee9d2534d2405f649ec47534f25d3a84612090 100644
 --- a/modules/launcher/services/Actions.qml
 +++ b/modules/launcher/services/Actions.qml
 @@ -28,8 +28,8 @@ Searcher {
@@ -1200,7 +1156,7 @@ index dcb4884..7fee9d2 100644
          readonly property list<string> command: modelData.command ?? []
          readonly property bool enabled: modelData.enabled ?? true
 diff --git a/modules/launcher/services/M3Variants.qml b/modules/launcher/services/M3Variants.qml
-index 4517d02..2cf88d4 100644
+index 4517d02cbb8306d9a673ba91c83b46f30131b2d9..2cf88d4047684cc2d69007e6d2dcf923af74e027 100644
 --- a/modules/launcher/services/M3Variants.qml
 +++ b/modules/launcher/services/M3Variants.qml
 @@ -17,56 +17,56 @@ Searcher {
@@ -1279,7 +1235,7 @@ index 4517d02..2cf88d4 100644
      ]
      useFuzzy: GlobalConfig.launcher.useFuzzy.variants
 diff --git a/modules/lock/Lock.qml b/modules/lock/Lock.qml
-index f852cb7..fb41d4f 100644
+index f852cb7ffd220933dbba4bd1128c70549f3b96da..fb41d4fdebd9764389f6a3dbe47204e2092e86f3 100644
 --- a/modules/lock/Lock.qml
 +++ b/modules/lock/Lock.qml
 @@ -44,7 +44,7 @@ Scope {
@@ -1301,7 +1257,7 @@ index f852cb7..fb41d4f 100644
      }
  
 diff --git a/modules/lock/Media.qml b/modules/lock/Media.qml
-index 3a8dc79..e7fa5d7 100644
+index 3a8dc794ac05d907868d372fca62e3cbfa636923..e7fa5d7d77bfb7456ef1bd8b872f1678fefa600e 100644
 --- a/modules/lock/Media.qml
 +++ b/modules/lock/Media.qml
 @@ -56,7 +56,7 @@ StyledClippingRect {
@@ -1323,7 +1279,7 @@ index 3a8dc79..e7fa5d7 100644
              horizontalAlignment: Text.AlignHCenter
              font: Tokens.font.body.small
 diff --git a/modules/lock/NotifDock.qml b/modules/lock/NotifDock.qml
-index ed5a396..55a7b02 100644
+index ed5a396d673fe6001bf4584141cc71866d88bf31..55a7b02d58f38e87eca76a736f5b5d0090720faf 100644
 --- a/modules/lock/NotifDock.qml
 +++ b/modules/lock/NotifDock.qml
 @@ -23,7 +23,7 @@ ColumnLayout {
@@ -1345,7 +1301,7 @@ index ed5a396..55a7b02 100644
                      font: Tokens.font.mono.builders.large.weight(Font.Medium).build()
                  }
 diff --git a/modules/lock/center/InputField.qml b/modules/lock/center/InputField.qml
-index 90b0c7d..1f3aecf 100644
+index 90b0c7dea683c551fd44b0c55da2afef65028fa6..1f3aecf3c3ace2861a4269f2b8eaf0444dc0fe95 100644
 --- a/modules/lock/center/InputField.qml
 +++ b/modules/lock/center/InputField.qml
 @@ -47,10 +47,10 @@ Item {
@@ -1363,7 +1319,7 @@ index 90b0c7d..1f3aecf 100644
          font: placeholder.font
      }
 diff --git a/modules/lock/center/StateMessage.qml b/modules/lock/center/StateMessage.qml
-index d6a37a3..cb41e2a 100644
+index d6a37a355b26e2563d29d323d0ef373372206958..cb41e2a3cec8a9f0cdb4242d2e676079c5bf24ad 100644
 --- a/modules/lock/center/StateMessage.qml
 +++ b/modules/lock/center/StateMessage.qml
 @@ -13,30 +13,30 @@ Item {
@@ -1435,7 +1391,7 @@ index d6a37a3..cb41e2a 100644
          return "";
      }
 diff --git a/modules/lock/weather/BriefInfo.qml b/modules/lock/weather/BriefInfo.qml
-index 7d87dfc..a039ff7 100644
+index 7d87dfc17fe388ce08f0d34ede7bbc895b1d177f..a039ff7853cd99c98581539c00aad505a21445a8 100644
 --- a/modules/lock/weather/BriefInfo.qml
 +++ b/modules/lock/weather/BriefInfo.qml
 @@ -44,7 +44,7 @@ ColumnLayout {
@@ -1457,7 +1413,7 @@ index 7d87dfc..a039ff7 100644
          color: Colours.palette.m3onSurfaceVariant
          font: Tokens.font.body.medium
 diff --git a/modules/lock/weather/Forecast.qml b/modules/lock/weather/Forecast.qml
-index 0ebfd7e..8817e11 100644
+index 0ebfd7e2d99cc6daafadae0d0dc061c4bf34eac0..8817e117a721e41f1be99005911a0dcad7b066ae 100644
 --- a/modules/lock/weather/Forecast.qml
 +++ b/modules/lock/weather/Forecast.qml
 @@ -31,7 +31,7 @@ StyledRect {
@@ -1479,7 +1435,7 @@ index 0ebfd7e..8817e11 100644
                      font: Tokens.font.body.medium
                  }
 diff --git a/modules/nexus/WindowFactory.qml b/modules/nexus/WindowFactory.qml
-index ab26d15..b17b2ba 100644
+index ab26d15f9b430cde03d50d9d96a8f1d766497a3a..b17b2ba78516e4484226f3e90f98791286146dde 100644
 --- a/modules/nexus/WindowFactory.qml
 +++ b/modules/nexus/WindowFactory.qml
 @@ -41,7 +41,7 @@ Singleton {
@@ -1492,7 +1448,7 @@ index ab26d15..b17b2ba 100644
              Nexus {
                  id: nexus
 diff --git a/modules/nexus/common/AudioDeviceList.qml b/modules/nexus/common/AudioDeviceList.qml
-index d501d62..f0a7170 100644
+index d501d628c48f6f6e308bc5da2399098a2ca620ba..f0a71708e8236865fcc6a6822b5ae9b305f05959 100644
 --- a/modules/nexus/common/AudioDeviceList.qml
 +++ b/modules/nexus/common/AudioDeviceList.qml
 @@ -75,7 +75,7 @@ ItemList {
@@ -1505,7 +1461,7 @@ index d501d62..f0a7170 100644
                  elide: Text.ElideRight
              }
 diff --git a/modules/nexus/common/EthernetSection.qml b/modules/nexus/common/EthernetSection.qml
-index f5cae61..c366433 100644
+index f5cae61c7f3a8928a914f9a61cc4f0861914a525..c3664332b5e69ddf561b1f5bea44707407cbf5cf 100644
 --- a/modules/nexus/common/EthernetSection.qml
 +++ b/modules/nexus/common/EthernetSection.qml
 @@ -50,7 +50,7 @@ ColumnLayout {
@@ -1570,7 +1526,7 @@ index f5cae61..c366433 100644
                      }
                  }
 diff --git a/modules/nexus/navpane/SearchBar.qml b/modules/nexus/navpane/SearchBar.qml
-index 6f35061..c03944f 100644
+index 6f35061d80182d1495dbfc2a310e8449fa83e6cf..c03944fdc2d24f4516bd1b2f36ff2130b36a2d83 100644
 --- a/modules/nexus/navpane/SearchBar.qml
 +++ b/modules/nexus/navpane/SearchBar.qml
 @@ -49,7 +49,7 @@ StyledRect {
@@ -1583,7 +1539,7 @@ index 6f35061..c03944f 100644
              color: Colours.palette.m3onSurfaceVariant
              font: Tokens.font.body.large
 diff --git a/modules/nexus/pages/AboutPage.qml b/modules/nexus/pages/AboutPage.qml
-index c3c7b5d..479801b 100644
+index c3c7b5d5ab7b4fa368e3fc701435a811bca790d1..479801be12115a6e3eb3e1116547eb44b564c33a 100644
 --- a/modules/nexus/pages/AboutPage.qml
 +++ b/modules/nexus/pages/AboutPage.qml
 @@ -17,7 +17,7 @@ PageBase {
@@ -1668,7 +1624,7 @@ index c3c7b5d..479801b 100644
          }
      }
 diff --git a/modules/nexus/pages/AppsPage.qml b/modules/nexus/pages/AppsPage.qml
-index 8aa1b5f..2c1d96a 100644
+index 2736b1e7b63a283c5a02618c0c0b9dbf5205aa2d..6e59c3a97791c03bc10e67a82a2149d416008b3d 100644
 --- a/modules/nexus/pages/AppsPage.qml
 +++ b/modules/nexus/pages/AppsPage.qml
 @@ -15,7 +15,7 @@ import qs.modules.nexus.common
@@ -1680,7 +1636,7 @@ index 8aa1b5f..2c1d96a 100644
  
      ColumnLayout {
          anchors.horizontalCenter: parent.horizontalCenter
-@@ -26,27 +26,27 @@ PageBase {
+@@ -26,34 +26,34 @@ PageBase {
          // Default applications
          SectionHeader {
              first: true
@@ -1712,7 +1668,7 @@ index 8aa1b5f..2c1d96a 100644
              status: GlobalConfig.general.apps.playback.join(" ")
              onSelected: app => GlobalConfig.general.apps.playback = app.command
          }
-@@ -54,29 +54,29 @@ PageBase {
+ 
          DefaultRow {
              icon: "folder"
 -            label: qsTr("File manager")
@@ -1720,7 +1676,7 @@ index 8aa1b5f..2c1d96a 100644
              status: GlobalConfig.general.apps.explorer.join(" ")
              onSelected: app => GlobalConfig.general.apps.explorer = app.command
          }
-
+@@ -61,22 +61,22 @@ PageBase {
          DefaultRow {
              last: true
              icon: "language"
@@ -1748,7 +1704,7 @@ index 8aa1b5f..2c1d96a 100644
          }
      }
 diff --git a/modules/nexus/pages/AudioPage.qml b/modules/nexus/pages/AudioPage.qml
-index 09918df..8d449a2 100644
+index 09918df010b7e1304ac1dd0a73ad52fc027c9158..8d449a2920b2639c2077cf630f739423d335cbe4 100644
 --- a/modules/nexus/pages/AudioPage.qml
 +++ b/modules/nexus/pages/AudioPage.qml
 @@ -11,7 +11,7 @@ import qs.modules.nexus.common
@@ -1832,7 +1788,7 @@ index 09918df..8d449a2 100644
                          font: Tokens.font.label.small
                          elide: Text.ElideRight
 diff --git a/modules/nexus/pages/BluetoothPage.qml b/modules/nexus/pages/BluetoothPage.qml
-index 11e2b1c..46e05ce 100644
+index 11e2b1cf3153fc98711df872e0cb4fd866061823..46e05ce6e546d9cdbbeba8ee52edf32c325248c8 100644
 --- a/modules/nexus/pages/BluetoothPage.qml
 +++ b/modules/nexus/pages/BluetoothPage.qml
 @@ -17,7 +17,7 @@ PageBase {
@@ -1910,120 +1866,8 @@ index 11e2b1c..46e05ce 100644
              enabled: root.btEnabled
              opacity: root.btEnabled ? 1 : 0.5
              checked: root.adapter?.pairable ?? false
-diff --git a/modules/nexus/pages/LanguageAndRegion.qml b/modules/nexus/pages/LanguageAndRegion.qml
-index 9668f59..b514db1 100644
---- a/modules/nexus/pages/LanguageAndRegion.qml
-+++ b/modules/nexus/pages/LanguageAndRegion.qml
-@@ -29,7 +29,7 @@ PageBase {
-         }
-     ]
- 
--    title: qsTr("Language & region")
-+    title: qsTr("语言和地区")
- 
-     ColumnLayout {
-         anchors.horizontalCenter: parent.horizontalCenter
-@@ -40,7 +40,7 @@ PageBase {
-         // Language
-         SectionHeader {
-             first: true
--            text: qsTr("Language")
-+            text: qsTr("语言")
-         }
- 
-         // Read-only: the shell follows the system locale (no in-shell translations yet)
-@@ -65,14 +65,14 @@ PageBase {
- 
-                     StyledText {
-                         Layout.fillWidth: true
--                        text: qsTr("System language")
-+                        text: qsTr("系统语言")
-                         font: Tokens.font.body.small
-                         elide: Text.ElideRight
-                     }
- 
-                     StyledText {
-                         Layout.fillWidth: true
--                        text: qsTr("Follows your system locale (%1)").arg(Qt.locale().name)
-+                        text: qsTr("跟随系统区域设置（%1）").arg(Qt.locale().name)
-                         color: Colours.palette.m3outline
-                         font: Tokens.font.label.small
-                         elide: Text.ElideRight
-@@ -89,7 +89,7 @@ PageBase {
- 
-         // Weather
-         SectionHeader {
--            text: qsTr("Weather")
-+            text: qsTr("天气")
-         }
- 
-         // Placeholder until the map-based location picker lands
-@@ -115,7 +115,7 @@ PageBase {
- 
-                 StyledText {
-                     Layout.alignment: Qt.AlignHCenter
--                    text: qsTr("Location picker coming soon")
-+                    text: qsTr("位置选择器即将推出")
-                     color: Colours.palette.m3outlineVariant
-                     font: Tokens.font.title.small
-                 }
-@@ -124,7 +124,7 @@ PageBase {
-                     Layout.fillWidth: true
-                     horizontalAlignment: Text.AlignHCenter
-                     wrapMode: Text.WordWrap
--                    text: qsTr("Choose your weather location on a map in a future update")
-+                    text: qsTr("后续更新可在地图上选择天气位置")
-                     color: Colours.palette.m3outlineVariant
-                     font: Tokens.font.body.small
-                 }
-@@ -133,13 +133,13 @@ PageBase {
- 
-         // Units
-         SectionHeader {
--            text: qsTr("Units")
-+            text: qsTr("单位")
-         }
- 
-         SelectRow {
-             first: true
--            label: qsTr("Temperature")
--            subtext: qsTr("Units for weather temperatures")
-+            label: qsTr("温度")
-+            subtext: qsTr("天气温度使用的单位")
-             menuItems: root.tempItems
-             active: root.tempItems[GlobalConfig.services.useFahrenheit ? 1 : 0]
-             onSelected: item => GlobalConfig.services.useFahrenheit = root.tempItems.indexOf(item) === 1
-@@ -147,8 +147,8 @@ PageBase {
- 
-         SelectRow {
-             last: true
--            label: qsTr("System temperatures")
--            subtext: qsTr("Units for CPU and GPU temperatures")
-+            label: qsTr("系统温度")
-+            subtext: qsTr("CPU 和 GPU 温度使用的单位")
-             menuItems: root.tempItems
-             active: root.tempItems[GlobalConfig.services.useFahrenheitPerformance ? 1 : 0]
-             onSelected: item => GlobalConfig.services.useFahrenheitPerformance = root.tempItems.indexOf(item) === 1
-@@ -156,14 +156,14 @@ PageBase {
- 
-         // Time & date
-         SectionHeader {
--            text: qsTr("Time & date")
-+            text: qsTr("时间和日期")
-         }
- 
-         SelectRow {
-             first: true
-             last: true
--            label: qsTr("Clock format")
--            subtext: qsTr("How times are shown across the shell")
-+            label: qsTr("时钟格式")
-+            subtext: qsTr("Shell 中时间的显示方式")
-             menuItems: root.clockItems
-             active: root.clockItems[GlobalConfig.services.useTwelveHourClock ? 1 : 0]
-             onSelected: item => GlobalConfig.services.useTwelveHourClock = root.clockItems.indexOf(item) === 1
 diff --git a/modules/nexus/pages/NetworkPage.qml b/modules/nexus/pages/NetworkPage.qml
-index 4e8f413..2e0930b 100644
+index 4e8f413bf9444e87e43d4e4f4150dbe30dac2106..2e0930bf1b62810896a043aeceb46c6efd1b664d 100644
 --- a/modules/nexus/pages/NetworkPage.qml
 +++ b/modules/nexus/pages/NetworkPage.qml
 @@ -15,7 +15,7 @@ PageBase {
@@ -2072,7 +1916,7 @@ index 4e8f413..2e0930b 100644
                      elide: Text.ElideRight
                  }
 diff --git a/modules/nexus/pages/PanelsPage.qml b/modules/nexus/pages/PanelsPage.qml
-index d49879b..52c80a5 100644
+index d49879bec3bb6aea6628aea6bbb66c22e5eacace..52c80a503f75c085d6c99e971f2c340697ab3d6b 100644
 --- a/modules/nexus/pages/PanelsPage.qml
 +++ b/modules/nexus/pages/PanelsPage.qml
 @@ -5,7 +5,7 @@ import qs.modules.nexus.common
@@ -2124,7 +1968,7 @@ index d49879b..52c80a5 100644
          }
      }
 diff --git a/modules/nexus/pages/ServicesPage.qml b/modules/nexus/pages/ServicesPage.qml
-index c8ea204..fcf1f47 100644
+index c8ea204526ddedfb8865bf890ae2d54d765006fa..fcf1f47983e6d972aa82cac3162f0836b2bd05d5 100644
 --- a/modules/nexus/pages/ServicesPage.qml
 +++ b/modules/nexus/pages/ServicesPage.qml
 @@ -13,10 +13,10 @@ PageBase {
@@ -2332,21 +2176,8 @@ index c8ea204..fcf1f47 100644
              menuOnTop: true
              menuItems: root.gpuItems
              active: root.gpuItems[root.gpuKeyToIndex(GlobalConfig.services.gpuType)]
-diff --git a/modules/nexus/pages/WallpaperAndStyle.qml b/modules/nexus/pages/WallpaperAndStyle.qml
-index 5390213..ac3ce7a 100644
---- a/modules/nexus/pages/WallpaperAndStyle.qml
-+++ b/modules/nexus/pages/WallpaperAndStyle.qml
-@@ -66,7 +66,7 @@ PageBase {
- 
-                     StyledText {
-                         Layout.alignment: Qt.AlignHCenter
--                        text: qsTr("Wallpaper disabled")
-+                        text: qsTr("壁纸已关闭")
-                         color: Colours.palette.m3onSurfaceVariant
-                         font: Tokens.font.body.large
-                     }
 diff --git a/modules/nexus/pages/apps/AllApps.qml b/modules/nexus/pages/apps/AllApps.qml
-index 0102715..75df2d4 100644
+index 0102715e92cefa50efd09ecab476e21504e42be2..75df2d4dc898dd84a493a1ff798a64c405af7749 100644
 --- a/modules/nexus/pages/apps/AllApps.qml
 +++ b/modules/nexus/pages/apps/AllApps.qml
 @@ -13,7 +13,7 @@ import qs.modules.nexus.common
@@ -2359,7 +2190,7 @@ index 0102715..75df2d4 100644
  
      ColumnLayout {
 diff --git a/modules/nexus/pages/apps/AppInfo.qml b/modules/nexus/pages/apps/AppInfo.qml
-index 0f24f99..b827298 100644
+index 0f24f99d773dea122ce343eaf8d01de0abb95413..b827298d3a99d2c3d705f22ba7f2e950fcb43cd1 100644
 --- a/modules/nexus/pages/apps/AppInfo.qml
 +++ b/modules/nexus/pages/apps/AppInfo.qml
 @@ -29,7 +29,7 @@ PageBase {
@@ -2426,7 +2257,7 @@ index 0f24f99..b827298 100644
              labelComp.Layout.preferredWidth: Math.max(labelComp.implicitWidth, appId.labelComp.implicitWidth)
          }
 diff --git a/modules/nexus/pages/audio/AppVolumes.qml b/modules/nexus/pages/audio/AppVolumes.qml
-index 8f36a4c..42fb132 100644
+index 8f36a4ca58760d2026685f7aa5d1dd4a07b1b9d6..42fb13243332a97a3ddc2432e6e91cf93067ee56 100644
 --- a/modules/nexus/pages/audio/AppVolumes.qml
 +++ b/modules/nexus/pages/audio/AppVolumes.qml
 @@ -13,7 +13,7 @@ import qs.modules.nexus.common
@@ -2457,7 +2288,7 @@ index 8f36a4c..42fb132 100644
              list.spacing: Tokens.spacing.extraSmall / 2
  
 diff --git a/modules/nexus/pages/bluetooth/BluetoothPairing.qml b/modules/nexus/pages/bluetooth/BluetoothPairing.qml
-index 543c967..05d6071 100644
+index 543c967708c29cba819fb66bb1d6d09f9d4b090b..05d6071efd20d7b629638c2f2004cbb967d7e4c7 100644
 --- a/modules/nexus/pages/bluetooth/BluetoothPairing.qml
 +++ b/modules/nexus/pages/bluetooth/BluetoothPairing.qml
 @@ -21,7 +21,7 @@ PageBase {
@@ -2505,7 +2336,7 @@ index 543c967..05d6071 100644
                              font: Tokens.font.label.small
                              elide: Text.ElideRight
 diff --git a/modules/nexus/pages/bluetooth/BtDeviceInfo.qml b/modules/nexus/pages/bluetooth/BtDeviceInfo.qml
-index d552cf5..31fa1b3 100644
+index d552cf5d83443cadd48c3a4a228178ce7d0a439b..31fa1b3d6946d3466f0b468684af36e2cd115cf4 100644
 --- a/modules/nexus/pages/bluetooth/BtDeviceInfo.qml
 +++ b/modules/nexus/pages/bluetooth/BtDeviceInfo.qml
 @@ -20,7 +20,7 @@ PageBase {
@@ -2601,7 +2432,7 @@ index d552cf5..31fa1b3 100644
  
                  StyledText {
 diff --git a/modules/nexus/pages/network/EthernetDetailPage.qml b/modules/nexus/pages/network/EthernetDetailPage.qml
-index 4591a7b..78f8eec 100644
+index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503dcbae6f77 100644
 --- a/modules/nexus/pages/network/EthernetDetailPage.qml
 +++ b/modules/nexus/pages/network/EthernetDetailPage.qml
 @@ -78,7 +78,7 @@ PageBase {
@@ -2761,7 +2592,7 @@ index 4591a7b..78f8eec 100644
                          animate: true
                      }
 diff --git a/modules/nexus/pages/panels/DashboardPanel.qml b/modules/nexus/pages/panels/DashboardPanel.qml
-index e168f12..cfe5534 100644
+index e168f124bb1df669117a4dd10fb9508d246c620c..cfe5534fac598da256cccfc757e5215ad96ad9a4 100644
 --- a/modules/nexus/pages/panels/DashboardPanel.qml
 +++ b/modules/nexus/pages/panels/DashboardPanel.qml
 @@ -8,7 +8,7 @@ import qs.modules.nexus.common
@@ -2890,7 +2721,7 @@ index e168f12..cfe5534 100644
              from: 0
              to: 200
 diff --git a/modules/nexus/pages/panels/LauncherPanel.qml b/modules/nexus/pages/panels/LauncherPanel.qml
-index b78edcc..002281b 100644
+index b78edcc29fdc3e075a5fefaec0dc212e36a0ca9c..002281b390b03a974c96d25d28ee9c9ada5a5b13 100644
 --- a/modules/nexus/pages/panels/LauncherPanel.qml
 +++ b/modules/nexus/pages/panels/LauncherPanel.qml
 @@ -8,7 +8,7 @@ import qs.modules.nexus.common
@@ -3032,7 +2863,7 @@ index b78edcc..002281b 100644
              onToggled: GlobalConfig.launcher.useFuzzy.wallpapers = checked
          }
 diff --git a/modules/nexus/pages/panels/SidebarPanel.qml b/modules/nexus/pages/panels/SidebarPanel.qml
-index 8d67822..eeb82d6 100644
+index 8d6782248881cbb7e1ac529bf3e514835ecdbae4..eeb82d666a7c901cbf98a3233cdf9ad558501fcd 100644
 --- a/modules/nexus/pages/panels/SidebarPanel.qml
 +++ b/modules/nexus/pages/panels/SidebarPanel.qml
 @@ -8,7 +8,7 @@ import qs.modules.nexus.common
@@ -3070,7 +2901,7 @@ index 8d67822..eeb82d6 100644
              from: 0
              to: 200
 diff --git a/modules/nexus/pages/panels/TaskbarPanel.qml b/modules/nexus/pages/panels/TaskbarPanel.qml
-index 97102f6..03aab90 100644
+index 97102f686b4561bf51b98441f4ce2877c57960fa..03aab90a4c8d12ace43c7bbbf58cd8d584fc79a6 100644
 --- a/modules/nexus/pages/panels/TaskbarPanel.qml
 +++ b/modules/nexus/pages/panels/TaskbarPanel.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3208,7 +3039,7 @@ index 97102f6..03aab90 100644
              onToggled: GlobalConfig.bar.scrollActions.brightness = checked
          }
 diff --git a/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml b/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
-index f51a1c4..58d9cae 100644
+index f51a1c4d5a0dc3feb05efe8e7ab82af32b3c3435..58d9caeb6b47c03d5cf46f32b6f7be9d92411143 100644
 --- a/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
 +++ b/modules/nexus/pages/panels/taskbar/BarActiveWindow.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3256,7 +3087,7 @@ index f51a1c4..58d9cae 100644
              onToggled: GlobalConfig.bar.popouts.activeWindow = checked
          }
 diff --git a/modules/nexus/pages/panels/taskbar/BarClock.qml b/modules/nexus/pages/panels/taskbar/BarClock.qml
-index b2b6aef..f4990b6 100644
+index b2b6aef17654c6452ed5c34f5418578fe2ab3a13..f4990b6ded31e2eb378f37f1f14446aa96064365 100644
 --- a/modules/nexus/pages/panels/taskbar/BarClock.qml
 +++ b/modules/nexus/pages/panels/taskbar/BarClock.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3293,7 +3124,7 @@ index b2b6aef..f4990b6 100644
              onToggled: GlobalConfig.bar.clock.showIcon = checked
          }
 diff --git a/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml b/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
-index bd0d91f..1acd507 100644
+index bd0d91fe83ae003fca3a9d875d5d23c8cfa710ad..1acd5077cb900a31ba5a7e5d53dcab8a1c86448f 100644
 --- a/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 +++ b/modules/nexus/pages/panels/taskbar/BarStatusIcons.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3388,7 +3219,7 @@ index bd0d91f..1acd507 100644
              onToggled: GlobalConfig.bar.popouts.statusIcons = checked
          }
 diff --git a/modules/nexus/pages/panels/taskbar/BarTray.qml b/modules/nexus/pages/panels/taskbar/BarTray.qml
-index a02597f..390d64e 100644
+index a02597fdb684a5d004ca787df5a39c2e6da11814..390d64e3a8c7bd91dc8b647cdd45597ed986f9ae 100644
 --- a/modules/nexus/pages/panels/taskbar/BarTray.qml
 +++ b/modules/nexus/pages/panels/taskbar/BarTray.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3434,7 +3265,7 @@ index a02597f..390d64e 100644
              onToggled: GlobalConfig.bar.popouts.tray = checked
          }
 diff --git a/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml b/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
-index 814dc86..ce48e64 100644
+index 814dc862650fa98f1a745b987fc3993af19a2ee9..ce48e64eb558442f5c5c7f9ce33387605eb51059 100644
 --- a/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
 +++ b/modules/nexus/pages/panels/taskbar/BarWorkspaces.qml
 @@ -7,7 +7,7 @@ import qs.modules.nexus.common
@@ -3515,7 +3346,7 @@ index 814dc86..ce48e64 100644
              onToggled: GlobalConfig.bar.workspaces.perMonitorWorkspaces = checked
          }
 diff --git a/modules/nexus/pages/services/NotificationsPage.qml b/modules/nexus/pages/services/NotificationsPage.qml
-index 78a03b8..ead2e22 100644
+index 78a03b8c53a941c9a2715a787fcb8087602db4ef..ead2e2240544364bd06c037ac7d798b991b772e2 100644
 --- a/modules/nexus/pages/services/NotificationsPage.qml
 +++ b/modules/nexus/pages/services/NotificationsPage.qml
 @@ -10,11 +10,11 @@ PageBase {
@@ -3722,7 +3553,7 @@ index 78a03b8..ead2e22 100644
              onToggled: GlobalConfig.utilities.toasts.nowPlaying = checked
          }
 diff --git a/modules/nexus/pages/wallandstyle/ColourSelect.qml b/modules/nexus/pages/wallandstyle/ColourSelect.qml
-index fd730ea..3e0c1b2 100644
+index fd730ea5138b1e164cbcaa0549b9bbf39f2b6dc0..3e0c1b29b33660d674207445cd1aac4beedfd51b 100644
 --- a/modules/nexus/pages/wallandstyle/ColourSelect.qml
 +++ b/modules/nexus/pages/wallandstyle/ColourSelect.qml
 @@ -8,7 +8,7 @@ import qs.modules.nexus.common
@@ -3752,7 +3583,7 @@ index fd730ea..3e0c1b2 100644
                  font: Tokens.font.body.large
              }
 diff --git a/modules/sidebar/Notif.qml b/modules/sidebar/Notif.qml
-index 641c334..3f7612b 100644
+index 641c3348fc6c2fb372f16cb034db0da39c3a68b0..3f7612b7d5bf9eb84009a35de1eb3db93e630ea6 100644
 --- a/modules/sidebar/Notif.qml
 +++ b/modules/sidebar/Notif.qml
 @@ -135,7 +135,7 @@ StyledRect {
@@ -3765,7 +3596,7 @@ index 641c334..3f7612b 100644
              wrapMode: Text.WordWrap
  
 diff --git a/modules/sidebar/NotifDock.qml b/modules/sidebar/NotifDock.qml
-index 10014a4..0bc9a70 100644
+index 10014a436bad11aaad38313ace55c743a57ecf59..0bc9a70e12cb74c736ab9bc18a48460af6e5f9e1 100644
 --- a/modules/sidebar/NotifDock.qml
 +++ b/modules/sidebar/NotifDock.qml
 @@ -65,7 +65,7 @@ Item {
@@ -3787,7 +3618,7 @@ index 10014a4..0bc9a70 100644
                      font: Tokens.font.headline.builders.small.width(90).build()
                  }
 diff --git a/modules/utilities/RecordingDeleteModal.qml b/modules/utilities/RecordingDeleteModal.qml
-index 2e462b4..e220325 100644
+index 2e462b466bade20c33b80811034591a87d2a1090..e2203251fb2655895c19a20ef3c0def977be0ba8 100644
 --- a/modules/utilities/RecordingDeleteModal.qml
 +++ b/modules/utilities/RecordingDeleteModal.qml
 @@ -167,13 +167,13 @@ Loader {
@@ -3823,7 +3654,7 @@ index 2e462b4..e220325 100644
                          onClicked: {
                              CUtils.deleteFile(Qt.resolvedUrl(root.props.recordingConfirmDelete));
 diff --git a/modules/utilities/cards/IdleInhibit.qml b/modules/utilities/cards/IdleInhibit.qml
-index c5244c9..4f7137e 100644
+index c5244c937b25cd6b3f5d7ced539e71485439c560..4f7137ef2c8539c0ec1c9d293ee376d622f37cd8 100644
 --- a/modules/utilities/cards/IdleInhibit.qml
 +++ b/modules/utilities/cards/IdleInhibit.qml
 @@ -49,14 +49,14 @@ StyledRect {
@@ -3853,7 +3684,7 @@ index c5244c9..4f7137e 100644
                  font: Tokens.font.body.builders.small.size(Math.round(Tokens.font.body.small.pointSize * 0.9)).build()
              }
 diff --git a/modules/utilities/cards/Record.qml b/modules/utilities/cards/Record.qml
-index 2c2cae2..c6a5327 100644
+index 2c2cae2425ee9901a5c43ad7e46845a93214568b..c6a5327d903f55cb5e30e4b894e12ead3f338680 100644
 --- a/modules/utilities/cards/Record.qml
 +++ b/modules/utilities/cards/Record.qml
 @@ -60,14 +60,14 @@ StyledRect {
@@ -3918,7 +3749,7 @@ index 2c2cae2..c6a5327 100644
                  font: Tokens.font.body.medium
                  elide: Text.ElideMiddle
 diff --git a/modules/utilities/cards/RecordingList.qml b/modules/utilities/cards/RecordingList.qml
-index a890ac7..97a7801 100644
+index a890ac74898164efa5be2676dba05dd0a6898816..97a7801f65e7feaa9bb3a0cb93553ed32b938595 100644
 --- a/modules/utilities/cards/RecordingList.qml
 +++ b/modules/utilities/cards/RecordingList.qml
 @@ -38,7 +38,7 @@ ColumnLayout {
@@ -3949,7 +3780,7 @@ index a890ac7..97a7801 100644
                      }
                  }
 diff --git a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggles.qml
-index d145700..8bad5a4 100644
+index d145700a52d703bee7159b604fd72f2a4589e740..8bad5a4816017839b74ff08fd4fb2b78c21c8448 100644
 --- a/modules/utilities/cards/Toggles.qml
 +++ b/modules/utilities/cards/Toggles.qml
 @@ -53,7 +53,7 @@ StyledRect {
@@ -3962,7 +3793,7 @@ index d145700..8bad5a4 100644
          }
  
 diff --git a/modules/windowinfo/Buttons.qml b/modules/windowinfo/Buttons.qml
-index 7a4fb74..be0362c 100644
+index 7a4fb743176ad099f06edff54f0e4dc1c69421f1..be0362c22abf7ccfd09e13cc448ccdc429aafeff 100644
 --- a/modules/windowinfo/Buttons.qml
 +++ b/modules/windowinfo/Buttons.qml
 @@ -24,7 +24,7 @@ ColumnLayout {
@@ -4002,7 +3833,7 @@ index 7a4fb74..be0362c 100644
          }
      }
 diff --git a/modules/windowinfo/Details.qml b/modules/windowinfo/Details.qml
-index fc96d41..a3a467a 100644
+index fc96d414e2c91422f6b6a45d0d983bc20f50bd13..a3a467a7e5187abc5a2d7646934f89383f146ed6 100644
 --- a/modules/windowinfo/Details.qml
 +++ b/modules/windowinfo/Details.qml
 @@ -16,14 +16,14 @@ ColumnLayout {
@@ -4114,7 +3945,7 @@ index fc96d41..a3a467a 100644
          color: Colours.palette.m3tertiary
      }
 diff --git a/modules/windowinfo/Preview.qml b/modules/windowinfo/Preview.qml
-index 4ff0348..114b41c 100644
+index 4ff03480a964e56c4f437a02f93d8a6379e9da30..114b41c1251c022d56f741cb2ba99c05c7d9d2d4 100644
 --- a/modules/windowinfo/Preview.qml
 +++ b/modules/windowinfo/Preview.qml
 @@ -49,14 +49,14 @@ Item {
@@ -4144,7 +3975,7 @@ index 4ff0348..114b41c 100644
              const mon = client.monitor;
              return qsTr("%1 on monitor %2 at %3, %4").arg(client.title).arg(mon.name).arg(client.lastIpcObject.at[0]).arg(client.lastIpcObject.at[1]);
 diff --git a/services/Audio.qml b/services/Audio.qml
-index 6268b92..78962a2 100644
+index 6268b92edbd5a8b5ff68215d303678d429f76533..78962a2a5f23e6d5d5d8bf401410986a77660e2d 100644
 --- a/services/Audio.qml
 +++ b/services/Audio.qml
 @@ -100,19 +100,19 @@ Singleton {
@@ -4194,7 +4025,7 @@ index 6268b92..78962a2 100644
  
      Connections {
 diff --git a/services/Brightness.qml b/services/Brightness.qml
-index ac34cbc..9e891d1 100644
+index ac34cbc1c762532c3d829e2d01c80e67c7d78781..9e891d1f26ad4e683d99ecb9b88efa6341b24bb6 100644
 --- a/services/Brightness.qml
 +++ b/services/Brightness.qml
 @@ -96,7 +96,7 @@ Singleton {
@@ -4216,7 +4047,7 @@ index ac34cbc..9e891d1 100644
      }
  
 diff --git a/services/GameMode.qml b/services/GameMode.qml
-index 6dfc791..949417c 100644
+index 6dfc791c5289e1a3ff8fb67fb3a359649d29fc4d..949417ccc3307fb46a7070fc8dbad31a8a2ae019 100644
 --- a/services/GameMode.qml
 +++ b/services/GameMode.qml
 @@ -29,11 +29,11 @@ Singleton {
@@ -4234,7 +4065,7 @@ index 6dfc791..949417c 100644
      }
  
 diff --git a/services/Hypr.qml b/services/Hypr.qml
-index d890f09..73b9783 100644
+index d890f0981c1422551f180cd3f25e6ada899524a0..73b9783c6f6bbeeae258673417173633f773778e 100644
 --- a/services/Hypr.qml
 +++ b/services/Hypr.qml
 @@ -29,7 +29,7 @@ Singleton {
@@ -4286,7 +4117,7 @@ index d890f09..73b9783 100644
          onReleased: extras.refreshDevices()
      }
 diff --git a/services/NotifData.qml b/services/NotifData.qml
-index 8e980f1..4bff8f6 100644
+index 8e980f189d298c54d4dd37e4e6cf4f4edd6f6166..4bff8f6a600cb46f5d2bfbdd49f665fce49e78da 100644
 --- a/services/NotifData.qml
 +++ b/services/NotifData.qml
 @@ -16,7 +16,7 @@ QtObject {
@@ -4308,7 +4139,7 @@ index 8e980f1..4bff8f6 100644
          } else {
              const h = Math.floor(m / 60);
 diff --git a/services/Notifs.qml b/services/Notifs.qml
-index 87645c4..e76c97e 100644
+index 87645c4a5b403a7ec30aeca5a505b579d9061c37..e76c97e5d863df7c7ad6780c1e849c4cd457b0fe 100644
 --- a/services/Notifs.qml
 +++ b/services/Notifs.qml
 @@ -42,9 +42,9 @@ Singleton {
@@ -4333,7 +4164,7 @@ index 87645c4..e76c97e 100644
              for (const notif of root.list.slice())
                  notif.close();
 diff --git a/services/Players.qml b/services/Players.qml
-index 59f9621..750440a 100644
+index 59f962141e499695b54749eb646b15fafd7354a6..750440a0389748d036e681b3e2d0832fe9ea1264 100644
 --- a/services/Players.qml
 +++ b/services/Players.qml
 @@ -43,7 +43,7 @@ Singleton {
@@ -4382,7 +4213,7 @@ index 59f9621..750440a 100644
      }
  
 diff --git a/services/VPN.qml b/services/VPN.qml
-index a1ed0dd..5d2cb84 100644
+index a1ed0dda9991a6539fd5a2a5f49b166a0a14305e..5d2cb8459db5f6fab994a2c57e09b0cae42cddf6 100644
 --- a/services/VPN.qml
 +++ b/services/VPN.qml
 @@ -216,7 +216,7 @@ Singleton {
@@ -4420,11 +4251,11 @@ index a1ed0dd..5d2cb84 100644
              break;
          }
 diff --git a/services/Weather.qml b/services/Weather.qml
-index 033b3ba..35c02ee 100644
+index 7c12569281c51904db706f7f2a7c658bfd227926..6311b76046e879df3cc8659be4c3c10282b21cb4 100644
 --- a/services/Weather.qml
 +++ b/services/Weather.qml
-@@ -16,7 +16,7 @@ Singleton {
-     property list<var> hourlyForecast
+@@ -27,7 +27,7 @@ Singleton {
+     }
  
      readonly property string icon: cc ? Icons.getWeatherIcon(cc.weatherCode) : "cloud_alert"
 -    readonly property string description: cc?.weatherDesc ?? qsTr("No weather")
@@ -4432,7 +4263,7 @@ index 033b3ba..35c02ee 100644
      readonly property string temp: formatTemp(cc?.tempC)
      readonly property string feelsLike: formatTemp(cc?.feelsLikeC)
      readonly property int humidity: cc?.humidity ?? 0
-@@ -119,7 +119,7 @@ Singleton {
+@@ -130,7 +130,7 @@ Singleton {
                      city = fixCityName(geoCity);
                      cachedCities.set(coords, city);
                  } else {
@@ -4441,7 +4272,7 @@ index 033b3ba..35c02ee 100644
                  }
              });
          };
-@@ -227,36 +227,36 @@ Singleton {
+@@ -247,36 +247,36 @@ Singleton {
  
      function getWeatherCondition(code: string): string {
          const conditions = {
