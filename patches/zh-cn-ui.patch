@@ -335,15 +335,6 @@ index 1898342..e318fd9 100644
              font: Tokens.font.body.builders.medium.weight(Font.Medium).build()
          }
  
-@@ -104,7 +104,7 @@ Item {
-             inactiveColour: Colours.palette.m3primaryContainer
-             inactiveOnColour: Colours.palette.m3onPrimaryContainer
-             verticalPadding: Tokens.padding.extraSmall
--            text: qsTr("Open settings")
-+            text: qsTr("打开设置")
-             icon: "settings"
- 
-             onClicked: root.popouts.detachRequested("audio")
 diff --git a/modules/bar/popouts/Battery.qml b/modules/bar/popouts/Battery.qml
 index 3c3ced5..e27c562 100644
 --- a/modules/bar/popouts/Battery.qml
@@ -1721,14 +1712,22 @@ index 8aa1b5f..2c1d96a 100644
              status: GlobalConfig.general.apps.playback.join(" ")
              onSelected: app => GlobalConfig.general.apps.playback = app.command
          }
-@@ -54,22 +54,22 @@ PageBase {
+@@ -54,29 +54,29 @@ PageBase {
          DefaultRow {
-             last: true
              icon: "folder"
 -            label: qsTr("File manager")
 +            label: qsTr("文件管理器")
              status: GlobalConfig.general.apps.explorer.join(" ")
              onSelected: app => GlobalConfig.general.apps.explorer = app.command
+         }
+
+         DefaultRow {
+             last: true
+             icon: "language"
+-            label: qsTr("Browser")
++            label: qsTr("浏览器")
+             status: GlobalConfig.general.apps.browser.join(" ")
+             onSelected: app => GlobalConfig.general.apps.browser = app.command
          }
  
          // Library
