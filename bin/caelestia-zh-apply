@@ -3,16 +3,12 @@ set -euo pipefail
 
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
 data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
-cache_home="${XDG_CACHE_HOME:-$HOME/.cache}"
 state_home="${XDG_STATE_HOME:-$HOME/.local/state}/caelestia-zh-cn"
-config_dir="${CAELESTIA_CONFIG_DIR:-$config_home/quickshell/caelestia}"
-patch_file="${CAELESTIA_PATCH_FILE:-$data_home/caelestia-zh-cn/patches/zh-cn-ui.patch}"
-source_override="${CAELESTIA_SOURCE_DIR:-}"
-source_dir=""
-staging_dir=""
-rollback_dir=""
+shell_dir="${CAELESTIA_CONFIG_DIR:-$config_home/quickshell/caelestia}"
+shell_config="${CAELESTIA_SHELL_CONFIG:-$config_home/caelestia/shell.json}"
+catalog="${CAELESTIA_TRANSLATION_FILE:-$data_home/caelestia-zh-cn/i18n/qml_zh_CN.qm}"
+source_override=""
 restart=true
-refresh=false
 check_only=false
 original_args=("$@")
 
@@ -20,12 +16,12 @@ usage() {
     cat <<'EOF'
 用法：caelestia-zh-apply [选项]
 
-应用或检查 Caelestia 简体中文界面补丁。
+安装或检查 Caelestia 简体中文翻译包，并把界面语言设为简体中文。
 
 选项：
-  --check          仅检查兼容性，不写入文件或重启
-  --source DIR     使用指定的 Shell 源码目录
-  --refresh        从 Villode 源码重新生成，并保留当前副本备份
+  --check          仅检查 Shell 翻译框架兼容性
+  --source DIR     检查指定的 Shell 源码或安装目录
+  --refresh        重新安装翻译包（为兼容旧命令保留）
   --no-restart     应用后不重启 Caelestia
   -h, --help       显示帮助
 EOF
@@ -39,238 +35,115 @@ die_usage() {
 
 while (($#)); do
     case "$1" in
-        --check)
-            check_only=true
-            ;;
+        --check) check_only=true ;;
         --source)
             (($# >= 2)) || die_usage "--source 需要一个目录参数。"
             source_override="$2"
             shift
             ;;
-        --source=*)
-            source_override="${1#*=}"
-            [[ -n "$source_override" ]] || die_usage "--source 需要一个目录参数。"
-            ;;
-        --refresh)
-            refresh=true
-            ;;
-        --no-restart)
-            restart=false
-            ;;
-        -h|--help)
-            usage
-            exit 0
-            ;;
-        *)
-            die_usage "未知选项：$1"
-            ;;
+        --source=*) source_override="${1#*=}" ;;
+        --refresh) ;;
+        --no-restart) restart=false ;;
+        -h|--help) usage; exit 0 ;;
+        *) die_usage "未知选项：$1" ;;
     esac
     shift
 done
 
-for command_name in patch; do
-    if ! command -v "$command_name" >/dev/null 2>&1; then
-        echo "缺少依赖：$command_name" >&2
-        exit 69
+check_shell() {
+    local source="${source_override:-$shell_dir}"
+    if [[ ! -f "$source/shell.qml" ]]; then
+        echo "找不到 Caelestia Shell：$source" >&2
+        return 66
     fi
-done
+    if [[ ! -f "$source/services/UiLanguage.qml" || ! -f "$source/i18n/qml_zh_CN.qm" ]]; then
+        echo "当前 Shell 不支持运行时翻译包，请先更新 Villode Shell。" >&2
+        echo "检查目录：$source" >&2
+        return 65
+    fi
+    echo "兼容性检查通过：Shell 支持简体中文翻译包。"
+}
 
-if ! $check_only && ! command -v rsync >/dev/null 2>&1; then
-    echo "缺少依赖：rsync" >&2
+if $check_only; then
+    check_shell
+    exit
+fi
+
+command -v python3 >/dev/null 2>&1 || {
+    echo "缺少依赖：python3" >&2
     exit 69
-fi
-
-if [[ ! -f "$patch_file" ]]; then
-    echo "找不到中文补丁：$patch_file" >&2
+}
+command -v flock >/dev/null 2>&1 || {
+    echo "缺少依赖：flock" >&2
+    exit 69
+}
+[[ -f "$catalog" ]] || {
+    echo "找不到简体中文翻译包：$catalog" >&2
     exit 66
-fi
+}
 
-acquire_apply_lock() {
-    local lock_file="$state_home/operation.lock" rc
-    $check_only && return 0
-    [[ "${CAELESTIA_ZH_LOCK_HELD:-}" == 1 ]] && return 0
-    command -v flock >/dev/null 2>&1 || {
-        echo "缺少中文组件并发保护所需的 flock。" >&2
-        exit 69
-    }
+if [[ "${CAELESTIA_ZH_LOCK_HELD:-}" != 1 ]]; then
     install -d -m700 "$state_home"
+    lock_file="$state_home/operation.lock"
     : > "$lock_file"
     chmod 600 "$lock_file"
     if flock --exclusive --nonblock --close --conflict-exit-code 75 \
         "$lock_file" env CAELESTIA_ZH_LOCK_HELD=1 "$0" "${original_args[@]}"; then
         exit 0
-    else
-        rc=$?
     fi
-    [[ "$rc" == 75 ]] && echo "另一个中文应用或刷新操作正在进行。" >&2
+    rc=$?
+    [[ "$rc" == 75 ]] && echo "另一个中文安装操作正在进行。" >&2
     exit "$rc"
-}
-
-acquire_apply_lock
-
-patch_state() {
-    local directory="$1"
-    if patch -d "$directory" -p1 --dry-run --forward --batch --fuzz=0 \
-        --no-backup-if-mismatch < "$patch_file" >/dev/null 2>&1; then
-        printf '%s\n' forward
-    elif patch -d "$directory" -R -p1 --dry-run --batch --fuzz=0 \
-        --no-backup-if-mismatch < "$patch_file" >/dev/null 2>&1; then
-        printf '%s\n' applied
-    else
-        return 65
-    fi
-}
-
-resolve_source() {
-    local candidate
-    local -a candidates
-    if [[ -n "$source_override" ]]; then
-        source_dir="${source_override%/}"
-    else
-        if $refresh; then
-            # 刷新必须从未应用补丁的基线重建，不能把旧的已中文化用户
-            # 副本复制回自身。优先使用整合安装器锁定的 Villode 源码。
-            candidates=(
-                "$cache_home/villode-caelestia/sources/shell"
-                "/etc/xdg/quickshell/caelestia"
-            )
-        else
-            candidates=(
-                "$config_dir"
-                "$cache_home/villode-caelestia/sources/shell"
-                "/etc/xdg/quickshell/caelestia"
-            )
-        fi
-        for candidate in "${candidates[@]}"; do
-            if [[ -f "$candidate/shell.qml" ]] && \
-               { [[ "$candidate" != "$config_dir" ]] || [[ -f "$candidate/.villode-managed" ]]; }; then
-                if $refresh && [[ "$(patch_state "$candidate" 2>/dev/null || true)" != forward ]]; then
-                    continue
-                fi
-                source_dir="$candidate"
-                break
-            fi
-        done
-    fi
-
-    if [[ -z "$source_dir" || ! -f "$source_dir/shell.qml" ]]; then
-        echo "找不到可用的未中文化 Caelestia 源码：${source_dir:-未找到}" >&2
-        echo "请先更新 Villode Shell 缓存，或使用 --source DIR 指定源码。" >&2
-        exit 66
-    fi
-}
-
-incompatible() {
-    echo "中文补丁无法干净应用，当前 Shell 版本与补丁不兼容。" >&2
-    echo "检查目录：$1" >&2
-    exit 65
-}
-
-if $check_only; then
-    resolve_source
-    state="$(patch_state "$source_dir")" || incompatible "$source_dir"
-    if [[ "$state" == applied ]]; then
-        echo "兼容性检查通过：中文补丁已经应用。"
-    else
-        echo "兼容性检查通过：中文补丁可以前向应用。"
-    fi
-    exit 0
 fi
 
-if $refresh || [[ ! -f "$config_dir/shell.qml" ]]; then
-    resolve_source
-    base_dir="$source_dir"
-else
-    base_dir="$config_dir"
-fi
+check_shell
+install -Dm644 "$catalog" "$shell_dir/i18n/qml_zh_CN.qm"
 
-state="$(patch_state "$base_dir")" || incompatible "$base_dir"
-if $refresh && [[ "$state" != forward ]]; then
-    echo "刷新源已经应用中文补丁，拒绝把旧副本当作干净基线。" >&2
-    exit 65
-fi
-changed=false
+python3 - "$shell_config" <<'PY'
+import json
+import os
+import sys
+import tempfile
 
-cleanup() {
-    local status=$?
-    trap - EXIT
-    if [[ -n "$staging_dir" && -e "$staging_dir" ]]; then
-        rm -rf "$staging_dir"
-    fi
-    if [[ -n "$rollback_dir" && -e "$rollback_dir" && ! -e "$config_dir" ]]; then
-        mv "$rollback_dir" "$config_dir"
-    fi
-    exit "$status"
-}
-trap cleanup EXIT
+path = os.path.abspath(os.path.expanduser(sys.argv[1]))
+try:
+    with open(path, encoding="utf-8") as handle:
+        config = json.load(handle)
+except FileNotFoundError:
+    config = {}
+except (json.JSONDecodeError, OSError) as error:
+    raise SystemExit(f"无法读取 Shell 配置 {path}: {error}")
 
-if $refresh || [[ "$state" == forward ]]; then
-    mkdir -p "$(dirname "$config_dir")"
-    staging_dir="$(mktemp -d "$(dirname "$config_dir")/.caelestia-zh-new.XXXXXX")"
-    rsync -a --delete --exclude='*.orig' --exclude='*.rej' \
-        "$base_dir/" "$staging_dir/"
+services = config.setdefault("services", {})
+services["uiLanguage"] = "zh_CN"
+os.makedirs(os.path.dirname(path), exist_ok=True)
+fd, temporary = tempfile.mkstemp(prefix=".shell.json.", dir=os.path.dirname(path), text=True)
+try:
+    with os.fdopen(fd, "w", encoding="utf-8") as handle:
+        json.dump(config, handle, ensure_ascii=False, indent=4)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.chmod(temporary, 0o600)
+    os.replace(temporary, path)
+finally:
+    if os.path.exists(temporary):
+        os.unlink(temporary)
+PY
 
-    if [[ "$state" == forward ]]; then
-        patch -d "$staging_dir" -p1 --forward --batch --fuzz=0 \
-            --no-backup-if-mismatch < "$patch_file"
-        changed=true
-    fi
-
-    # 当前 Quickshell 版本不接受这些 DefaultEnv pragma，环境由启动器设置。
-    sed -i '/^\/\/@ pragma DefaultEnv /d' "$staging_dir/shell.qml"
-
-    if [[ -e "$config_dir" ]]; then
-        if $refresh; then
-            rollback_dir="${config_dir}.backup-$(date +%Y%m%d-%H%M%S-%N)"
-        else
-            rollback_dir="${config_dir}.rollback-$(date +%Y%m%d-%H%M%S-%N)"
-        fi
-        mv "$config_dir" "$rollback_dir"
-    fi
-
-    if ! mv "$staging_dir" "$config_dir"; then
-        if [[ -n "$rollback_dir" && -e "$rollback_dir" ]]; then
-            mv "$rollback_dir" "$config_dir"
-            rollback_dir=""
-        fi
-        echo "替换 Caelestia 用户副本失败，已恢复原配置。" >&2
-        exit 74
-    fi
-    staging_dir=""
-
-    if $refresh && [[ -n "$rollback_dir" ]]; then
-        echo "原用户副本已备份到：$rollback_dir"
-        rollback_dir=""
-    elif [[ -n "$rollback_dir" ]]; then
-        rm -rf "$rollback_dir"
-        rollback_dir=""
-    fi
-fi
-
-if $changed; then
-    echo "已应用 Caelestia 简体中文补丁。"
-else
-    echo "简体中文补丁已经应用，无需重复操作。"
-fi
+echo "已安装简体中文翻译包，并将 Shell 界面语言设为简体中文。"
 
 if $restart && command -v caelestia >/dev/null 2>&1; then
     umask 077
-    mkdir -p "$state_home"
-    chmod 700 "$state_home"
+    install -d -m700 "$state_home"
     log_file="$state_home/restart.log"
     : > "$log_file"
     chmod 600 "$log_file"
     caelestia shell -k >/dev/null 2>&1 || true
-    LANG=zh_CN.UTF-8 \
-    LC_ALL=zh_CN.UTF-8 \
-    LC_MESSAGES=zh_CN.UTF-8 \
-    QT_QPA_PLATFORM=wayland \
-    QT_QPA_PLATFORMTHEME=gtk3 \
-    QT_WAYLAND_DISABLE_WINDOWDECORATION=1 \
-        caelestia shell -d >"$log_file" 2>&1 || {
-            echo "补丁已应用，但 Caelestia 自动重启失败。" >&2
-            echo "日志：$log_file" >&2
-            exit 70
-        }
-    echo "Caelestia 已使用简体中文环境重新启动。"
+    caelestia shell -d >"$log_file" 2>&1 || {
+        echo "翻译包已安装，但 Caelestia 自动重启失败。" >&2
+        echo "日志：$log_file" >&2
+        exit 70
+    }
+    echo "Caelestia 已重新启动。"
 fi
