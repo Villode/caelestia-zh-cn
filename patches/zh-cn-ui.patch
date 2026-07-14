@@ -984,7 +984,7 @@ index 4eccebe74693acfcd08df396d73d16712cd7c0be..4807c790d8d409110a6323b52415fdcc
 +                text: qsTr("正在收集数据...")
                  font: Tokens.font.body.small
                  color: Colours.palette.m3outline
-                 visible: NetworkUsage.downloadBuffer.count < 2
+                 visible: Native.NetworkUsage.downloadBuffer.count < 2
 @@ -112,7 +112,7 @@ StyledRect {
              }
  
