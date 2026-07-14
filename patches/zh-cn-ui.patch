@@ -628,40 +628,6 @@ index 1cd9243e5075d256d3037c52ecdb7fe7ba97b92f..6ca75566442be3c53705237ceec1a163
          }
      }
  
-diff --git a/modules/dashboard/Content.qml b/modules/dashboard/Content.qml
-index 0a1e23c2d420a70f823c4f03abd3d8667e98542e..63258a11e601c9938534fbd5c4eb2dfbf473c5b2 100644
---- a/modules/dashboard/Content.qml
-+++ b/modules/dashboard/Content.qml
-@@ -21,25 +21,25 @@ Item {
-             {
-                 component: dashComponent,
-                 iconName: "dashboard",
--                text: qsTr("Dashboard"),
-+                text: qsTr("仪表盘"),
-                 enabled: Config.dashboard.showDashboard
-             },
-             {
-                 component: mediaComponent,
-                 iconName: "queue_music",
--                text: qsTr("Media"),
-+                text: qsTr("媒体"),
-                 enabled: Config.dashboard.showMedia
-             },
-             {
-                 component: performanceComponent,
-                 iconName: "speed",
--                text: qsTr("Performance"),
-+                text: qsTr("性能"),
-                 enabled: Config.dashboard.showPerformance
-             },
-             {
-                 component: weatherComponent,
-                 iconName: "cloud",
--                text: qsTr("Weather"),
-+                text: qsTr("天气"),
-                 enabled: Config.dashboard.showWeather
-             }
-         ];
 diff --git a/modules/dashboard/Media.qml b/modules/dashboard/Media.qml
 index 2a2f5c2e70cbb1bce716a30b064faae0e110c9f8..80ca5cfc245b1cbb42674023a205f7845a5aec4a 100644
 --- a/modules/dashboard/Media.qml
@@ -1866,55 +1832,6 @@ index 11e2b1cf3153fc98711df872e0cb4fd866061823..46e05ce6e546d9cdbbeba8ee52edf32c
              enabled: root.btEnabled
              opacity: root.btEnabled ? 1 : 0.5
              checked: root.adapter?.pairable ?? false
-diff --git a/modules/nexus/pages/NetworkPage.qml b/modules/nexus/pages/NetworkPage.qml
-index 4e8f413bf9444e87e43d4e4f4150dbe30dac2106..2e0930bf1b62810896a043aeceb46c6efd1b664d 100644
---- a/modules/nexus/pages/NetworkPage.qml
-+++ b/modules/nexus/pages/NetworkPage.qml
-@@ -15,7 +15,7 @@ PageBase {
- 
-     signal networkSelected(ap: Nmcli.AccessPoint)
- 
--    title: qsTr("Network")
-+    title: qsTr("网络")
- 
-     ColumnLayout {
-         anchors.horizontalCenter: parent.horizontalCenter
-@@ -62,7 +62,7 @@ PageBase {
-         ToggleRow {
-             Layout.topMargin: Nmcli.hasAvailableEthernet ? Tokens.spacing.large : 0
-             first: true
--            text: qsTr("Wi-Fi")
-+            text: qsTr("无线网络")
-             font: Tokens.font.body.medium
-             horizontalPadding: Tokens.padding.largeIncreased
-             checked: Nmcli.wifiEnabled
-@@ -74,7 +74,7 @@ PageBase {
- 
-             showList: Nmcli.wifiEnabled
-             placeholderIcon: Nmcli.wifiEnabled ? "wifi_find" : "signal_wifi_off"
--            placeholderText: Nmcli.wifiEnabled ? qsTr("No networks found") : qsTr("Wi-Fi disabled")
-+            placeholderText: Nmcli.wifiEnabled ? qsTr("未找到网络") : qsTr("无线网络已关闭")
-             extraHeight: Nmcli.scanning ? Tokens.rounding.extraSmall : 0 // Inline so it isn't affected by anim
-             list.anchors.top: scanningIndicator.bottom
- 
-@@ -164,7 +164,7 @@ PageBase {
- 
-                         StyledText {
-                             Layout.fillWidth: true
--                            text: qsTr("Security: %1%2").arg(network.modelData.security).arg(network.modelData.active ? qsTr(" • Connected") : Nmcli.hasSavedProfile(network.modelData.ssid) ? qsTr(" • Saved") : "")
-+                            text: qsTr("安全性：%1%2").arg(network.modelData.security).arg(network.modelData.active ? qsTr(" • 已连接") : Nmcli.hasSavedProfile(network.modelData.ssid) ? qsTr(" • 已保存") : "")
-                             color: Colours.palette.m3outline
-                             font: Tokens.font.label.small
-                             elide: Text.ElideRight
-@@ -237,7 +237,7 @@ PageBase {
- 
-                 StyledText {
-                     Layout.fillWidth: true
--                    text: qsTr("Add network")
-+                    text: qsTr("添加网络")
-                     font: Tokens.font.body.small
-                     elide: Text.ElideRight
-                 }
 diff --git a/modules/nexus/pages/PanelsPage.qml b/modules/nexus/pages/PanelsPage.qml
 index d49879bec3bb6aea6628aea6bbb66c22e5eacace..52c80a503f75c085d6c99e971f2c340697ab3d6b 100644
 --- a/modules/nexus/pages/PanelsPage.qml
@@ -2432,10 +2349,10 @@ index d552cf5d83443cadd48c3a4a228178ce7d0a439b..31fa1b3d6946d3466f0b468684af36e2
  
                  StyledText {
 diff --git a/modules/nexus/pages/network/EthernetDetailPage.qml b/modules/nexus/pages/network/EthernetDetailPage.qml
-index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503dcbae6f77 100644
+index 8c9b4369cc0ec541d882370268d35798207db76a..dd12f18e6a302781796f25119666c193eebc234d 100644
 --- a/modules/nexus/pages/network/EthernetDetailPage.qml
 +++ b/modules/nexus/pages/network/EthernetDetailPage.qml
-@@ -78,7 +78,7 @@ PageBase {
+@@ -77,7 +77,7 @@ PageBase {
          });
      }
  
@@ -2444,7 +2361,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
      isSubPage: true
  
      Component.onCompleted: {
-@@ -134,7 +134,7 @@ PageBase {
+@@ -133,7 +133,7 @@ PageBase {
  
                      StyledText {
                          Layout.alignment: Qt.AlignHCenter
@@ -2453,7 +2370,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
                          color: connectBtn.onColour
                      }
                  }
-@@ -144,45 +144,45 @@ PageBase {
+@@ -143,45 +143,45 @@ PageBase {
          // ---- Connection info ------------------------------------------------
          SectionHeader {
              first: true
@@ -2507,43 +2424,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
              value: root.details?.macAddress || qsTr("—")
          }
  
-@@ -197,8 +197,8 @@ PageBase {
-             Layout.fillWidth: true
-             first: true
-             last: root.ipMethod === "auto"
--            label: qsTr("IP assignment")
--            fallbackText: qsTr("Automatic (DHCP)")
-+            label: qsTr("IP 分配")
-+            fallbackText: qsTr("自动（DHCP）")
-             fallbackIcon: "lan"
- 
-             menuItems: [autoItem, autoDnsItem, manualItem]
-@@ -209,21 +209,21 @@ PageBase {
-                 id: autoItem
- 
-                 icon: "lan"
--                text: qsTr("Automatic (DHCP)")
-+                text: qsTr("自动（DHCP）")
-             }
- 
-             MenuItem {
-                 id: autoDnsItem
- 
-                 icon: "dns"
--                text: qsTr("Automatic, DNS only")
-+                text: qsTr("自动，仅 DNS")
-             }
- 
-             MenuItem {
-                 id: manualItem
- 
-                 icon: "edit"
--                text: qsTr("Manual")
-+                text: qsTr("手动")
-             }
-         }
- 
-@@ -238,11 +238,11 @@ PageBase {
+@@ -234,11 +234,11 @@ PageBase {
  
                  Layout.fillWidth: true
                  visible: root.ipMethod === "manual"
@@ -2558,7 +2439,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
                  inputMethodHints: Qt.ImhNoPredictiveText
              }
  
-@@ -251,7 +251,7 @@ PageBase {
+@@ -247,7 +247,7 @@ PageBase {
  
                  Layout.fillWidth: true
                  visible: root.ipMethod === "manual"
@@ -2567,7 +2448,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
                  placeholder: qsTr("192.168.1.1")
                  leadingIcon: "exit_to_app"
                  inputMethodHints: Qt.ImhNoPredictiveText
-@@ -261,11 +261,11 @@ PageBase {
+@@ -257,11 +257,11 @@ PageBase {
                  id: dnsField
  
                  Layout.fillWidth: true
@@ -2582,7 +2463,7 @@ index 4591a7ba03fb4ba3dbc210a9713eb4c5dd02d9f3..78f8eec95ce415dde317b956de6c503d
                  inputMethodHints: Qt.ImhNoPredictiveText
              }
          }
-@@ -319,7 +319,7 @@ PageBase {
+@@ -315,7 +315,7 @@ PageBase {
                      id: applyTextComp
  
                      StyledText {
@@ -3653,101 +3534,6 @@ index 2e462b466bade20c33b80811034591a87d2a1090..e2203251fb2655895c19a20ef3c0def9
                          type: TextButton.Text
                          onClicked: {
                              CUtils.deleteFile(Qt.resolvedUrl(root.props.recordingConfirmDelete));
-diff --git a/modules/utilities/cards/IdleInhibit.qml b/modules/utilities/cards/IdleInhibit.qml
-index c5244c937b25cd6b3f5d7ced539e71485439c560..4f7137ef2c8539c0ec1c9d293ee376d622f37cd8 100644
---- a/modules/utilities/cards/IdleInhibit.qml
-+++ b/modules/utilities/cards/IdleInhibit.qml
-@@ -49,14 +49,14 @@ StyledRect {
- 
-             StyledText {
-                 Layout.fillWidth: true
--                text: qsTr("Keep Awake")
-+                text: qsTr("保持唤醒")
-                 font: Tokens.font.body.medium
-                 elide: Text.ElideRight
-             }
- 
-             StyledText {
-                 Layout.fillWidth: true
--                text: IdleInhibitor.enabled ? qsTr("Preventing sleep mode") : qsTr("Normal power management")
-+                text: IdleInhibitor.enabled ? qsTr("正在阻止睡眠") : qsTr("正常电源管理")
-                 color: Colours.palette.m3onSurfaceVariant
-                 font: Tokens.font.body.small
-                 elide: Text.ElideRight
-@@ -95,7 +95,7 @@ StyledRect {
-                 id: activeText
- 
-                 anchors.centerIn: parent
--                text: qsTr("Active since %1").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
-+                text: qsTr("自 %1 起启用").arg(Qt.formatTime(IdleInhibitor.enabledSince, GlobalConfig.services.useTwelveHourClock ? "hh:mm a" : "hh:mm"))
-                 color: Colours.palette.m3onPrimary
-                 font: Tokens.font.body.builders.small.size(Math.round(Tokens.font.body.small.pointSize * 0.9)).build()
-             }
-diff --git a/modules/utilities/cards/Record.qml b/modules/utilities/cards/Record.qml
-index 2c2cae2425ee9901a5c43ad7e46845a93214568b..c6a5327d903f55cb5e30e4b894e12ead3f338680 100644
---- a/modules/utilities/cards/Record.qml
-+++ b/modules/utilities/cards/Record.qml
-@@ -60,14 +60,14 @@ StyledRect {
- 
-                 StyledText {
-                     Layout.fillWidth: true
--                    text: qsTr("Screen Recorder")
-+                    text: qsTr("屏幕录制")
-                     font: Tokens.font.body.medium
-                     elide: Text.ElideRight
-                 }
- 
-                 StyledText {
-                     Layout.fillWidth: true
--                    text: Recorder.paused ? qsTr("Paused") : Recorder.running ? qsTr("Running...") : qsTr("Ready")
-+                    text: Recorder.paused ? qsTr("已暂停") : Recorder.running ? qsTr("运行中...") : qsTr("就绪")
-                     color: Colours.palette.m3onSurfaceVariant
-                     font: Tokens.font.body.small
-                     elide: Text.ElideRight
-@@ -84,26 +84,26 @@ StyledRect {
-                 menuItems: [
-                     MenuItem {
-                         icon: "fullscreen"
--                        text: qsTr("Record fullscreen")
--                        activeText: qsTr("Fullscreen")
-+                        text: qsTr("录制全屏")
-+                        activeText: qsTr("全屏")
-                         onClicked: Recorder.start()
-                     },
-                     MenuItem {
-                         icon: "screenshot_region"
--                        text: qsTr("Record region")
--                        activeText: qsTr("Region")
-+                        text: qsTr("录制区域")
-+                        activeText: qsTr("区域")
-                         onClicked: Recorder.start(["-r"])
-                     },
-                     MenuItem {
-                         icon: "select_to_speak"
--                        text: qsTr("Record fullscreen with sound")
--                        activeText: qsTr("Fullscreen")
-+                        text: qsTr("录制全屏和声音")
-+                        activeText: qsTr("全屏")
-                         onClicked: Recorder.start(["-s"])
-                     },
-                     MenuItem {
-                         icon: "volume_up"
--                        text: qsTr("Record region with sound")
--                        activeText: qsTr("Region")
-+                        text: qsTr("录制区域和声音")
-+                        activeText: qsTr("区域")
-                         onClicked: Recorder.start(["-sr"])
-                     }
-                 ]
-@@ -237,7 +237,7 @@ StyledRect {
-                     else
-                         time = `${mins}:${secs}`;
- 
--                    return qsTr("Recording for %1").arg(time);
-+                    return qsTr("已录制 %1").arg(time);
-                 }
-                 font: Tokens.font.body.medium
-                 elide: Text.ElideMiddle
 diff --git a/modules/utilities/cards/RecordingList.qml b/modules/utilities/cards/RecordingList.qml
 index a890ac74898164efa5be2676dba05dd0a6898816..97a7801f65e7feaa9bb3a0cb93553ed32b938595 100644
 --- a/modules/utilities/cards/RecordingList.qml
@@ -3779,19 +3565,6 @@ index a890ac74898164efa5be2676dba05dd0a6898816..97a7801f65e7feaa9bb3a0cb93553ed3
                          color: Colours.palette.m3outline
                      }
                  }
-diff --git a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggles.qml
-index d145700a52d703bee7159b604fd72f2a4589e740..8bad5a4816017839b74ff08fd4fb2b78c21c8448 100644
---- a/modules/utilities/cards/Toggles.qml
-+++ b/modules/utilities/cards/Toggles.qml
-@@ -53,7 +53,7 @@ StyledRect {
-         spacing: Tokens.spacing.medium
- 
-         StyledText {
--            text: qsTr("Quick Toggles")
-+            text: qsTr("快捷开关")
-             font: Tokens.font.body.medium
-         }
- 
 diff --git a/modules/windowinfo/Buttons.qml b/modules/windowinfo/Buttons.qml
 index 7a4fb743176ad099f06edff54f0e4dc1c69421f1..be0362c22abf7ccfd09e13cc448ccdc429aafeff 100644
 --- a/modules/windowinfo/Buttons.qml
@@ -4065,7 +3838,7 @@ index 6dfc791c5289e1a3ff8fb67fb3a359649d29fc4d..949417ccc3307fb46a7070fc8dbad31a
      }
  
 diff --git a/services/Hypr.qml b/services/Hypr.qml
-index d890f0981c1422551f180cd3f25e6ada899524a0..73b9783c6f6bbeeae258673417173633f773778e 100644
+index bcb3ec00060566949f426ba18f22cc88cb17d8f8..15122e83baa8d78bac3879fa69c666516659abd9 100644
 --- a/services/Hypr.qml
 +++ b/services/Hypr.qml
 @@ -29,7 +29,7 @@ Singleton {
@@ -4077,37 +3850,7 @@ index d890f0981c1422551f180cd3f25e6ada899524a0..73b9783c6f6bbeeae258673417173633
      readonly property string kbLayout: kbMap.get(kbLayoutFull) ?? "??"
      readonly property var kbMap: new Map()
  
-@@ -102,9 +102,9 @@ Singleton {
-             return;
- 
-         if (capsLock)
--            Toaster.toast(qsTr("Caps lock enabled"), qsTr("Caps lock is currently enabled"), "keyboard_capslock_badge");
-+            Toaster.toast(qsTr("大写锁定已启用"), qsTr("当前已启用大写锁定"), "keyboard_capslock_badge");
-         else
--            Toaster.toast(qsTr("Caps lock disabled"), qsTr("Caps lock is currently disabled"), "keyboard_capslock");
-+            Toaster.toast(qsTr("大写锁定已关闭"), qsTr("当前已关闭大写锁定"), "keyboard_capslock");
-     }
- 
-     onNumLockChanged: {
-@@ -112,14 +112,14 @@ Singleton {
-             return;
- 
-         if (numLock)
--            Toaster.toast(qsTr("Num lock enabled"), qsTr("Num lock is currently enabled"), "looks_one");
-+            Toaster.toast(qsTr("数字锁定已启用"), qsTr("当前已启用数字锁定"), "looks_one");
-         else
--            Toaster.toast(qsTr("Num lock disabled"), qsTr("Num lock is currently disabled"), "timer_1");
-+            Toaster.toast(qsTr("数字锁定已关闭"), qsTr("当前已关闭数字锁定"), "timer_1");
-     }
- 
-     onKbLayoutFullChanged: {
-         if (hadKeyboard && GlobalConfig.utilities.toasts.kbLayoutChanged)
--            Toaster.toast(qsTr("Keyboard layout changed"), qsTr("Layout changed to: %1").arg(kbLayoutFull), "keyboard");
-+            Toaster.toast(qsTr("键盘布局已更改"), qsTr("布局已切换为：%1").arg(kbLayoutFull), "keyboard");
- 
-         hadKeyboard = !!keyboard;
-     }
-@@ -216,7 +216,7 @@ Singleton {
+@@ -217,7 +217,7 @@ Singleton {
      CustomShortcut {
          // qmllint enable unresolved-type
          name: "refreshDevices"
