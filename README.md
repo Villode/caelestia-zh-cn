@@ -12,6 +12,24 @@
 
 Villode 整合安装器会锁定并组合测试 Shell 与翻译包版本。
 
+
+## 运行要求（重要）
+
+翻译目录（`.qm`）必须由 **Villode 自带的 Caelestia 原生插件** 中的 `TranslationManager` 加载。
+
+- 安装 Shell 时请使用 `install-villode.sh`（**不要**加 `--no-native-build`）
+- 启动请使用 `caelestia shell` / `villode-caelestia-shell-guard`，确保 `QML2_IMPORT_PATH` 包含 `~/.local/lib/qt6/qml`
+- 系统包 `/usr/lib/qt6/qml/Caelestia` 通常过旧，不含 `TranslationManager`，会导致设置页全英文
+
+检查：
+
+```bash
+caelestia-zh-apply --check
+qs -c caelestia ipc call uilanguage status   # Shell 运行中
+```
+
+目录源：Shell 仓库 `i18n/` 为真相源；本仓库在发版时同步 `.ts` / `.qm` / `zh_CN.json`。
+
 ## 安装
 
 先安装 Villode Caelestia Shell，然后执行：

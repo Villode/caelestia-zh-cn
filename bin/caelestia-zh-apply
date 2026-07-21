@@ -52,6 +52,7 @@ done
 
 check_shell() {
     local source="${source_override:-$shell_dir}"
+    local plugin_types="${HOME}/.local/lib/qt6/qml/Caelestia/caelestia-core.qmltypes"
     if [[ ! -f "$source/shell.qml" ]]; then
         echo "找不到 Caelestia Shell：$source" >&2
         return 66
@@ -60,6 +61,13 @@ check_shell() {
         echo "当前 Shell 不支持运行时翻译包，请先更新 Villode Shell。" >&2
         echo "检查目录：$source" >&2
         return 65
+    fi
+    if [[ ! -f "$plugin_types" ]] || ! grep -q 'TranslationManager' "$plugin_types" 2>/dev/null; then
+        echo "警告：本地 Caelestia 插件未导出 TranslationManager。" >&2
+        echo "请用 install-villode.sh（不要 --no-native-build）重装 Shell 原生模块。" >&2
+        echo "仅有 .qm 无法翻译；系统 /usr 插件通常过旧。" >&2
+    else
+        echo "原生插件检查通过：TranslationManager 可用。"
     fi
     echo "兼容性检查通过：Shell 支持简体中文翻译包。"
 }
@@ -139,6 +147,9 @@ if $restart && command -v caelestia >/dev/null 2>&1; then
     log_file="$state_home/restart.log"
     : > "$log_file"
     chmod 600 "$log_file"
+    export QML2_IMPORT_PATH="${HOME}/.local/lib/qt6/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+    case "${LANG:-}" in ""|C|C.*|POSIX|en|en_*) export LANG=zh_CN.UTF-8 ;; esac
+    case "${LC_ALL:-}" in ""|C|C.*|POSIX|en|en_*) export LC_ALL="$LANG" ;; esac
     caelestia shell -k >/dev/null 2>&1 || true
     caelestia shell -d >"$log_file" 2>&1 || {
         echo "翻译包已安装，但 Caelestia 自动重启失败。" >&2
